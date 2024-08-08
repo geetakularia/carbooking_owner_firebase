@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "767938749957",
+    "project_id": "carcustomerwithfirebase",
+    "storage_bucket": "carcustomerwithfirebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:767938749957:android:a66f3b6245b394d4d45e6c",
+        "android_client_info": {
+          "package_name": "com.carbooking.own"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBaCSOszb3HTuiNmrzUxN4aWQAXcK-TcfE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

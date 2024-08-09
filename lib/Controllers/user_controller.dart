@@ -21,6 +21,6 @@ class UserController extends GetxController {
   DataResonse<Usermodel> get userdata => _userdata;
 
   Future<void> signup() async {
-    // final userdata = await services.authenticate();
+  
   }
 }

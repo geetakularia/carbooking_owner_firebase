@@ -12,17 +12,24 @@ class Usermodel {
     required this.owner,
     required this.customer,
   });
-  Usermodel copywith(String id, String email, String password, String image,
-      String username, String phonenumber, bool owner, bool customer) {
+  Usermodel copywith(
+      {String? id,
+      String? email,
+      String? password,
+      String? image,
+      String? username,
+      String? phonenumber,
+      bool? owner,
+      bool? customer}) {
     return Usermodel(
-        id: id,
-        email: email,
-        password: password,
-        image: image,
-        username: username,
-        phonenumber: phonenumber,
-        owner: owner,
-        customer: customer);
+        id: id ??this.id,
+        email: email ?? this.email,
+        password: password ??this. password,
+        image: image ??this. image,
+        username: username ??this. username,
+        phonenumber: phonenumber ??this. phonenumber,
+        owner: owner ?? true,
+        customer: customer ?? false);
   }
 
   Map<String, dynamic> tomap() {

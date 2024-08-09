@@ -1,4 +1,4 @@
-package com.carbooking.owner
+package com.carbooking.own
 
 import io.flutter.embedding.android.FlutterActivity
 

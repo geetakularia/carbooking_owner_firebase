@@ -6,24 +6,24 @@ import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/Utils/app_validators.dart';
-import 'package:car_booking_owner/Views/Authentication/SignUpScreen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
-class Login_screen extends StatefulWidget {
-  const Login_screen({super.key});
+class SignupScreen extends StatefulWidget {
+  const SignupScreen({super.key});
 
   @override
-  State<Login_screen> createState() => _Login_screenState();
+  State<SignupScreen> createState() => _SignupScreenState();
 }
 
 RxString initialvalue = "".obs;
 
-class _Login_screenState extends State<Login_screen> {
+class _SignupScreenState extends State<SignupScreen> {
   final _namecontroller = TextEditingController();
+  final _gmailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
@@ -67,6 +67,18 @@ class _Login_screenState extends State<Login_screen> {
                 hint_txt: languageconst.enterUserName.tr,
                 suffixicon: Icons.person_3_outlined,
               ),
+              heightY(10.h),
+              Text(
+                "Email",
+                style: font.fs14Normal.copyWith(color: clr.white),
+              ),
+              heightY(10.h),
+              Primary_txtField(
+                validator: (value) => TextValidator().validator(value),
+                controller: _gmailcontroller,
+                hint_txt: "Enter Your Email",
+                suffixicon: Icons.email,
+              ),
               heightY(20.h),
               Text(
                 languageconst.password.tr,
@@ -87,18 +99,18 @@ class _Login_screenState extends State<Login_screen> {
                   });
                 },
               ),
-              heightY(15.h),
-              Align(
-                  alignment: Alignment.centerRight,
-                  child: InkWell(
-                    onTap: () {
-                      Get.toNamed(RoutesName.forget_screen);
-                    },
-                    child: Text(
-                      languageconst.forgotPassword.tr,
-                      style: font.fs16Normal.copyWith(color: clr.white),
-                    ),
-                  )),
+              // heightY(15.h),
+              // Align(
+              //     alignment: Alignment.centerRight,
+              //     child: InkWell(
+              //       onTap: () {
+              //         Get.toNamed(RoutesName.forget_screen);
+              //       },
+              //       child: Text(
+              //         languageconst.forgotPassword.tr,
+              //         style: font.fs16Normal.copyWith(color: clr.white),
+              //       ),
+              //     )),
               heightY(15.h),
               Obx(
                 () => CheckBoxListTile_widget(
@@ -119,21 +131,9 @@ class _Login_screenState extends State<Login_screen> {
               Row(
                 children: [
                   PrimaryButton(
-                    title: languageconst.login.tr,
-                    onPressed: () {
-                      valideinput();
-                    },
-                    isExpanded: true,
-                  ),
-                ],
-              ),
-              heightY(15.h),
-              Row(
-                children: [
-                  PrimaryButton(
                     title: "SignUp",
                     onPressed: () {
-                      Get.to(SignupScreen());
+                      valideinput();
                     },
                     isExpanded: true,
                   ),

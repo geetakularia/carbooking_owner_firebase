@@ -42,6 +42,7 @@ class _Onboarding_ScreenState extends State<Onboarding_Screen> {
                                 width: AppServices.screenWidth(context),
                                 fit: BoxFit.cover,
                               ),
+                              Text("nbvfngm,ugjhfggk"),
                               Positioned(
                                 bottom: 100,
                                 child: Text(

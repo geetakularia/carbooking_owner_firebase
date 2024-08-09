@@ -2,6 +2,7 @@ import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/CheckBox/checkBoxListTile.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/AuthCommonWidget.dart';
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
@@ -23,7 +24,7 @@ class Login_screen extends StatefulWidget {
 RxString initialvalue = "".obs;
 
 class _Login_screenState extends State<Login_screen> {
-  final _namecontroller = TextEditingController();
+  final _emailcontroller = TextEditingController();
   final _passwordcontroller = TextEditingController();
   final _formkey = GlobalKey<FormState>();
 
@@ -63,7 +64,7 @@ class _Login_screenState extends State<Login_screen> {
               heightY(10.h),
               Primary_txtField(
                 validator: (value) => TextValidator().validator(value),
-                controller: _namecontroller,
+                controller: _emailcontroller,
                 hint_txt: languageconst.enterUserName.tr,
                 suffixicon: Icons.person_3_outlined,
               ),
@@ -148,7 +149,9 @@ class _Login_screenState extends State<Login_screen> {
 
   valideinput() {
     if (_formkey.currentState!.validate()) {
-      Get.toNamed(RoutesName.BottomScreen);
+      // Get.toNamed(RoutesName.BottomScreen);
+      UserController()
+          .login(_emailcontroller.text.trim(), _passwordcontroller.text.trim());
     }
   }
 }

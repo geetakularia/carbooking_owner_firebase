@@ -2,9 +2,10 @@ import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/CheckBox/checkBoxListTile.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/AuthCommonWidget.dart';
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/UserModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
-import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/Utils/app_validators.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -148,7 +149,14 @@ class _SignupScreenState extends State<SignupScreen> {
 
   valideinput() {
     if (_formkey.currentState!.validate()) {
-      Get.toNamed(RoutesName.BottomScreen);
+      // Get.toNamed(RoutesName.BottomScreen);
+      final modeldata = Usermodel(
+          username: _namecontroller.text.trim(),
+          email: _gmailcontroller.text.trim());
+      UserController().signup({
+        "userdata": modeldata.tomap(),
+        "password": _passwordcontroller.text.trim()
+      });
     }
   }
 }

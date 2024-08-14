@@ -13,7 +13,7 @@ class Prefs {
   }
 
   static get _languageKey => "Language";
-   get userkey => "userkey";
+  get userkey => "userkey";
   setLanguage({required LanguageModel data}) {
     _prefs.setString(_languageKey, data.tojson());
   }
@@ -27,11 +27,14 @@ class Prefs {
   }
 
   Usermodel getUserPrefs() {
-    return Usermodel.fromjson(
-        jsonDecode(_prefs.getString(userkey).toString()));
+    return Usermodel.fromjson(jsonDecode(_prefs.getString(userkey).toString()));
   }
 
-  removePrefs(String userkey)async {
+  removePrefs(String userkey) async {
     return await _prefs.remove(userkey);
+  }
+
+  getstring(String userkey) {
+    return _prefs.getString(userkey) ?? "";
   }
 }

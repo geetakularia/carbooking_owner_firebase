@@ -1,5 +1,6 @@
 import 'package:car_booking_owner/Data/Network/networkapi_service.dart';
 import 'package:car_booking_owner/Models/UserModel.dart';
+import 'package:car_booking_owner/Preferences/sharedpreferences.dart';
 import 'package:car_booking_owner/Res/Apis/apis.dart';
 import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';
@@ -69,6 +70,50 @@ class UserController extends GetxController {
       print("=====================");
       print(e.toString());
       print("=====================");
+    }
+  }
+
+  // Future relogin() async {
+  //   try {
+  //     final shareduid = prefrance.getstring().toString();
+  //     if (shareduid.isNotEmpty) {
+  //       final data = await Apis().userdoc(shareduid).get();
+  //       if (data.exists) {
+  //         _userdata = Usermodel.fromjson(json)
+  //       }
+  //     }
+  //   } catch (e) {}
+  // }
+
+  Future<void> relogin() async {
+    try {
+      final String userId = prefrance.getstring(prefrance.userkey);
+
+      if (userId.isNotEmpty) {
+        final DocumentSnapshot<Map<String, dynamic>> data =
+            await Apis().userdoc(userId).get();
+
+        if (data.exists) {
+          final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
+
+          _userdata = DataResonse.completed(usermodeldata);
+
+          prefrance.setUserPrefs(usermodeldata);
+
+          Get.offAllNamed(RoutesName.BottomScreen);
+        } else {
+          _userdata = DataResonse.error("User data not found.");
+          Get.offAllNamed(RoutesName.login_screen);
+        }
+      } else {
+        Get.offAllNamed(RoutesName.login_screen);
+      }
+    } catch (e) {
+      _userdata = DataResonse.error(e.toString());
+      print("-------relogin error:: $e-------");
+      Get.offAllNamed(RoutesName.login_screen);
+    } finally {
+      update();
     }
   }
 }

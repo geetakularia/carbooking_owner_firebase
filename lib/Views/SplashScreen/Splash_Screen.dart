@@ -1,3 +1,4 @@
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -18,10 +19,9 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   }
 
   navigatorcontext() {
-    Future.delayed(
-      Duration(seconds: 2),
-      () => Get.toNamed("/onboarding"),
-    );
+    Future.delayed(Duration(seconds: 2), () {
+      UserController().relogin();
+    });
   }
 
   @override

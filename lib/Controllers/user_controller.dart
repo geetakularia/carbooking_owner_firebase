@@ -88,15 +88,18 @@ class UserController extends GetxController {
       print(userId);
       bool islogin = false;
       if (userId.isNotEmpty) {
-        final userData = await Apis().userdoc(jsonDecode(userId)["id"]).get();
-        // print("Step 2***********************");
-        print(userData);
-        print(userData.exists);
-        if (userData.exists) {
-          // final _userdata = Usermodel.fromjson(userData.data()!);
-          islogin = true;
-          // print("Bottom Scen *********88 ");
-          Get.to(BottomScreen());
+        final data = await Apis().userdoc(jsonDecode(userId)["id"]).get();
+        print("=======================");
+        print(jsonDecode(userId)["id"]);
+
+        if (data.exists) {
+          final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
+
+          _userdata = DataResonse.completed(usermodeldata);
+
+          prefrance.setUserPrefs(usermodeldata);
+
+          Get.offAllNamed(RoutesName.BottomScreen);
         } else {
           // print("els case :::::;;;;;;; Bottom Screen *********88 ");
           _userdata = DataResonse.error("User data not found.");

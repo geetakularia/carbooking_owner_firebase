@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:car_booking_owner/Data/Network/baseapi_service.dart';
 import 'package:car_booking_owner/Data/app_exceptions.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';
@@ -11,8 +10,13 @@ class NetworkapiService extends BaseapiService {
   final _auth = FirebaseAuth.instance;
   @override
   Future authenticate(AuthState state, {Map<String, dynamic>? json}) async {
-    String email = json!["email"];
-    String password = json["password"];
+
+    String email = "";
+    String password = "";
+    if (json != null) {
+      email = json["email"] ?? "";
+      password = json["password"] ?? "";
+    }
     if (state == AuthState.SIGNUP) {
       UserCredential userCredential = await _auth
           .createUserWithEmailAndPassword(email: email, password: password);
@@ -30,7 +34,6 @@ class NetworkapiService extends BaseapiService {
 
   @override
   Future post(path, Map<String, dynamic> data) async {
-    // TODO: implement post
     if (path is CollectionReference) {
       return await path.add(data);
     } else {

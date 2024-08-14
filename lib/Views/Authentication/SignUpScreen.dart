@@ -70,14 +70,14 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               heightY(10.h),
               Text(
-                "Email",
+                languageconst.email.tr,
                 style: font.fs14Normal.copyWith(color: clr.white),
               ),
               heightY(10.h),
               Primary_txtField(
                 validator: (value) => TextValidator().validator(value),
                 controller: _gmailcontroller,
-                hint_txt: "Enter Your Email",
+                hint_txt: languageconst.enterUseremail.tr,
                 suffixicon: Icons.email,
               ),
               heightY(20.h),
@@ -100,18 +100,6 @@ class _SignupScreenState extends State<SignupScreen> {
                   });
                 },
               ),
-              // heightY(15.h),
-              // Align(
-              //     alignment: Alignment.centerRight,
-              //     child: InkWell(
-              //       onTap: () {
-              //         Get.toNamed(RoutesName.forget_screen);
-              //       },
-              //       child: Text(
-              //         languageconst.forgotPassword.tr,
-              //         style: font.fs16Normal.copyWith(color: clr.white),
-              //       ),
-              //     )),
               heightY(15.h),
               Obx(
                 () => CheckBoxListTile_widget(

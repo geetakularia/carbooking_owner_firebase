@@ -45,6 +45,7 @@ class languagetype {
     languageconst.gladToSeeYouAgain: "Glad to See you again !",
     languageconst.userName: "User name",
     languageconst.enterUserName: "Enter user name",
+    languageconst.enterUseremail: "Enter user Email",
     languageconst.password: "Password",
     languageconst.enterYourPassword: "Enter your password",
     languageconst.forgotPassword: "Forgot password ?",
@@ -431,6 +432,7 @@ class languagetype {
     languageconst.gladToSeeYouAgain: "आपको फिर से देखकर खुशी हुई!",
     languageconst.userName: "उपयोगकर्ता नाम",
     languageconst.enterUserName: "उपयोगकर्ता नाम दर्ज करें",
+    languageconst.enterUseremail: "उपयोगकर्ता ईमेल दर्ज करें",
     languageconst.password: "पासवर्ड",
     languageconst.enterYourPassword: "अपना पासवर्ड दर्ज करें",
     languageconst.forgotPassword: "पासवर्ड भूल गए?",
@@ -811,6 +813,7 @@ class languageconst {
   static const String gladToSeeYouAgain = "Glad to See you again !";
   static const String userName = "User name";
   static const String enterUserName = "Enter user name";
+  static const String enterUseremail = "Enter user Email";
   static const String password = "Password";
   static const String enterYourPassword = "Enter your password";
   static const String forgotPassword = "Forgot password ?";

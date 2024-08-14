@@ -58,15 +58,15 @@ class _Login_screenState extends State<Login_screen> {
               ),
               heightY(20.h),
               Text(
-                languageconst.userName.tr,
+                languageconst.email.tr,
                 style: font.fs14Normal.copyWith(color: clr.white),
               ),
               heightY(10.h),
               Primary_txtField(
-                validator: (value) => TextValidator().validator(value),
+                validator: (value) => EmailValidator().validator(value),
                 controller: _emailcontroller,
-                hint_txt: languageconst.enterUserName.tr,
-                suffixicon: Icons.person_3_outlined,
+                hint_txt: languageconst.enterUseremail.tr,
+                suffixicon: Icons.email,
               ),
               heightY(20.h),
               Text(

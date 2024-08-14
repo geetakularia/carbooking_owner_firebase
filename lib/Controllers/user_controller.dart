@@ -3,26 +3,14 @@ import 'package:car_booking_owner/Models/UserModel.dart';
 import 'package:car_booking_owner/Res/Apis/apis.dart';
 import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';
-import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
+import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
+import 'package:car_booking_owner/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 class UserController extends GetxController {
   final _services = NetworkapiService();
-  dynamic _user;
-  dynamic get getuserdata => _user;
-  // LOADING
-  bool _loading = false;
-
-  // LOADING GET
-  bool get loading => _loading;
-
-  // LOADING SET
-  setloading(bool value) {
-    _loading = value;
-    update();
-  }
 
   DataResonse<Usermodel> _userdata = DataResonse.loading();
   DataResonse<Usermodel> get userdata => _userdata;
@@ -33,18 +21,19 @@ class UserController extends GetxController {
       final credential = await _services.authenticate(AuthState.SIGNUP,
               json: {"email": userdata.email, "password": data["password"]})
           as UserCredential;
-      //TODO: get uid from Authantication
       final String userid = credential.user!.uid;
       // print("-=-=-=-=--=///////${userid}\\\\\\-=-=-=-");
       // print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
       if (userid.isNotEmpty) {
         await _services.post(Apis().userdoc(userid),
             await userdata.copywith(id: userid).tomap());
-        _user = userdata.copywith(id: userid);
-        Get.to(BottomScreen());
+
+        _userdata = DataResonse.completed(userdata.copywith(id: userid));
+        prefrance.setUserPrefs(userdata);
+        Get.offAllNamed(RoutesName.BottomScreen);
       }
     } catch (e) {
-      print("---------$e----------");
+      DataResonse.error(e.toString());
     } finally {
       update();
     }
@@ -60,11 +49,26 @@ class UserController extends GetxController {
             json: {"email": email, "password": password}) as UserCredential;
         final Usermodel usermodeldata =
             Usermodel.fromjson(snapshot.docs.first.data());
-        _user = usermodeldata;
-        Get.to(BottomScreen());
+        _userdata = DataResonse.completed(usermodeldata);
+        prefrance.setUserPrefs(usermodeldata);
+
+        Get.offAllNamed(RoutesName.BottomScreen);
       }
     } catch (e) {
+      _userdata = DataResonse.error(e.toString());
       print("-------login error:: $e-------");
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      await _services.authenticate(AuthState.LOGOUT);
+      prefrance.removePrefs(prefrance.userkey);
+      Get.offAllNamed(RoutesName.login_screen);
+    } catch (e) {
+      print("=====================");
+      print(e.toString());
+      print("=====================");
     }
   }
 }

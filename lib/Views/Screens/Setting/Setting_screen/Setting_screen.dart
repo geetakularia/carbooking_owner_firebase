@@ -1,4 +1,5 @@
 import 'package:car_booking_owner/Components/Dialog/logout_dialog.dart';
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -156,16 +157,18 @@ pushtosetting(String id) {
     case "Help":
       return Get.toNamed("/helpsupport");
     case "Logout":
-      return Get.dialog(Logout_dialog(
-          onpressed_No: () {
-            Get.back();
-          },
-          onpressed_Yes: () {
-            Get.toNamed("/login_screen");
-          },
-          image: manageData.appimage.logout,
-          title: languageconst.confirmLogout.tr,
-          subtitle: languageconst.configuringSerialNumberPleaseWait.tr));
+      return Get.dialog(GetBuilder<UserController>(
+        builder: (controller) => Logout_dialog(
+            onpressed_No: () {
+              Get.back();
+            },
+            onpressed_Yes: () async {
+              await controller.logout();
+            },
+            image: manageData.appimage.logout,
+            title: languageconst.confirmLogout.tr,
+            subtitle: languageconst.configuringSerialNumberPleaseWait.tr),
+      ));
 
     default:
   }

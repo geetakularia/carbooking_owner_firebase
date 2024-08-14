@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:car_booking_owner/Data/Network/networkapi_service.dart';
 import 'package:car_booking_owner/Models/UserModel.dart';
 import 'package:car_booking_owner/Preferences/sharedpreferences.dart';
@@ -90,8 +92,9 @@ class UserController extends GetxController {
       final String userId = prefrance.getstring(prefrance.userkey);
 
       if (userId.isNotEmpty) {
-        final DocumentSnapshot<Map<String, dynamic>> data =
-            await Apis().userdoc(userId).get();
+        final data = await Apis().userdoc(jsonDecode(userId)["id"]).get();
+        print("=======================");
+        print(jsonDecode(userId)["id"]);
 
         if (data.exists) {
           final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);

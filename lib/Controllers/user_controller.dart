@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:car_booking_owner/Data/Network/networkapi_service.dart';
 import 'package:car_booking_owner/Models/UserModel.dart';
-import 'package:car_booking_owner/Preferences/sharedpreferences.dart';
 import 'package:car_booking_owner/Res/Apis/apis.dart';
 import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
+import 'package:car_booking_owner/Views/Authentication/Login_screen.dart';
+import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -15,7 +18,7 @@ class UserController extends GetxController {
 
   DataResonse<Usermodel> _userdata = DataResonse.loading();
   DataResonse<Usermodel> get userdata => _userdata;
-
+/******************************* sign up */
   Future<void> signup(Map<String, dynamic> data) async {
     final Usermodel userdata = Usermodel.fromjson(data["userdata"]);
     try {
@@ -40,6 +43,7 @@ class UserController extends GetxController {
     }
   }
 
+/************************** login */
   Future<void> login(String email, String password) async {
     try {
       final snapshot = await _services.getdata(
@@ -52,7 +56,10 @@ class UserController extends GetxController {
             Usermodel.fromjson(snapshot.docs.first.data());
         _userdata = DataResonse.completed(usermodeldata);
         prefrance.setUserPrefs(usermodeldata);
-
+        // print(prefrance.getstring(email));
+        // // usermodeldata.copywith(email: email);
+        // print(
+        //     "-=-=-=-=-=-==-=-${usermodeldata.copywith(email: email)}-----------------");
         Get.offAllNamed(RoutesName.BottomScreen);
       }
     } catch (e) {
@@ -73,40 +80,32 @@ class UserController extends GetxController {
     }
   }
 
-  // Future relogin() async {
-  //   try {
-  //     final shareduid = prefrance.getstring().toString();
-  //     if (shareduid.isNotEmpty) {
-  //       final data = await Apis().userdoc(shareduid).get();
-  //       if (data.exists) {
-  //         _userdata = Usermodel.fromjson(json)
-  //       }
-  //     }
-  //   } catch (e) {}
-  // }
-
-  Future<void> relogin() async {
+/******************** relogin */
+  Future<bool> relogin() async {
     try {
       final String userId = prefrance.getstring(prefrance.userkey);
-
+      // print("Step 1***********************");
+      print(userId);
+      bool islogin = false;
       if (userId.isNotEmpty) {
-        final DocumentSnapshot<Map<String, dynamic>> data =
-            await Apis().userdoc(userId).get();
-
-        if (data.exists) {
-          final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
-
-          _userdata = DataResonse.completed(usermodeldata);
-
-          prefrance.setUserPrefs(usermodeldata);
-
-          Get.offAllNamed(RoutesName.BottomScreen);
+        final userData = await Apis().userdoc(jsonDecode(userId)["id"]).get();
+        // print("Step 2***********************");
+        print(userData);
+        print(userData.exists);
+        if (userData.exists) {
+          // final _userdata = Usermodel.fromjson(userData.data()!);
+          islogin = true;
+          // print("Bottom Scen *********88 ");
+          Get.to(BottomScreen());
         } else {
+          // print("els case :::::;;;;;;; Bottom Screen *********88 ");
           _userdata = DataResonse.error("User data not found.");
-          Get.offAllNamed(RoutesName.login_screen);
+          Get.to(Login_screen());
+          print("=====================================================");
         }
       } else {
         Get.offAllNamed(RoutesName.login_screen);
+        // print("=s=s=s=s=s==s=s=s=s=s=s=s=s=s=s=s=s=s=s=s=s==s=s");
       }
     } catch (e) {
       _userdata = DataResonse.error(e.toString());
@@ -115,5 +114,6 @@ class UserController extends GetxController {
     } finally {
       update();
     }
+    return true;
   }
 }

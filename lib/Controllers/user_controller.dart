@@ -7,7 +7,6 @@ import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/Views/Authentication/Login_screen.dart';
-import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -68,6 +67,7 @@ class UserController extends GetxController {
     }
   }
 
+/************************** logout */
   Future<void> logout() async {
     try {
       await _services.authenticate(AuthState.LOGOUT);
@@ -80,35 +80,26 @@ class UserController extends GetxController {
     }
   }
 
-/******************** relogin */
-  Future<bool> relogin() async {
+/************************** relogin */
+  Future<void> relogin() async {
     try {
       final String userId = prefrance.getstring(prefrance.userkey);
-      // print("Step 1***********************");
       print(userId);
-      bool islogin = false;
       if (userId.isNotEmpty) {
         final data = await Apis().userdoc(jsonDecode(userId)["id"]).get();
-        print("=======================");
-        print(jsonDecode(userId)["id"]);
 
         if (data.exists) {
           final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
-
           _userdata = DataResonse.completed(usermodeldata);
-
           prefrance.setUserPrefs(usermodeldata);
 
           Get.offAllNamed(RoutesName.BottomScreen);
         } else {
-          // print("els case :::::;;;;;;; Bottom Screen *********88 ");
           _userdata = DataResonse.error("User data not found.");
           Get.to(Login_screen());
-          print("=====================================================");
         }
       } else {
         Get.offAllNamed(RoutesName.login_screen);
-        // print("=s=s=s=s=s==s=s=s=s=s=s=s=s=s=s=s=s=s=s=s=s==s=s");
       }
     } catch (e) {
       _userdata = DataResonse.error(e.toString());
@@ -117,6 +108,5 @@ class UserController extends GetxController {
     } finally {
       update();
     }
-    return true;
   }
 }

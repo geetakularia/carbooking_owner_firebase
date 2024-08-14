@@ -75,17 +75,7 @@ class UserController extends GetxController {
     }
   }
 
-  // Future relogin() async {
-  //   try {
-  //     final shareduid = prefrance.getstring().toString();
-  //     if (shareduid.isNotEmpty) {
-  //       final data = await Apis().userdoc(shareduid).get();
-  //       if (data.exists) {
-  //         _userdata = Usermodel.fromjson(json)
-  //       }
-  //     }
-  //   } catch (e) {}
-  // }
+
 
   Future<void> relogin() async {
     try {

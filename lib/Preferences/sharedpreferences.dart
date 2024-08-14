@@ -33,4 +33,8 @@ class Prefs {
   removePrefs(String userkey) async {
     return await _prefs.remove(userkey);
   }
+
+  getstring(String userkey) {
+    return _prefs.getString(userkey) ?? "";
+  }
 }

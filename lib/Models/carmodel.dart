@@ -1,5 +1,6 @@
 class Carmodel {
   String? companyname,
+      id,
       carmodel,
       platenumber,
       transmission,
@@ -14,6 +15,7 @@ class Carmodel {
   List<CreatePackageModel>? createpackagedata;
   Carmodel(
       {this.companyname,
+      this.id,
       this.carmodel,
       this.platenumber,
       this.transmission,
@@ -28,6 +30,7 @@ class Carmodel {
       this.createpackagedata});
   Carmodel copywith(
       {String? companyname,
+      String? id,
       String? carmodel,
       String? platenumber,
       String? transmission,
@@ -42,6 +45,7 @@ class Carmodel {
       List<CreatePackageModel>? createpackagedata}) {
     return Carmodel(
       companyname: companyname ?? this.companyname,
+      id: id ?? this.id,
       carmodel: carmodel ?? this.carmodel,
       platenumber: platenumber ?? this.platenumber,
       transmission: transmission ?? this.transmission,
@@ -57,9 +61,32 @@ class Carmodel {
     );
   }
 
+  Carmodel.fromjson(Map<String, dynamic> json)
+      : companyname = json["companyname"],
+        id = json["id"],
+        carmodel = json["carmodel"],
+        platenumber = json["platenumber"],
+        transmission = json["transmission"],
+        seatingcapacity = json["seatingcapacity"],
+        fuel = json["fuel"],
+        category = json["category"],
+        manufactureyear = json["manufactureyear"],
+        description = json["description"],
+        carcolor = (json["carcolor"] as List).map((e) => e.toString()).toList(),
+        images = (json["image"] as List).map((e) => e.toString()).toList(),
+        videos = (json["videos"] as List).map((e) => e.toString()).toList(),
+        createpackagedata = json["createpackagedata"] != null
+            ? (json["createpackagedata"] as List)
+                .map(
+                  (e) => CreatePackageModel.fromjson(e),
+                )
+                .toList()
+            : null;
+
   Map<String, dynamic> tomap() {
     return {
       "companyname": companyname,
+      "id": id,
       "carmodel": carmodel,
       "platenumber": platenumber,
       "transmission": transmission,
@@ -91,6 +118,10 @@ class CreatePackageModel {
       ammount: ammount ?? this.ammount,
     );
   }
+
+  CreatePackageModel.fromjson(Map<String, dynamic> json)
+      : packagetype = json["packagetype"],
+        ammount = json["ammount"];
 
   Map<String, dynamic> tomap() {
     return {

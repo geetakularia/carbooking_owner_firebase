@@ -19,6 +19,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
   }
 
   navigatorcontext() async {
+    // await CarController();
     Future.delayed(Duration(milliseconds: 400), () async {
       await Get.find<UserController>().relogin();
     });

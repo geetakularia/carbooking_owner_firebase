@@ -190,4 +190,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
       ),
     );
   }
+  Map<String,dynamic> add_data(){}
 }
+

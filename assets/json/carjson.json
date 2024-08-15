@@ -19,8 +19,8 @@
       "https://example.com/videos/tesla_model_s_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Basic", "ammount": "79999" },
-      { "packagetype": "Premium", "ammount": "89999" }
+      { "packagetype": "perhour", "ammount": "79999" },
+      { "packagetype": "perday", "ammount": "89999" }
     ]
   },
   {
@@ -43,8 +43,8 @@
       "https://example.com/videos/ford_mustang_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Standard", "ammount": "55999" },
-      { "packagetype": "Performance", "ammount": "65999" }
+      { "packagetype": "perhour", "ammount": "55999" },
+      { "packagetype": "perday", "ammount": "65999" }
     ]
   },
   {
@@ -67,8 +67,8 @@
       "https://example.com/videos/toyota_camry_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "LE", "ammount": "29999" },
-      { "packagetype": "XLE", "ammount": "34999" }
+      { "packagetype": "perhour", "ammount": "29999" },
+      { "packagetype": "perday", "ammount": "34999" }
     ]
   },
   {
@@ -91,8 +91,8 @@
       "https://example.com/videos/bmw_x5_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Standard", "ammount": "74999" },
-      { "packagetype": "Luxury", "ammount": "84999" }
+      { "packagetype": "perhour", "ammount": "74999" },
+      { "packagetype": "perday", "ammount": "84999" }
     ]
   },
   {
@@ -115,8 +115,8 @@
       "https://example.com/videos/audi_a4_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Premium", "ammount": "41999" },
-      { "packagetype": "Prestige", "ammount": "46999" }
+      { "packagetype": "perhour", "ammount": "41999" },
+      { "packagetype": "perday", "ammount": "46999" }
     ]
   },
   {
@@ -139,8 +139,8 @@
       "https://example.com/videos/mercedes_eclass_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Luxury", "ammount": "56999" },
-      { "packagetype": "Sport", "ammount": "61999" }
+      { "packagetype": "perhour", "ammount": "56999" },
+      { "packagetype": "perday", "ammount": "61999" }
     ]
   },
   {
@@ -163,8 +163,8 @@
       "https://example.com/videos/honda_civic_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "LX", "ammount": "21999" },
-      { "packagetype": "EX", "ammount": "25999" }
+      { "packagetype": "perhour", "ammount": "21999" },
+      { "packagetype": "perday", "ammount": "25999" }
     ]
   },
   {
@@ -187,8 +187,8 @@
       "https://example.com/videos/chevrolet_silverado_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "Work Truck", "ammount": "39999" },
-      { "packagetype": "LTZ", "ammount": "49999" }
+      { "packagetype": "perhour", "ammount": "39999" },
+      { "packagetype": "perday", "ammount": "49999" }
     ]
   },
   {
@@ -211,8 +211,8 @@
       "https://example.com/videos/nissan_altima_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "S", "ammount": "24999" },
-      { "packagetype": "SL", "ammount": "29999" }
+      { "packagetype": "perhour", "ammount": "24999" },
+      { "packagetype": "perday", "ammount": "29999" }
     ]
   },
   {
@@ -235,8 +235,8 @@
       "https://example.com/videos/hyundai_tucson_overview.mp4"
     ],
     "createpackagedata": [
-      { "packagetype": "SE", "ammount": "27999" },
-      { "packagetype": "Limited", "ammount": "32999" }
+      { "packagetype": "perhour", "ammount": "27999" },
+      { "packagetype": "perday", "ammount": "32999" }
     ]
   }
 ]

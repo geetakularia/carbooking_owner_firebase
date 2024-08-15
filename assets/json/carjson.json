@@ -1,0 +1,242 @@
+[
+  {
+    "companyname": "Tesla",
+    "id": "12345",
+    "carmodel": "Model S",
+    "platenumber": "TES1234",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Electric",
+    "category": "Sedan",
+    "manufactureyear": "2022",
+    "description": "A luxury electric sedan with high performance and cutting-edge technology.",
+    "carcolor": ["Red", "Black", "White"],
+    "images": [
+      "https://example.com/images/tesla_model_s_1.jpg",
+      "https://example.com/images/tesla_model_s_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/tesla_model_s_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Basic", "ammount": "79999" },
+      { "packagetype": "Premium", "ammount": "89999" }
+    ]
+  },
+  {
+    "companyname": "Ford",
+    "id": "67890",
+    "carmodel": "Mustang",
+    "platenumber": "FRD6789",
+    "transmission": "Manual",
+    "seatingcapacity": "4",
+    "fuel": "Gasoline",
+    "category": "Coupe",
+    "manufactureyear": "2021",
+    "description": "A classic American muscle car with a modern twist.",
+    "carcolor": ["Blue", "Yellow", "Black"],
+    "images": [
+      "https://example.com/images/ford_mustang_1.jpg",
+      "https://example.com/images/ford_mustang_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/ford_mustang_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Standard", "ammount": "55999" },
+      { "packagetype": "Performance", "ammount": "65999" }
+    ]
+  },
+  {
+    "companyname": "Toyota",
+    "id": "54321",
+    "carmodel": "Camry",
+    "platenumber": "TOY5432",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Hybrid",
+    "category": "Sedan",
+    "manufactureyear": "2023",
+    "description": "A reliable and efficient mid-size sedan.",
+    "carcolor": ["Silver", "White", "Gray"],
+    "images": [
+      "https://example.com/images/toyota_camry_1.jpg",
+      "https://example.com/images/toyota_camry_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/toyota_camry_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "LE", "ammount": "29999" },
+      { "packagetype": "XLE", "ammount": "34999" }
+    ]
+  },
+  {
+    "companyname": "BMW",
+    "id": "11223",
+    "carmodel": "X5",
+    "platenumber": "BMW1122",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Diesel",
+    "category": "SUV",
+    "manufactureyear": "2022",
+    "description": "A luxury SUV with superior performance and comfort.",
+    "carcolor": ["Black", "White", "Blue"],
+    "images": [
+      "https://example.com/images/bmw_x5_1.jpg",
+      "https://example.com/images/bmw_x5_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/bmw_x5_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Standard", "ammount": "74999" },
+      { "packagetype": "Luxury", "ammount": "84999" }
+    ]
+  },
+  {
+    "companyname": "Audi",
+    "id": "33445",
+    "carmodel": "A4",
+    "platenumber": "AUD3344",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Gasoline",
+    "category": "Sedan",
+    "manufactureyear": "2023",
+    "description": "A sleek and stylish luxury sedan with advanced features.",
+    "carcolor": ["Black", "Gray", "Silver"],
+    "images": [
+      "https://example.com/images/audi_a4_1.jpg",
+      "https://example.com/images/audi_a4_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/audi_a4_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Premium", "ammount": "41999" },
+      { "packagetype": "Prestige", "ammount": "46999" }
+    ]
+  },
+  {
+    "companyname": "Mercedes-Benz",
+    "id": "55667",
+    "carmodel": "E-Class",
+    "platenumber": "MB5566",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Gasoline",
+    "category": "Sedan",
+    "manufactureyear": "2022",
+    "description": "A refined and elegant luxury sedan with exceptional comfort.",
+    "carcolor": ["White", "Black", "Blue"],
+    "images": [
+      "https://example.com/images/mercedes_eclass_1.jpg",
+      "https://example.com/images/mercedes_eclass_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/mercedes_eclass_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Luxury", "ammount": "56999" },
+      { "packagetype": "Sport", "ammount": "61999" }
+    ]
+  },
+  {
+    "companyname": "Honda",
+    "id": "77889",
+    "carmodel": "Civic",
+    "platenumber": "HON7788",
+    "transmission": "Manual",
+    "seatingcapacity": "5",
+    "fuel": "Gasoline",
+    "category": "Sedan",
+    "manufactureyear": "2023",
+    "description": "A compact car known for its reliability and fuel efficiency.",
+    "carcolor": ["Red", "Gray", "Black"],
+    "images": [
+      "https://example.com/images/honda_civic_1.jpg",
+      "https://example.com/images/honda_civic_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/honda_civic_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "LX", "ammount": "21999" },
+      { "packagetype": "EX", "ammount": "25999" }
+    ]
+  },
+  {
+    "companyname": "Chevrolet",
+    "id": "99100",
+    "carmodel": "Silverado",
+    "platenumber": "CHE9910",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Diesel",
+    "category": "Truck",
+    "manufactureyear": "2022",
+    "description": "A powerful and durable truck with impressive towing capacity.",
+    "carcolor": ["White", "Black", "Silver"],
+    "images": [
+      "https://example.com/images/chevrolet_silverado_1.jpg",
+      "https://example.com/images/chevrolet_silverado_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/chevrolet_silverado_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "Work Truck", "ammount": "39999" },
+      { "packagetype": "LTZ", "ammount": "49999" }
+    ]
+  },
+  {
+    "companyname": "Nissan",
+    "id": "121314",
+    "carmodel": "Altima",
+    "platenumber": "NIS1213",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Gasoline",
+    "category": "Sedan",
+    "manufactureyear": "2023",
+    "description": "A mid-size sedan with modern features and a comfortable interior.",
+    "carcolor": ["Blue", "White", "Gray"],
+    "images": [
+      "https://example.com/images/nissan_altima_1.jpg",
+      "https://example.com/images/nissan_altima_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/nissan_altima_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "S", "ammount": "24999" },
+      { "packagetype": "SL", "ammount": "29999" }
+    ]
+  },
+  {
+    "companyname": "Hyundai",
+    "id": "151617",
+    "carmodel": "Tucson",
+    "platenumber": "HYU1516",
+    "transmission": "Automatic",
+    "seatingcapacity": "5",
+    "fuel": "Hybrid",
+    "category": "SUV",
+    "manufactureyear": "2023",
+    "description": "A compact SUV with a sleek design and advanced safety features.",
+    "carcolor": ["Red", "Black", "White"],
+    "images": [
+      "https://example.com/images/hyundai_tucson_1.jpg",
+      "https://example.com/images/hyundai_tucson_2.jpg"
+    ],
+    "videos": [
+      "https://example.com/videos/hyundai_tucson_overview.mp4"
+    ],
+    "createpackagedata": [
+      { "packagetype": "SE", "ammount": "27999" },
+      { "packagetype": "Limited", "ammount": "32999" }
+    ]
+  }
+]

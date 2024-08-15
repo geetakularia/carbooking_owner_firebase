@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:car_booking_owner/Data/Network/networkapi_service.dart';
 import 'package:car_booking_owner/Models/UserModel.dart';
-import 'package:car_booking_owner/Preferences/sharedpreferences.dart';
 import 'package:car_booking_owner/Res/Apis/apis.dart';
 import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/Utils/Enums/enums.dart';

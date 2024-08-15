@@ -2,7 +2,6 @@ import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
 
 class Splash_Screen extends StatefulWidget {
   const Splash_Screen({super.key});

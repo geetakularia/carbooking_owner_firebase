@@ -98,7 +98,8 @@ class Carmodel {
       "carcolor": carcolor,
       "images": images,
       "videos": videos,
-      "createpackagedata": createpackagedata!.map((e) => e.tomap()).toList(),
+      "createpackagedata":
+          createpackagedata?.map((e) => e.tomap()).toList() ?? [],
     };
   }
 }

@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class Profile_screen extends StatefulWidget {
   const Profile_screen({super.key});
@@ -19,6 +20,18 @@ class Profile_screen extends StatefulWidget {
 
 class _Profile_screenState extends State<Profile_screen> {
   File? file;
+  final picker = ImagePicker();
+  Future getgalleryimage() async {
+    final pickedimage = await picker
+      .pickImage(source: ImageSource.gallery);
+      if(pickedimage !=null){
+
+      }else{
+
+      }
+   
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

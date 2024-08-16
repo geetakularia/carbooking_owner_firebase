@@ -37,7 +37,7 @@ dependencies:
   get: ^4.6.6
   shared_preferences: ^2.2.3
   flutter_screenutil: ^5.9.3
-  http: ^1.2.1
+  http: ^1.2.2
   google_fonts: ^6.2.1
   flutter_svg: ^2.0.10+1
   carousel_slider: ^5.0.0

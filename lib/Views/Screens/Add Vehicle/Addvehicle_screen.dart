@@ -3,8 +3,10 @@ import 'package:car_booking_owner/Components/Dialog/ClrDialog.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +29,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
   String? _fuelValue;
   String? _categoryValue;
   String? _yearValue;
+  TextEditingController _plateNumber = TextEditingController();
   void changeColor(Color color) {
     setState(() => pickerColor = color);
   }
@@ -44,6 +47,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
             PrimaryButton(
               title: languageconst.next.tr,
               onPressed: () {
+                CarController().addcarData(add_data());
                 Get.toNamed("/mercedesbenz_screen");
               },
               isExpanded: true,
@@ -62,7 +66,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-           
             Container(
               margin: EdgeInsets.all(15.sp),
               width: AppServices.screenWidth(context),
@@ -99,6 +102,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   heightY(10.h),
                   Primary_txtField(
                     fillcolor: true,
+                    controller: _plateNumber,
                     hint_txt: languageconst.enter.tr,
                     suffixicon: Icons.done,
                   ),
@@ -189,5 +193,19 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
         ),
       ),
     );
+  }
+
+  Map<String, dynamic> add_data() {
+    return Carmodel()
+        .copywith(
+            platenumber: _plateNumber.text.trim(),
+            companyname: _carmakeValue, 
+            carmodel: _carmodelValue,
+            transmission: _transmissionValue,
+            seatingcapacity: _seatingcapacityValue,
+            fuel: _fuelValue,
+            category: _categoryValue,
+            manufactureyear: _yearValue)
+        .tomap();
   }
 }

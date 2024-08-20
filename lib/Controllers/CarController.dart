@@ -14,7 +14,7 @@ class CarController extends GetxController {
         },
       );
     } catch (e) {
-      print("---------------------addcar data $e==========================");
+      print("---------------------addcar data$e==========================");
     } finally {
       update();
     }

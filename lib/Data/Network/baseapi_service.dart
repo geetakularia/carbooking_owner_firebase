@@ -4,4 +4,5 @@ abstract class BaseapiService {
   Future<dynamic> authenticate(AuthState state, {Map<String, dynamic>? json});
   Future<dynamic> post(path, Map<String, dynamic> data);
   Future<dynamic> getdata(path);
+  Future<dynamic> upDate(path, Map<String, dynamic> data);
 }

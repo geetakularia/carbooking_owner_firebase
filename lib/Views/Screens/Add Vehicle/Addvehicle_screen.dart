@@ -37,8 +37,11 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
   Color pickerColor = Color.fromARGB(255, 235, 19, 4);
   Color currentColor = Color(0xff443a49);
 
+  // CAR CONTROLLER
+  final carController = Get.find<CarController>();
   @override
   Widget build(BuildContext context) {
+    print(_carmakeValue);
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -46,8 +49,18 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
           children: [
             PrimaryButton(
               title: languageconst.next.tr,
-              onPressed: () {
-                CarController().addcarData(add_data());
+              onPressed: () async {
+                await carController.addcarData(
+                  Carmodel(
+                      platenumber: _plateNumber.text.trim(),
+                      companyname: _carmakeValue,
+                      carmodel: _carmodelValue,
+                      transmission: _transmissionValue,
+                      seatingcapacity: _seatingcapacityValue,
+                      fuel: _fuelValue,
+                      category: _categoryValue,
+                      manufactureyear: _yearValue),
+                );
                 Get.toNamed("/mercedesbenz_screen");
               },
               isExpanded: true,
@@ -83,16 +96,28 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   ),
                   heightY(10.h),
                   Primarydropdownbutton_widget(
-                      hint: languageconst.chooseCarCompany.tr,
-                      selectedValue: _carmakeValue,
-                      dropdownItems: Localdata.carMakeItems,
-                      title: languageconst.carMake.tr),
+                    hint: languageconst.chooseCarCompany.tr,
+                    selectedValue: _carmakeValue,
+                    dropdownItems: Localdata.carMakeItems,
+                    title: languageconst.carMake.tr,
+                    onChanged: (v) {
+                      setState(() {
+                        _carmakeValue = v;
+                      });
+                    },
+                  ),
                   heightY(10.h),
                   Primarydropdownbutton_widget(
-                      hint: languageconst.select.tr,
-                      selectedValue: _carmodelValue,
-                      dropdownItems: Localdata.carmodelItems,
-                      title: languageconst.carModel.tr),
+                    hint: languageconst.select.tr,
+                    selectedValue: _carmodelValue,
+                    dropdownItems: Localdata.carmodelItems,
+                    title: languageconst.carModel.tr,
+                    onChanged: (v) {
+                      setState(() {
+                        _carmodelValue = v;
+                      });
+                    },
+                  ),
                   heightY(10.h),
                   Text(
                     languageconst.licensePlateNumber.tr,
@@ -108,27 +133,45 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   ),
                   heightY(10.h),
                   Primarydropdownbutton_widget(
-                      hint: languageconst.select.tr,
-                      selectedValue: _transmissionValue,
-                      dropdownItems: Localdata.transmissionItems,
-                      title: languageconst.transmission.tr),
+                    hint: languageconst.select.tr,
+                    selectedValue: _transmissionValue,
+                    dropdownItems: Localdata.transmissionItems,
+                    title: languageconst.transmission.tr,
+                    onChanged: (v) {
+                      setState(() {
+                        _transmissionValue = v;
+                      });
+                    },
+                  ),
                   heightY(10.h),
                   Row(
                     children: [
                       Expanded(
                         child: Primarydropdownbutton_widget(
-                            hint: languageconst.select.tr,
-                            selectedValue: _seatingcapacityValue,
-                            dropdownItems: Localdata.seatingcapacityItems,
-                            title: languageconst.seatingCapacity.tr),
+                          hint: languageconst.select.tr,
+                          selectedValue: _seatingcapacityValue,
+                          dropdownItems: Localdata.seatingcapacityItems,
+                          title: languageconst.seatingCapacity.tr,
+                          onChanged: (v) {
+                            setState(() {
+                              _seatingcapacityValue = v;
+                            });
+                          },
+                        ),
                       ),
                       widthX(15.w),
                       Expanded(
                         child: Primarydropdownbutton_widget(
-                            hint: languageconst.select.tr,
-                            selectedValue: _fuelValue,
-                            dropdownItems: Localdata.fuelItems,
-                            title: languageconst.fuel.tr),
+                          hint: languageconst.select.tr,
+                          selectedValue: _fuelValue,
+                          dropdownItems: Localdata.fuelItems,
+                          title: languageconst.fuel.tr,
+                          onChanged: (v) {
+                            setState(() {
+                              _fuelValue = v;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -137,18 +180,30 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                     children: [
                       Expanded(
                         child: Primarydropdownbutton_widget(
-                            hint: languageconst.selectCarCategory.tr,
-                            selectedValue: _categoryValue,
-                            dropdownItems: Localdata.categoryItems,
-                            title: languageconst.category.tr),
+                          hint: languageconst.selectCarCategory.tr,
+                          selectedValue: _categoryValue,
+                          dropdownItems: Localdata.categoryItems,
+                          title: languageconst.category.tr,
+                          onChanged: (v) {
+                            setState(() {
+                              _categoryValue = v;
+                            });
+                          },
+                        ),
                       ),
                       widthX(15.w),
                       Expanded(
                         child: Primarydropdownbutton_widget(
-                            hint: languageconst.select.tr,
-                            selectedValue: _yearValue,
-                            dropdownItems: Localdata.yearItems,
-                            title: languageconst.manufactureYear.tr),
+                          hint: languageconst.select.tr,
+                          selectedValue: _yearValue,
+                          dropdownItems: Localdata.yearItems,
+                          title: languageconst.manufactureYear.tr,
+                          onChanged: (v) {
+                            setState(() {
+                              _yearValue = v;
+                            });
+                          },
+                        ),
                       ),
                     ],
                   ),
@@ -157,7 +212,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                       title: languageconst.addColorVariant.tr,
                       onpressed: () {
                         setState(() => currentColor = pickerColor);
-
                         Get.dialog(Dialog(child: ClrDialog()));
                       }),
                   heightY(15.h),
@@ -193,19 +247,5 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
         ),
       ),
     );
-  }
-
-  Map<String, dynamic> add_data() {
-    return Carmodel()
-        .copywith(
-            platenumber: _plateNumber.text.trim(),
-            companyname: _carmakeValue, 
-            carmodel: _carmodelValue,
-            transmission: _transmissionValue,
-            seatingcapacity: _seatingcapacityValue,
-            fuel: _fuelValue,
-            category: _categoryValue,
-            manufactureyear: _yearValue)
-        .tomap();
   }
 }

@@ -10,7 +10,6 @@ class NetworkapiService extends BaseapiService {
   final _auth = FirebaseAuth.instance;
   @override
   Future authenticate(AuthState state, {Map<String, dynamic>? json}) async {
-
     String email = "";
     String password = "";
     if (json != null) {
@@ -57,6 +56,18 @@ class NetworkapiService extends BaseapiService {
       rethrow;
     }
     return response;
+  }
+
+  // UPDATE DATA
+  @override
+  Future upDate(path, Map<String, dynamic> data) async {
+    try {
+      if (path is DocumentReference) {
+        await path.update(data);
+      }
+    } catch (e) {
+      rethrow;
+    }
   }
 
   // Return Response

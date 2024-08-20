@@ -15,8 +15,8 @@ import 'package:get/get.dart';
 class UserController extends GetxController {
   final _services = NetworkapiService();
 
-  DataResonse<Usermodel> _userdata = DataResonse.loading();
-  DataResonse<Usermodel> get userdata => _userdata;
+  DataResponse<Usermodel> _userdata = DataResponse.loading();
+  DataResponse<Usermodel> get userdata => _userdata;
 /******************************* sign up */
   Future<void> signup(Map<String, dynamic> data) async {
     final Usermodel userdata = Usermodel.fromjson(data["userdata"]);
@@ -31,12 +31,12 @@ class UserController extends GetxController {
         await _services.post(Apis().userdoc(userid),
             await userdata.copywith(id: userid).tomap());
 
-        _userdata = DataResonse.completed(userdata.copywith(id: userid));
+        _userdata = DataResponse.completed(userdata.copywith(id: userid));
         prefrance.setUserPrefs(userdata);
         Get.offAllNamed(RoutesName.BottomScreen);
       }
     } catch (e) {
-      DataResonse.error(e.toString());
+      DataResponse.error(e.toString());
     } finally {
       update();
     }
@@ -53,7 +53,7 @@ class UserController extends GetxController {
             json: {"email": email, "password": password}) as UserCredential;
         final Usermodel usermodeldata =
             Usermodel.fromjson(snapshot.docs.first.data());
-        _userdata = DataResonse.completed(usermodeldata);
+        _userdata = DataResponse.completed(usermodeldata);
         prefrance.setUserPrefs(usermodeldata);
         // print(prefrance.getstring(email));
         // // usermodeldata.copywith(email: email);
@@ -62,7 +62,7 @@ class UserController extends GetxController {
         Get.offAllNamed(RoutesName.BottomScreen);
       }
     } catch (e) {
-      _userdata = DataResonse.error(e.toString());
+      _userdata = DataResponse.error(e.toString());
       print("-------login error:: $e-------");
     }
   }
@@ -90,19 +90,19 @@ class UserController extends GetxController {
 
         if (data.exists) {
           final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
-          _userdata = DataResonse.completed(usermodeldata);
+          _userdata = DataResponse.completed(usermodeldata);
           prefrance.setUserPrefs(usermodeldata);
 
           Get.offAllNamed(RoutesName.BottomScreen);
         } else {
-          _userdata = DataResonse.error("User data not found.");
+          _userdata = DataResponse.error("User data not found.");
           Get.to(Login_screen());
         }
       } else {
         Get.offAllNamed(RoutesName.login_screen);
       }
     } catch (e) {
-      _userdata = DataResonse.error(e.toString());
+      _userdata = DataResponse.error(e.toString());
       print("-------relogin error:: $e-------");
       Get.offAllNamed(RoutesName.login_screen);
     } finally {

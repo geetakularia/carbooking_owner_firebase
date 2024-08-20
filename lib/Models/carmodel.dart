@@ -90,7 +90,7 @@ class Carmodel {
       "carmodel": carmodel,
       "platenumber": platenumber,
       "transmission": transmission,
-      "seatingcapacity": seatingcapacity, 
+      "seatingcapacity": seatingcapacity,
       "fuel": fuel,
       "category": category,
       "manufactureyear": manufactureyear,

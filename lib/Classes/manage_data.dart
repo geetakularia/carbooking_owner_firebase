@@ -1,5 +1,6 @@
 import 'package:car_booking_owner/Components/Constant/image.dart';
 import 'package:car_booking_owner/Components/Constant/style_sheet.dart';
+import 'package:car_booking_owner/Res/Apis/apis.dart';
 
 class ConstantSheet {
   ConstantSheet._constructor();
@@ -22,4 +23,7 @@ class ConstantSheet {
   //  APP IMAGE  GET
   final _svgimg = SvgImage();
   SvgImage get appsvgimg => _svgimg;
+  //  API  GET
+  final _api = Apis();
+  Apis get api => _api;
 }

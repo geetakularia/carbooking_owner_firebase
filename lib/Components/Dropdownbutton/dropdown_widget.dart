@@ -62,7 +62,9 @@ class Primarydropdownbutton_widget extends StatelessWidget {
             );
           }).toList(),
           onChanged: (value) {
-            onChanged!(value!);
+            if (onChanged != null) {
+              onChanged!(value!);
+            }
           },
         ),
       ],

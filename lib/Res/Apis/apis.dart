@@ -11,4 +11,7 @@ class Apis {
   //doc for user
   DocumentReference<Map<String, dynamic>> userdoc(String? id) =>
       getusercollection.doc(id);
+  //DOC for CAR
+  DocumentReference<Map<String, dynamic>> cardoc(String? id) =>
+      getcarcollection.doc(id);
 }

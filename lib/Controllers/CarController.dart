@@ -20,7 +20,7 @@ class CarController extends GetxController {
         await _services.upDate(manageData.api.cardoc(id), {"id": id});
       }
     } catch (e) {
-      print("---------------------addcar data $e==========================");
+      print("---------------------addcar data$e==========================");
     } finally {
       update();
     }

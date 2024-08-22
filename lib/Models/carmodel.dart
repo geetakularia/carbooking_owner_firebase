@@ -72,9 +72,15 @@ class Carmodel {
         category = json["category"],
         manufactureyear = json["manufactureyear"],
         description = json["description"],
-        carcolor = (json["carcolor"] as List).map((e) => e.toString()).toList(),
-        images = (json["image"] as List).map((e) => e.toString()).toList(),
-        videos = (json["videos"] as List).map((e) => e.toString()).toList(),
+        carcolor = json["carcolor"] != null
+            ? (json["carcolor"] as List).map((e) => e.toString()).toList()
+            : [],
+        images = json['images'] != null
+            ? (json["image"] as List).map((e) => e.toString()).toList()
+            : [],
+        videos = json["videos"] != null
+            ? (json["videos"] as List).map((e) => e.toString()).toList()
+            : [],
         createpackagedata = json["createpackagedata"] != null
             ? (json["createpackagedata"] as List)
                 .map(

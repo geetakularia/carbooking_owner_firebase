@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 
 class CarController extends GetxController {
   final _services = NetworkapiService();
- DataResponse< List<Carmodel>> _cardatalist = DataResponse.loading();
-   DataResponse< List<Carmodel>> get getcardata => _cardatalist;
+  DataResponse<List<Carmodel>> _cardatalist = DataResponse.loading();
+  DataResponse<List<Carmodel>> get getcardata => _cardatalist;
   Future addcarData(Carmodel model) async {
     try {
       final response =

@@ -1,4 +1,4 @@
-import 'package:car_booking_owner/Controllers/AaddDatafirebase.dart';
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -20,13 +20,13 @@ class _Splash_ScreenState extends State<Splash_Screen> {
 
   navigatorcontext() async {
     // Add each car model to Firebase
-    for (var carModel in carModels) {
-      await addCarModelToFirebase(carModel);
-    }
+    // for (var carModel in carModels) {
+    //   await addCarModelToFirebase(carModel);
+    // }
     // await CarController();
     Future.delayed(Duration(milliseconds: 400), () async {
-      // await Get.find<UserController>().relogin();
-      Get.to(CarModelDropdown());
+      await Get.find<UserController>().relogin();
+      // Get.to(CarModelDropdown());
     });
   }
 

@@ -3,7 +3,6 @@ import 'package:car_booking_owner/Components/Dialog/ClrDialog.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
-import 'package:car_booking_owner/Controllers/AaddDatafirebase.dart';
 import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
@@ -112,7 +111,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                     hint: languageconst.select.tr,
                     selectedValue: _carmodelValue,
                     dropdownItems: Localdata.carmodelItems,
-                    // dropdownItems: carModels.first.companyname,
                     title: languageconst.carModel.tr,
                     onChanged: (v) {
                       setState(() {

@@ -57,7 +57,7 @@ class NetworkapiService extends BaseapiService {
     }
     return response;
   }
-
+ 
   // UPDATE DATA
   @override
   Future upDate(path, Map<String, dynamic> data) async {

@@ -9,6 +9,7 @@ import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
+import 'package:car_booking_owner/Views/Screens/Home/testingScreen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -93,7 +94,9 @@ class _Home_screenState extends State<Home_screen> {
                       ),
                       widthX(10.w),
                       Iconcontainer(
-                        onpressed: () {},
+                        onpressed: () {
+                          Get.to(TestingScreen());
+                        },
                         icon: Icons.search,
                       )
                     ],

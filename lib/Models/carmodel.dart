@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 class Carmodel {
   String? companyname,
       id,
@@ -136,4 +138,76 @@ class CreatePackageModel {
       "ammount": ammount,
     };
   }
+}
+
+/************************************new car model ******************* */
+class Car_model {
+  String? car_id;
+  String? title;
+  double? price;
+  List<String>? image;
+  DateTime? createdAt;
+  DateTime? updateAt;
+  bool? isAvailable;
+  int? quantity;
+  double? discount;
+  String? dicountCode;
+  DateTime? addedAt;
+
+  Car_model(
+      {this.addedAt,
+      this.car_id,
+      this.createdAt,
+      this.dicountCode,
+      this.discount,
+      this.image,
+      this.isAvailable,
+      this.price,
+      this.quantity,
+      this.title,
+      this.updateAt});
+  Car_model.fromcars(FirebaseResponseModel map)
+      : car_id = map.docid,
+        title = map.data["title"] ?? "",
+        price = map.data["price"]?.double();
+
+  Map<String, dynamic> toOrderjson() {
+    return {
+      "title": title ?? "",
+      "price": price ?? 0.0,
+      "isAvailable": isAvailable ?? true,
+      "quantity": quantity ?? 1,
+      "discount": discount ?? 0.0,
+      "discountCode": dicountCode ?? "",
+    };
+  }
+
+  Map<String, dynamic> toProduct() {
+    return {
+      "title": title ?? "",
+      "price": price ?? 0.0,
+      "createdAt": createdAt ?? DateTime.now().millisecondsSinceEpoch,
+      "updatedAt": updateAt ?? DateTime.now().millisecondsSinceEpoch,
+      "images": image ?? [],
+      'isAvailable': isAvailable ?? true
+    };
+  }
+
+  Car_model.fromCarOrder(FirebaseResponseModel json)
+      : car_id = json.docid,
+        title = json.data["title"] ?? "",
+        price = json.data["price"]?.toDouble(),
+        isAvailable = json.data["isAvailable"] ?? true,
+        quantity = json.data["quantity"].toInt(),
+        discount = json.data["discount"].toDouble(),
+        dicountCode = json.data["dicountCode"] ?? "";
+}
+
+class FirebaseResponseModel {
+  Map<String, dynamic> data;
+  String docid;
+  FirebaseResponseModel(this.data, this.docid);
+  FirebaseResponseModel.fromResonse(DocumentSnapshot snapshot)
+      : data = snapshot.data() as Map<String, dynamic>,
+        docid = snapshot.id;
 }

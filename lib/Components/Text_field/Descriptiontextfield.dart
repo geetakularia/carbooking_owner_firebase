@@ -6,15 +6,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 // ignore: must_be_immutable
-class Descriptiontextfield extends StatefulWidget {
+class Descriptiontextfield extends StatelessWidget {
   String hint;
-  Descriptiontextfield({super.key, required this.hint});
+  TextEditingController? controller;
+  Descriptiontextfield({super.key, required this.hint, this.controller});
 
-  @override
-  State<Descriptiontextfield> createState() => _DescriptiontextfieldState();
-}
-
-class _DescriptiontextfieldState extends State<Descriptiontextfield> {
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -25,6 +21,7 @@ class _DescriptiontextfieldState extends State<Descriptiontextfield> {
         heightY(10.h),
         TextField(
           maxLines: 5,
+          controller: controller,
           decoration: InputDecoration(
             focusedBorder: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(12.r),
@@ -35,7 +32,7 @@ class _DescriptiontextfieldState extends State<Descriptiontextfield> {
             border: InputBorder.none,
             fillColor: manageData.appColors.bgclr,
             filled: true,
-            hintText: widget.hint,
+            hintText: hint,
             hintStyle: manageData.appTextTheme.fs16Normal,
           ),
         ),

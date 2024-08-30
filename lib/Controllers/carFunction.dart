@@ -5,9 +5,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 enum RequestType { ADD, SET, UPDATE }
 
 class FirebaseResponseHandler {
-  // final _firestore = FirebaseFirestore.instance;
-
   Future<dynamic> getDataFromFirebase(dynamic path) async {
+    // ignore: unused_local_variable
     dynamic response;
     try {
       if (path is CollectionReference) {
@@ -27,9 +26,7 @@ class FirebaseResponseHandler {
     try {
       final snapshot = await reff.get();
       data = snapshot.docs
-          .map(
-            (e) => FirebaseResponseModel.fromResonse(e),
-          )
+          .map((e) => FirebaseResponseModel.fromResonse(e))
           .toList();
     } catch (e) {
       rethrow;
@@ -120,17 +117,53 @@ class FirebaseController extends GetxController {
     }
   }
 
-  addNewProduct(Car_model model) async {
+  // deletekey() async {
+  //   await _databse
+  //       .collection("addvehicle")
+  //       .doc("dQE0sfkwqxpMMTwqW26c")
+  //       .update({"companyname": FieldValue.delete()});
+  // }
+
+  // addNewProduct(Car_model model) async {
+  //   try {
+  //     final response = await _function.postData(
+  //         _databse.collection("MyCars"), model.toProduct());
+  //     if (response != null) {
+  //       _allCars.add(Car_model.fromcars(response));
+  //     }
+  //   } catch (e) {
+  //     print(e.toString());
+  //   } finally {
+  //     update();
+  //   }
+  // }
+
+  addvehicle(Car_model model) async {
     try {
       final response = await _function.postData(
-          _databse.collection("MyCars"), model.toProduct());
+          _databse.collection("addvehicle"), model.toAddvehicle());
       if (response != null) {
-        _allCars.add(Car_model.fromcars(response));
+        _allCars.add(Car_model.fromAddvehicle(response));
       }
     } catch (e) {
       print(e.toString());
     } finally {
       update();
+    }
+  }
+
+// // Example function call to update vehicle data in Firestore
+  updateVehicle(String uid, Map<String, dynamic> updatedData) async {
+    try {
+      print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+      // Call updateData with the document reference, data, and request type
+      FirebaseResponseModel? response = await _function.postData(
+          _databse.collection("addvehicle").doc(uid),
+          updatedData,
+          RequestType.UPDATE);
+      print('Data successfully updated with ID: ${response!.docid}');
+    } catch (e) {
+      print('Failed to update vehicle data: $e');
     }
   }
 }

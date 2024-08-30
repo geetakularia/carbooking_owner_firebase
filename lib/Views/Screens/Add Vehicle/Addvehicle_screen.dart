@@ -3,7 +3,7 @@ import 'package:car_booking_owner/Components/Dialog/ClrDialog.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
-import 'package:car_booking_owner/Controllers/CarController.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
@@ -38,7 +38,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
   Color currentColor = Color(0xff443a49);
 
   // CAR CONTROLLER
-  final carController = Get.find<CarController>();
+  final carController = Get.find<FirebaseController>();
   @override
   Widget build(BuildContext context) {
     print(_carmakeValue);
@@ -50,8 +50,9 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
             PrimaryButton(
               title: languageconst.next.tr,
               onPressed: () async {
-                await carController.addcarData(
-                  Carmodel(
+                await carController.addvehicle(
+                  Car_model(
+                    
                       platenumber: _plateNumber.text.trim(),
                       companyname: _carmakeValue,
                       carmodel: _carmodelValue,
@@ -61,6 +62,17 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                       category: _categoryValue,
                       manufactureyear: _yearValue),
                 );
+                // await carController.addcarData(
+                //   Carmodel(
+                //       platenumber: _plateNumber.text.trim(),
+                //       companyname: _carmakeValue,
+                //       carmodel: _carmodelValue,
+                //       transmission: _transmissionValue,
+                //       seatingcapacity: _seatingcapacityValue,
+                //       fuel: _fuelValue,
+                //       category: _categoryValue,
+                //       manufactureyear: _yearValue),
+                // );
                 Get.toNamed("/mercedesbenz_screen");
               },
               isExpanded: true,

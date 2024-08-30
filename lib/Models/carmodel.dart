@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Carmodel {
@@ -64,16 +65,16 @@ class Carmodel {
   }
 
   Carmodel.fromjson(Map<String, dynamic> json)
-      : companyname = json["companyname"],
-        id = json["id"],
-        carmodel = json["carmodel"],
-        platenumber = json["platenumber"],
-        transmission = json["transmission"],
-        seatingcapacity = json["seatingcapacity"],
-        fuel = json["fuel"],
-        category = json["category"],
-        manufactureyear = json["manufactureyear"],
-        description = json["description"],
+      : companyname = json["companyname"] ?? "",
+        id = json["id"] ?? "",
+        carmodel = json["carmodel"] ?? "",
+        platenumber = json["platenumber"] ?? "",
+        transmission = json["transmission"] ?? "",
+        seatingcapacity = json["seatingcapacity"] ?? "",
+        fuel = json["fuel"] ?? "",
+        category = json["category"] ?? "",
+        manufactureyear = json["manufactureyear"] ?? "",
+        description = json["description"] ?? "",
         carcolor = json["carcolor"] != null
             ? (json["carcolor"] as List).map((e) => e.toString()).toList()
             : [],
@@ -145,7 +146,6 @@ class Car_model {
   String? car_id;
   String? title;
   double? price;
-  List<String>? image;
   DateTime? createdAt;
   DateTime? updateAt;
   bool? isAvailable;
@@ -153,6 +153,21 @@ class Car_model {
   double? discount;
   String? dicountCode;
   DateTime? addedAt;
+  String? companyname;
+  String? carmodel;
+  String? platenumber;
+  String? transmission;
+  String? seatingcapacity;
+  String? fuel;
+  String? category;
+  String? manufactureyear;
+  String? description;
+  double? ammount;
+  String? packagetype;
+  List<String>? carcolor;
+  List<String>? videos;
+  List<String>? image;
+  List<CreatePackageModel>? createpackagedata;
 
   Car_model(
       {this.addedAt,
@@ -165,22 +180,88 @@ class Car_model {
       this.price,
       this.quantity,
       this.title,
-      this.updateAt});
-  Car_model.fromcars(FirebaseResponseModel map)
-      : car_id = map.docid,
-        title = map.data["title"] ?? "",
-        price = map.data["price"]?.double();
-// tor
-  // Map<String, dynamic> toOrderjson() {
-  //   return {
-  //     "title": title ?? "",
-  //     "price": price ?? 0.0,
-  //     "isAvailable": isAvailable ?? true,
-  //     "quantity": quantity ?? 1,
-  //     "discount": discount ?? 0.0,
-  //     "discountCode": dicountCode ?? "",
-  //   };
-  // }
+      this.updateAt,
+      this.companyname,
+      this.carmodel,
+      this.platenumber,
+      this.transmission,
+      this.seatingcapacity,
+      this.fuel,
+      this.category,
+      this.manufactureyear,
+      this.description,
+      this.carcolor,
+      this.videos,
+      this.createpackagedata,
+      this.packagetype,
+      this.ammount});
+  Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
+
+  Map<String, dynamic> toOrderjson() {
+    return {
+      "title": title ?? "",
+      "price": price ?? 0.0,
+      "isAvailable": isAvailable ?? true,
+      "quantity": quantity ?? 1,
+      "discount": discount ?? 0.0,
+      "discountCode": dicountCode ?? "",
+    };
+  }
+
+  Car_model.fromAddvehicle(FirebaseResponseModel json)
+      : companyname = json.data["companyname"],
+        image = json.data["image"] != null
+            ? (json.data["image"] as List)
+                .map(
+                  (e) => e.toString(),
+                )
+                .toList()
+            : [],
+        carmodel = json.data["carmodel"],
+        platenumber = json.data["platenumber"],
+        transmission = json.data["transmission"],
+        seatingcapacity = json.data["seatingcapacity"],
+        fuel = json.data["fuel"],
+        category = json.data["category"],
+        manufactureyear = json.data["manufactureyear"],
+        description = json.data["description"],
+        carcolor = json.data["carcolor"] != null
+            ? (json.data["carcolor"] as List).map((e) => e.toString()).toList()
+            : [],
+        videos = json.data["videos"] != null
+            ? (json.data["videos"] as List).map((e) => e.toString()).toList()
+            : [],
+        createpackagedata = json.data["createpackagedata"] != null
+            ? (json.data["createpackagedata"] as List)
+                .map(
+                  (e) => CreatePackageModel.fromjson(e),
+                )
+                .toList()
+            : null,
+        packagetype = json.data["packagetype"] ?? "",
+        ammount = json.data["ammount"]?.toDouble();
+
+  Map<String, dynamic> toAddvehicle() {
+    return {
+      "car_id": car_id,
+      "companyname": companyname,
+      "carmodel": carmodel,
+      "platenumber": platenumber,
+      "transmission": transmission,
+      "seatingcapacity": seatingcapacity,
+      "fuel": fuel,
+      "category": category,
+      "manufactureyear": manufactureyear,
+      "description": description,
+      "carcolor": carcolor,
+      "videos": videos,
+      "createpackagedata":
+          createpackagedata?.map((e) => e.tomap()).toList() ?? [],
+      "ammount": ammount,
+      "packagetype": packagetype,
+      "image": image,
+    };
+  }
 
   Map<String, dynamic> toProduct() {
     return {
@@ -201,6 +282,62 @@ class Car_model {
         quantity = json.data["quantity"].toInt(),
         discount = json.data["discount"].toDouble(),
         dicountCode = json.data["dicountCode"] ?? "";
+
+  Car_model copyWith({
+    String? car_id,
+    String? title,
+    double? price,
+    DateTime? createdAt,
+    DateTime? updateAt,
+    bool? isAvailable,
+    int? quantity,
+    double? discount,
+    String? dicountCode,
+    DateTime? addedAt,
+    String? companyname,
+    String? carmodel,
+    String? platenumber,
+    String? transmission,
+    String? seatingcapacity,
+    String? fuel,
+    String? category,
+    String? manufactureyear,
+    String? description,
+    double? ammount,
+    String? packagetype,
+    List<String>? carcolor,
+    List<String>? videos,
+    List<String>? image,
+    List<CreatePackageModel>? createpackagedata,
+  }) {
+    return Car_model(
+      car_id: car_id ?? this.car_id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      createdAt: createdAt ?? this.createdAt,
+      updateAt: updateAt ?? this.updateAt,
+      isAvailable: isAvailable ?? this.isAvailable,
+      quantity: quantity ?? this.quantity,
+      discount: discount ?? this.discount,
+      dicountCode: dicountCode ?? this.dicountCode,
+      addedAt: addedAt ?? this.addedAt,
+      companyname: companyname ?? this.companyname,
+      carmodel: carmodel ?? this.carmodel,
+      platenumber: platenumber ?? this.platenumber,
+      transmission: transmission ?? this.transmission,
+      seatingcapacity: seatingcapacity ?? this.seatingcapacity,
+      fuel: fuel ?? this.fuel,
+      category: category ?? this.category,
+      manufactureyear: manufactureyear ?? this.manufactureyear,
+      description: description ?? this.description,
+      ammount: ammount ?? this.ammount,
+      packagetype: packagetype ?? this.packagetype,
+      carcolor: carcolor ?? this.carcolor,
+      videos: videos ?? this.videos,
+      image: image ?? this.image,
+      createpackagedata: createpackagedata ?? this.createpackagedata,
+    );
+  }
 }
 
 class FirebaseResponseModel {

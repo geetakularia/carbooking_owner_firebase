@@ -6,7 +6,6 @@ import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart'
 import 'package:car_booking_owner/Components/Widget/Car_box_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
-import 'package:car_booking_owner/Functions/stream_function.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -27,7 +26,6 @@ class Home_screen extends StatefulWidget {
 class _Home_screenState extends State<Home_screen> {
   int currentindex = 0;
   final usercontroller = Get.find<UserController>();
-  final stream = StreamFunction().streamdata();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

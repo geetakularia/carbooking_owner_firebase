@@ -53,7 +53,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                 await carController.addvehicle(
                   Car_model(
                       platenumber: _plateNumber.text.trim(),
-                      companyname: _carmakeValue,
+                       companyname: _carmakeValue,
                       carmodel: _carmodelValue,
                       transmission: _transmissionValue,
                       seatingcapacity: _seatingcapacityValue,
@@ -72,7 +72,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                 //       category: _categoryValue,
                 //       manufactureyear: _yearValue),
                 // );
-                Get.toNamed("/mercedesbenz_screen");
+                Get.toNamed("/mercedesbenz_screen",);
               },
               isExpanded: true,
             ),

@@ -126,6 +126,7 @@ class FirebaseController extends GetxController {
   }
 
   addvehicle(Car_model model) async {
+    final _databse = FirebaseFirestore.instance;
     try {
       final response = await _function.postData(
           _databse.collection("addvehicle"), model.toAddvehicle());

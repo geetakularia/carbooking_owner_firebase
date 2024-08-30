@@ -10,7 +10,7 @@ class AppInitialbinding extends Bindings {
   void dependencies() {
     Get.put(UserController());
     Get.put(LanguageController());
-    Get.put(CarController());
+    // Get.put(CarController());
     Get.put(OfferController());
     Get.put(FirebaseController());
   }

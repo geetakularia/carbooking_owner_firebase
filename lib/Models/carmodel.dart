@@ -170,17 +170,17 @@ class Car_model {
       : car_id = map.docid,
         title = map.data["title"] ?? "",
         price = map.data["price"]?.double();
-
-  Map<String, dynamic> toOrderjson() {
-    return {
-      "title": title ?? "",
-      "price": price ?? 0.0,
-      "isAvailable": isAvailable ?? true,
-      "quantity": quantity ?? 1,
-      "discount": discount ?? 0.0,
-      "discountCode": dicountCode ?? "",
-    };
-  }
+// tor
+  // Map<String, dynamic> toOrderjson() {
+  //   return {
+  //     "title": title ?? "",
+  //     "price": price ?? 0.0,
+  //     "isAvailable": isAvailable ?? true,
+  //     "quantity": quantity ?? 1,
+  //     "discount": discount ?? 0.0,
+  //     "discountCode": dicountCode ?? "",
+  //   };
+  // }
 
   Map<String, dynamic> toProduct() {
     return {

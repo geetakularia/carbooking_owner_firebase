@@ -92,7 +92,19 @@ class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
   List<Car_model> _allCars = [];
+  // var _allCars = <Car_model>[].obs; // Make the list observable
+
   List<Car_model> get getallcars => _allCars;
+  user_delete() {
+    try {
+      _databse
+          .collection("MyCars")
+          .doc("VnFwBDL807XUowNVn34y")
+          .update({"title": FieldValue.delete()});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   getCars() async {
     try {
@@ -102,6 +114,7 @@ class FirebaseController extends GetxController {
         _allCars = response.map((e) => Car_model.fromcars(e)).toList();
       }
     } catch (e) {
+      print("==================================${e}");
     } finally {
       update();
     }

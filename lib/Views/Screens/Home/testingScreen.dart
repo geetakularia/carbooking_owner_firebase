@@ -30,7 +30,7 @@ class _TestingScreenState extends State<TestingScreen> {
           heightY(50),
           TextButton(
               onPressed: () {
-                FirebaseController().addNewProduct(generateData());
+                // FirebaseController().addNewProduct(generateData());
               },
               child: Text("data"))
         ],

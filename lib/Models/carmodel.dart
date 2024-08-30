@@ -153,6 +153,18 @@ class Car_model {
   double? discount;
   String? dicountCode;
   DateTime? addedAt;
+  String? companyname;
+  String? carmodel;
+  String? platenumber;
+  String? transmission;
+  String? seatingcapacity;
+  String? fuel;
+  String? category;
+  String? manufactureyear;
+  String? description;
+  List<String>? carcolor;
+  List<String>? videos;
+  List<CreatePackageModel>? createpackagedata;
 
   Car_model(
       {this.addedAt,
@@ -165,11 +177,23 @@ class Car_model {
       this.price,
       this.quantity,
       this.title,
-      this.updateAt});
+      this.updateAt,
+      this.companyname,
+      this.carmodel,
+      this.platenumber,
+      this.transmission,
+      this.seatingcapacity,
+      this.fuel,
+      this.category,
+      this.manufactureyear,
+      this.description,
+      this.carcolor,
+      this.videos,
+      this.createpackagedata});
   Car_model.fromcars(FirebaseResponseModel map)
       : car_id = map.docid,
         title = map.data["title"] ?? "",
-        price = map.data["price"]?.double();
+        price = map.data["price"]?.toDouble();
 
   Map<String, dynamic> toOrderjson() {
     return {
@@ -179,6 +203,48 @@ class Car_model {
       "quantity": quantity ?? 1,
       "discount": discount ?? 0.0,
       "discountCode": dicountCode ?? "",
+    };
+  }
+
+  Car_model.fromAddvehicle(FirebaseResponseModel json)
+      : companyname = json.data["companyname"],
+        carmodel = json.data["carmodel"],
+        platenumber = json.data["platenumber"],
+        transmission = json.data["transmission"],
+        seatingcapacity = json.data["seatingcapacity"],
+        fuel = json.data["fuel"],
+        category = json.data["category"],
+        manufactureyear = json.data["manufactureyear"],
+        description = json.data["description"],
+        carcolor = json.data["carcolor"] != null
+            ? (json.data["carcolor"] as List).map((e) => e.toString()).toList()
+            : [],
+        videos = json.data["videos"] != null
+            ? (json.data["videos"] as List).map((e) => e.toString()).toList()
+            : [],
+        createpackagedata = json.data["createpackagedata"] != null
+            ? (json.data["createpackagedata"] as List)
+                .map(
+                  (e) => CreatePackageModel.fromjson(e),
+                )
+                .toList()
+            : null;
+
+  Map<String, dynamic> toAddvehicle() {
+    return {
+      "companyname": companyname,
+      "carmodel": carmodel,
+      "platenumber": platenumber,
+      "transmission": transmission,
+      "seatingcapacity": seatingcapacity,
+      "fuel": fuel,
+      "category": category,
+      "manufactureyear": manufactureyear,
+      "description": description,
+      "carcolor": carcolor,
+      "videos": videos,
+      "createpackagedata":
+          createpackagedata?.map((e) => e.tomap()).toList() ?? [],
     };
   }
 

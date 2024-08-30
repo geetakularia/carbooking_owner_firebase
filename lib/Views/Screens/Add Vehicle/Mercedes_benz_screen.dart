@@ -2,6 +2,7 @@ import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Descriptiontextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -23,6 +24,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
 
   @override
   Widget build(BuildContext context) {
+    final carController = Get.find<FirebaseController>();
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 40.w,
@@ -35,21 +37,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Container(
-            //   padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 5.h),
-            //   decoration: BoxDecoration(
-            //       color: manageData.appColors.black,
-            //       borderRadius:
-            //           BorderRadius.horizontal(right: Radius.circular(20.r))),
-            //   child: Text(
-            //     "Mercedes Benz Q80 ( 2023 )",
-            //     style: manageData.appTextTheme.fs24Normal
-            //         .copyWith(color: manageData.appColors.white),
-            //   ),
-            // ),
-            // heightY(5.h),
             heightY(10.h),
-
             Align(
               alignment: Alignment.topRight,
               child: Container(
@@ -66,7 +54,6 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                 ),
               ),
             ),
-
             Container(
               margin: EdgeInsets.all(15.sp),
               width: AppServices.screenWidth(context),
@@ -127,16 +114,21 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                             ],
                           )),
                           widthX(15.w),
-                          Container(
-                            margin: EdgeInsets.only(top: 30),
-                            padding: EdgeInsets.all(8.sp),
-                            decoration: BoxDecoration(
-                                color: manageData.appColors.bgclr,
-                                borderRadius: BorderRadius.circular(10.r)),
-                            child: Icon(
-                              Icons.delete_outlined,
-                              color: manageData.appColors.red,
-                              size: 30.sp,
+                          InkWell(
+                            onTap: () {
+                              carController.deletekey();
+                            },
+                            child: Container(
+                              margin: EdgeInsets.only(top: 30),
+                              padding: EdgeInsets.all(8.sp),
+                              decoration: BoxDecoration(
+                                  color: manageData.appColors.bgclr,
+                                  borderRadius: BorderRadius.circular(10.r)),
+                              child: Icon(
+                                Icons.delete_outlined,
+                                color: manageData.appColors.red,
+                                size: 30.sp,
+                              ),
                             ),
                           )
                         ],

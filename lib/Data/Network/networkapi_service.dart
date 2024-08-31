@@ -8,7 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:http/http.dart' as http;
 
 class NetworkapiService extends BaseapiService {
-  final _auth = FirebaseAuth.instance.;
+  final _auth = FirebaseAuth.instance;
   @override
   Future authenticate(AuthState state, {Map<String, dynamic>? json}) async {
     String email = "";

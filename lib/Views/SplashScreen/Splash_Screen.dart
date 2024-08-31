@@ -1,3 +1,4 @@
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -24,8 +25,12 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     //   await addCarModelToFirebase(carModel);
     // }
     // await CarController();
+
     Future.delayed(Duration(milliseconds: 400), () async {
       await Get.find<UserController>().relogin();
+
+      Get.find<FirebaseController>().getCars();
+
       // Get.to(CarModelDropdown());
     });
   }

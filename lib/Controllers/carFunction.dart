@@ -6,7 +6,6 @@ enum RequestType { ADD, SET, UPDATE }
 
 class FirebaseResponseHandler {
   Future<dynamic> getDataFromFirebase(dynamic path) async {
-    // ignore: unused_local_variable
     dynamic response;
     try {
       if (path is CollectionReference) {
@@ -16,10 +15,12 @@ class FirebaseResponseHandler {
       } else {
         response = await _getDataFromQuery(path as Query);
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+    return response;
   }
 
-  /// collection
   Future<List<FirebaseResponseModel>> _getDataFromCollection(
       CollectionReference reff) async {
     List<FirebaseResponseModel> data = [];
@@ -29,12 +30,12 @@ class FirebaseResponseHandler {
           .map((e) => FirebaseResponseModel.fromResonse(e))
           .toList();
     } catch (e) {
+      print('Error getting data from collection: $e');
       rethrow;
     }
     return data;
   }
 
-  /// DocumentReference
   Future<FirebaseResponseModel?> _getDataFromDocumentReference(
       DocumentReference reff) async {
     FirebaseResponseModel? data;
@@ -42,28 +43,26 @@ class FirebaseResponseHandler {
       final snapshot = await reff.get();
       data = FirebaseResponseModel.fromResonse(snapshot);
     } catch (e) {
+      print('Error getting data from document reference: $e');
       rethrow;
     }
     return data;
   }
 
-  ///query
   Future<List<FirebaseResponseModel>> _getDataFromQuery(Query reff) async {
     List<FirebaseResponseModel> data = [];
     try {
       final snapshot = await reff.get();
       data = snapshot.docs
-          .map(
-            (e) => FirebaseResponseModel.fromResonse(e),
-          )
+          .map((e) => FirebaseResponseModel.fromResonse(e))
           .toList();
     } catch (e) {
+      print('Error getting data from query: $e');
       rethrow;
     }
     return data;
   }
 
-  // post Data
   Future<FirebaseResponseModel?> postData(
       dynamic path, Map<String, dynamic> data,
       [RequestType? request]) async {
@@ -79,6 +78,7 @@ class FirebaseResponseHandler {
         return FirebaseResponseModel(data, response.id);
       }
     } catch (e) {
+      print('Error posting data: $e');
       rethrow;
     }
     return null;
@@ -89,7 +89,19 @@ class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
   List<Car_model> _allCars = [];
+
   List<Car_model> get getallcars => _allCars;
+
+  user_delete() {
+    try {
+      _databse
+          .collection("MyCars")
+          .doc("VnFwBDL807XUowNVn34y")
+          .update({"title": FieldValue.delete()});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   getCars() async {
     try {
@@ -99,44 +111,45 @@ class FirebaseController extends GetxController {
         _allCars = response.map((e) => Car_model.fromcars(e)).toList();
       }
     } catch (e) {
+      print("Error getting cars: ${e}");
     } finally {
       update();
     }
   }
 
-  deletekey() async {
-    await _databse
-        .collection("addvehicle")
-        .doc("dQE0sfkwqxpMMTwqW26c")
-        .update({"companyname": FieldValue.delete()});
-  }
-
-  addNewProduct(Car_model model) async {
+  Future<String?> addvehicle(Car_model model) async {
+    String? vehicleId;
     try {
       final response = await _function.postData(
-          _databse.collection("MyCars"), model.toProduct());
-      if (response != null) {
-        _allCars.add(Car_model.fromcars(response));
-      }
-    } catch (e) {
-      print(e.toString());
-    } finally {
-      update();
-    }
-  }
+        _databse.collection("addvehicle"),
+        model.toAddvehicle(),
+      );
 
-  addvehicle(Car_model model) async {
-    final _databse = FirebaseFirestore.instance;
-    try {
-      final response = await _function.postData(
-          _databse.collection("addvehicle"), model.toAddvehicle());
       if (response != null) {
+        vehicleId = response.docid;
         _allCars.add(Car_model.fromAddvehicle(response));
       }
     } catch (e) {
-      print(e.toString());
+      print('Error adding vehicle: $e');
     } finally {
       update();
+    }
+
+    return vehicleId;
+  }
+
+  Future<void>  updateVehicle(
+      String uid, Map<String, dynamic> updatedData) async {
+    try {
+      FirebaseResponseModel? response = await _function.postData(
+          _databse.collection("addvehicle").doc(uid),
+          updatedData,
+          RequestType.UPDATE);
+      if (response != null) {
+        print('Data successfully updated with ID: ${response.docid}');
+      }
+    } catch (e) {
+      print('Error updating vehicle data: $e');
     }
   }
 }

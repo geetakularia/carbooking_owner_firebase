@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // class Carmodel {
@@ -145,7 +146,6 @@ class Car_model {
   String? car_id;
   String? title;
   double? price;
-  List<String>? image;
   DateTime? createdAt;
   DateTime? updateAt;
   bool? isAvailable;
@@ -162,8 +162,11 @@ class Car_model {
   String? category;
   String? manufactureyear;
   String? description;
+  double? ammount;
+  String? packagetype;
   List<String>? carcolor;
   List<String>? videos;
+  List<String>? image;
   List<CreatePackageModel>? createpackagedata;
 
   Car_model(
@@ -189,11 +192,10 @@ class Car_model {
       this.description,
       this.carcolor,
       this.videos,
-      this.createpackagedata});
-  Car_model.fromcars(FirebaseResponseModel map)
-      : car_id = map.docid,
-        title = map.data["title"] ?? "",
-        price = map.data["price"]?.toDouble();
+      this.createpackagedata,
+      this.packagetype,
+      this.ammount});
+  Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
 
   Map<String, dynamic> toOrderjson() {
     return {
@@ -208,6 +210,13 @@ class Car_model {
 
   Car_model.fromAddvehicle(FirebaseResponseModel json)
       : companyname = json.data["companyname"],
+        image = json.data["image"] != null
+            ? (json.data["image"] as List)
+                .map(
+                  (e) => e.toString(),
+                )
+                .toList()
+            : [],
         carmodel = json.data["carmodel"],
         platenumber = json.data["platenumber"],
         transmission = json.data["transmission"],
@@ -228,10 +237,13 @@ class Car_model {
                   (e) => CreatePackageModel.fromjson(e),
                 )
                 .toList()
-            : null;
+            : null,
+        packagetype = json.data["packagetype"] ?? "",
+        ammount = json.data["ammount"]?.toDouble();
 
   Map<String, dynamic> toAddvehicle() {
     return {
+      "car_id": car_id,
       "companyname": companyname,
       "carmodel": carmodel,
       "platenumber": platenumber,
@@ -245,6 +257,9 @@ class Car_model {
       "videos": videos,
       "createpackagedata":
           createpackagedata?.map((e) => e.tomap()).toList() ?? [],
+      "ammount": ammount,
+      "packagetype": packagetype,
+      "image": image,
     };
   }
 
@@ -267,6 +282,62 @@ class Car_model {
         quantity = json.data["quantity"].toInt(),
         discount = json.data["discount"].toDouble(),
         dicountCode = json.data["dicountCode"] ?? "";
+
+  Car_model copyWith({
+    String? car_id,
+    String? title,
+    double? price,
+    DateTime? createdAt,
+    DateTime? updateAt,
+    bool? isAvailable,
+    int? quantity,
+    double? discount,
+    String? dicountCode,
+    DateTime? addedAt,
+    String? companyname,
+    String? carmodel,
+    String? platenumber,
+    String? transmission,
+    String? seatingcapacity,
+    String? fuel,
+    String? category,
+    String? manufactureyear,
+    String? description,
+    double? ammount,
+    String? packagetype,
+    List<String>? carcolor,
+    List<String>? videos,
+    List<String>? image,
+    List<CreatePackageModel>? createpackagedata,
+  }) {
+    return Car_model(
+      car_id: car_id ?? this.car_id,
+      title: title ?? this.title,
+      price: price ?? this.price,
+      createdAt: createdAt ?? this.createdAt,
+      updateAt: updateAt ?? this.updateAt,
+      isAvailable: isAvailable ?? this.isAvailable,
+      quantity: quantity ?? this.quantity,
+      discount: discount ?? this.discount,
+      dicountCode: dicountCode ?? this.dicountCode,
+      addedAt: addedAt ?? this.addedAt,
+      companyname: companyname ?? this.companyname,
+      carmodel: carmodel ?? this.carmodel,
+      platenumber: platenumber ?? this.platenumber,
+      transmission: transmission ?? this.transmission,
+      seatingcapacity: seatingcapacity ?? this.seatingcapacity,
+      fuel: fuel ?? this.fuel,
+      category: category ?? this.category,
+      manufactureyear: manufactureyear ?? this.manufactureyear,
+      description: description ?? this.description,
+      ammount: ammount ?? this.ammount,
+      packagetype: packagetype ?? this.packagetype,
+      carcolor: carcolor ?? this.carcolor,
+      videos: videos ?? this.videos,
+      image: image ?? this.image,
+      createpackagedata: createpackagedata ?? this.createpackagedata,
+    );
+  }
 }
 
 class FirebaseResponseModel {

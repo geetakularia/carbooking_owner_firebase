@@ -5,7 +5,6 @@ import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart'
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
-import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -154,7 +153,10 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                     child: PrimaryButton(
                       title: languageconst.continueButton.tr,
                       onPressed: () async {
-                        print("-=-=-=-");
+                        print(
+                            "-=-=-======================================================================================================================================-=-");
+                        print(
+                            "-=-=-=-${carController.getallcars.first.car_id},,,,,,,,,,,,,,,");
                         // await carController.updateVehicle(
                         //   carController.getallcars.first.car_id!,
                         //   Car_model(
@@ -164,13 +166,13 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                         //           packagetype: _packagetype_value)
                         //       .toAddvehicle(),
                         // );
-                        final data = Car_model().copyWith(
-                            ammount: double.tryParse(_ammount.text.trim()),
-                            description: _description.text.trim(),
-                            packagetype: _packagetype_value);
-                        /****** */
-                        carController.addvehicle(data);
-                        Get.toNamed("/thumbnail_screen");
+                        // final data = Car_model().copyWith(
+                        //     ammount: double.tryParse(_ammount.text.trim()),
+                        //     description: _description.text.trim(),
+                        //     packagetype: _packagetype_value);
+                        // /****** */
+                        // carController.addvehicle(data);
+                        //    Get.toNamed("/thumbnail_screen");
                       },
                       isExpanded: true,
                     ),

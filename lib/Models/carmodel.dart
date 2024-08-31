@@ -168,7 +168,6 @@ class Car_model {
   List<String>? videos;
   List<String>? image;
   List<CreatePackageModel>? createpackagedata;
-
   Car_model(
       {this.addedAt,
       this.car_id,
@@ -209,7 +208,8 @@ class Car_model {
   }
 
   Car_model.fromAddvehicle(FirebaseResponseModel json)
-      : companyname = json.data["companyname"],
+      : car_id = json.docid,
+        companyname = json.data["companyname"] ?? "",
         image = json.data["image"] != null
             ? (json.data["image"] as List)
                 .map(
@@ -217,14 +217,14 @@ class Car_model {
                 )
                 .toList()
             : [],
-        carmodel = json.data["carmodel"],
-        platenumber = json.data["platenumber"],
-        transmission = json.data["transmission"],
-        seatingcapacity = json.data["seatingcapacity"],
-        fuel = json.data["fuel"],
-        category = json.data["category"],
-        manufactureyear = json.data["manufactureyear"],
-        description = json.data["description"],
+        carmodel = json.data["carmodel"] ?? "",
+        platenumber = json.data["platenumber"] ?? "",
+        transmission = json.data["transmission"] ?? "",
+        seatingcapacity = json.data["seatingcapacity"] ?? "",
+        fuel = json.data["fuel"] ?? "",
+        category = json.data["category"] ?? "",
+        manufactureyear = json.data["manufactureyear"] ?? "",
+        description = json.data["description"] ?? "",
         carcolor = json.data["carcolor"] != null
             ? (json.data["carcolor"] as List).map((e) => e.toString()).toList()
             : [],

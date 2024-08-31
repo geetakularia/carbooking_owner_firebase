@@ -52,7 +52,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
               onPressed: () async {
                 await carController.addvehicle(
                   Car_model(
-                    
                       platenumber: _plateNumber.text.trim(),
                       companyname: _carmakeValue,
                       carmodel: _carmodelValue,

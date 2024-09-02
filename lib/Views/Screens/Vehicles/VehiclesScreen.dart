@@ -24,7 +24,6 @@ class VehiclesScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // heightY(15.h),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -94,10 +93,11 @@ class VehiclesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final data = controllerdata.getallcars[index];
                       return RentalCarTile(
-                        carname: data.carmodel.toString(),
+                        carname: data.companyname.toString(),
                         fuel: data.fuel.toString(),
-                        price: data.price!.toDouble(),
-                        seatscpty: data.quantity!.toDouble(),
+                        price:
+                            data.price != null ? data.price!.toDouble() : 0.0,
+                        seatscpty: data.seatingcapacity.toString(),
                         transmission: data.transmission.toString(),
                       );
                     },

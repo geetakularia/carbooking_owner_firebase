@@ -58,7 +58,9 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 title: languageconst.edit.tr,
                 isExpanded: true,
                 onPressed: () {
-                  Get.toNamed(RoutesName.EditVehiclesScreen);
+                  Get.toNamed(
+                    RoutesName.EditVehiclesScreen,
+                  );
                 })
           ],
         ),
@@ -409,8 +411,10 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                               child: RentalCarTile(
                                 carname: data.carmodel.toString(),
                                 fuel: data.fuel.toString(),
-                                price: data.price!.toDouble(),
-                                seatscpty: data.quantity!.toDouble(),
+                                price: data.price != null
+                                    ? data.price!.toDouble()
+                                    : 0.0,
+                                seatscpty: data.seatingcapacity.toString(),
                                 transmission: data.transmission.toString(),
                               ));
                         },

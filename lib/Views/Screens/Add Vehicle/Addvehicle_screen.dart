@@ -8,6 +8,7 @@ import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
+import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,27 +46,18 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
             PrimaryButton(
               title: languageconst.next.tr,
               onPressed: () async {
-                String? vehicleId = await carController.addvehicle(
-                  Car_model(
-                    platenumber: _plateNumber.text.trim(),
-                    companyname: _carmakeValue,
-                    carmodel: _carmodelValue,
-                    transmission: _transmissionValue,
-                    seatingcapacity: _seatingcapacityValue,
-                    fuel: _fuelValue,
-                    category: _categoryValue,
-                    manufactureyear: _yearValue,
-                  ),
+                final vehicle = Car_model(
+                  platenumber: _plateNumber.text.trim(),
+                  companyname: _carmakeValue,
+                  carmodel: _carmodelValue,
+                  transmission: _transmissionValue,
+                  seatingcapacity: _seatingcapacityValue,
+                  fuel: _fuelValue,
+                  category: _categoryValue,
+                  manufactureyear: _yearValue,
                 );
-
-                if (vehicleId != null) {
-                  Get.toNamed(
-                    "/mercedesbenz_screen",
-                    arguments: {'vehicleId': vehicleId},
-                  );
-                } else {
-                  print("Failed to add vehicle");
-                }
+                carController.setCar(vehicle);
+                Get.toNamed(RoutesName.mercedesbenz_screen);
               },
               isExpanded: true,
             )

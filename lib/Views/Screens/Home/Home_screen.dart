@@ -95,7 +95,7 @@ class _Home_screenState extends State<Home_screen> {
                   InkWell(
                     onTap: () {
                       print(
-                          "-====================${controllerdata.getallcars.first.fuel}-=-=-=----------");
+                          "-====================${controllerdata.getallcars.first.fuel}-=-=-=---------");
                       Get.toNamed(RoutesName.notification);
                     },
                     child: Icon(
@@ -345,8 +345,10 @@ class _Home_screenState extends State<Home_screen> {
                           child: RentalCarTile(
                             carname: data.carmodel.toString(),
                             fuel: data.fuel.toString(),
-                            price: data.price!.toDouble(),
-                            seatscpty: data.quantity!.toDouble(),
+                          price: data.price != null
+                                ? data.price!.toDouble()
+                                : 0.0,
+                            seatscpty: data.seatingcapacity.toString(),
                             transmission: data.transmission.toString(),
                           ));
                     },

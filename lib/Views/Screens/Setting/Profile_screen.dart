@@ -57,6 +57,7 @@ class _Profile_screenState extends State<Profile_screen> {
 
   @override
   Widget build(BuildContext context) {
+    final usercontroller = Get.find<UserController>();
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -193,7 +194,8 @@ class _Profile_screenState extends State<Profile_screen> {
                 Row(
                   children: [
                     Expanded(
-                      child: Primary_txtField(hint_txt: "johnleo@gmail.com"),
+                      child: Primary_txtField(
+                          hint_txt: usercontroller.userdata.data!.email),
                     ),
                     widthX(20.w),
                     Iconcontainer(icon: Icons.lock_outline, onpressed: () {}),

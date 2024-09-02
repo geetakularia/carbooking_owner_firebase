@@ -35,8 +35,8 @@ class RentalCarSeeAllScreen extends StatelessWidget {
             return RentalCarTile(
               carname: data.carmodel.toString(),
               fuel: data.fuel.toString(),
-              price: data.price!.toDouble(),
-              seatscpty: data.quantity!.toDouble(),
+             price: data.price != null ? data.price!.toDouble() : 0.0,
+              seatscpty: data.seatingcapacity.toString(),
               transmission: data.transmission.toString(),
             );
           },

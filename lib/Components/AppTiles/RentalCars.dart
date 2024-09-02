@@ -8,8 +8,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class RentalCarTile extends StatelessWidget {
-  String carname, fuel, transmission;
-  double price, seatscpty;
+  String carname, fuel, transmission, seatscpty;
+  double price;
   RentalCarTile(
       {super.key,
       required this.carname,

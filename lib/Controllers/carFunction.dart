@@ -88,20 +88,27 @@ class FirebaseResponseHandler {
 class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
-  List<Car_model> _allCars = [];
 
+  List<Car_model> _allCars = [];
   List<Car_model> get getallcars => _allCars;
 
-  // user_delete() {
-  //   try {
-  //     _databse
-  //         .collection("MyCars")
-  //         .doc("VnFwBDL807XUowNVn34y")
-  //         .update({"title": FieldValue.delete()});
-  //   } catch (e) {
-  //     print(e.toString());
-  //   }
-  // }
+  Car_model? _car;
+  Car_model get car => _car!;
+  setCar(Car_model model) {
+    _car = model;
+    update();
+  }
+
+  user_delete() {
+    try {
+      _databse
+          .collection("MyCars")
+          .doc("VnFwBDL807XUowNVn34y")
+          .update({"title": FieldValue.delete()});
+    } catch (e) {
+      print(e.toString());
+    }
+  }
 
   getCars() async {
     try {
@@ -118,6 +125,7 @@ class FirebaseController extends GetxController {
   }
 
   Future<String?> addvehicle(Car_model model) async {
+    print("");
     String? vehicleId;
     try {
       print("-=-=-=-step2-=-=-=-=-");
@@ -132,7 +140,8 @@ class FirebaseController extends GetxController {
 
       if (response != null) {
         vehicleId = response.docid;
-        _allCars.add(Car_model.fromAddvehicle(response));
+         _allCars.add(Car_model.fromAddvehicle(response));
+        // print(";;;;;;;;;;;;;${response};;;;;;;;;;;;;;;;;;;;;");
       }
     } catch (e) {
       print('Error adding vehicle: $e');
@@ -143,47 +152,47 @@ class FirebaseController extends GetxController {
     return vehicleId;
   }
 
-  // Future<void>  updateVehicle(
-  //     String uid, Map<String, dynamic> updatedData) async {
-  //   try {
-  //     FirebaseResponseModel? response = await _function.postData(
-  //         _databse.collection("addvehicle").doc(uid),
-  //         updatedData,
-  //         RequestType.UPDATE);
-  //     if (response != null) {
-  //       print('Data successfully updated with ID: ${response.docid}');
-  //     }
-  //   } catch (e) {
-  //     print('Error updating vehicle data: $e');
-  //   }
-  // }
-  updateVehicle(String uid, Car_model updatedData) async {
+  Future<void> updateVehicle(
+      String uid, Map<String, dynamic> updatedData) async {
     try {
-      print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-      // Reference to the document to update
-      DocumentReference docRef = _databse.collection("addvehicle").doc(uid);
-      // Fetch current data from the document
-      DocumentSnapshot currentDoc = await docRef.get();
-      if (currentDoc.exists) {
-        Map<String, dynamic> existingData =
-            currentDoc.data() as Map<String, dynamic>;
-        // Convert updated model to a map
-        Map<String, dynamic> dataToUpdate = updatedData.toAddvehicle();
-
-        // Merge existing data with the new data, preferring new data values
-        Map<String, dynamic> mergedData = {...existingData, ...dataToUpdate};
-
-        // Update only the fields specified in mergedData
-        await docRef.update(mergedData);
-
-        print('Data successfully updated with ID: $uid');
-      } else {
-        print('Document does not exist.');
+      FirebaseResponseModel? response = await _function.postData(
+          _databse.collection("addvehicle").doc(uid),
+          updatedData,
+          RequestType.UPDATE);
+      if (response != null) {
+        print('Data successfully updated with ID: ${response.docid}');
       }
     } catch (e) {
-      print('Failed to update vehicle data: $e');
-    } finally {
-      update();
+      print('Error updating vehicle data: $e');
     }
   }
+  // updateVehicle(String uid, Car_model updatedData) async {
+  //   try {
+  //     print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
+  //     // Reference to the document to update
+  //     DocumentReference docRef = _databse.collection("addvehicle").doc(uid);
+  //     // Fetch current data from the document
+  //     DocumentSnapshot currentDoc = await docRef.get();
+  //     if (currentDoc.exists) {
+  //       Map<String, dynamic> existingData =
+  //           currentDoc.data() as Map<String, dynamic>;
+  //       // Convert updated model to a map
+  //       Map<String, dynamic> dataToUpdate = updatedData.toAddvehicle();
+
+  //       // Merge existing data with the new data, preferring new data values
+  //       Map<String, dynamic> mergedData = {...existingData, ...dataToUpdate};
+
+  //       // Update only the fields specified in mergedData
+  //       await docRef.update(mergedData);
+
+  //       print('Data successfully updated with ID: $uid');
+  //     } else {
+  //       print('Document does not exist.');
+  //     }
+  //   } catch (e) {
+  //     print('Failed to update vehicle data: $e');
+  //   } finally {
+  //     update();
+  //   }
+  // }
 }

@@ -18,6 +18,7 @@ class Setting_screen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final usercontroller = Get.find<UserController>();
     var manageData2 = manageData;
     return Scaffold(
       body: SafeArea(
@@ -61,7 +62,7 @@ class Setting_screen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      "Mr John Leo",
+                      usercontroller.userdata.data!.username,
                       style: manageData.appTextTheme.fs24Normal
                           .copyWith(color: manageData.appColors.white),
                     ),

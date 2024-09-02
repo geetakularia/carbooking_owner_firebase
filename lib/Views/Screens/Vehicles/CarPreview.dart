@@ -58,7 +58,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 title: languageconst.edit.tr,
                 isExpanded: true,
                 onPressed: () {
-                  Get.toNamed(RoutesName.EditVehiclesScreen);
+                  Get.toNamed(RoutesName.EditVehiclesScreen,);
                 })
           ],
         ),

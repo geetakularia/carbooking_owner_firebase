@@ -88,9 +88,16 @@ class FirebaseResponseHandler {
 class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
+  
   List<Car_model> _allCars = [];
-
   List<Car_model> get getallcars => _allCars;
+
+  Car_model? _car;
+  Car_model get car => _car!;
+  setCar(Car_model model) {
+    _car = model;
+    update();
+  }
 
   user_delete() {
     try {
@@ -118,6 +125,7 @@ class FirebaseController extends GetxController {
   }
 
   Future<String?> addvehicle(Car_model model) async {
+    print("");
     String? vehicleId;
     try {
       final response = await _function.postData(
@@ -138,7 +146,7 @@ class FirebaseController extends GetxController {
     return vehicleId;
   }
 
-  Future<void>  updateVehicle(
+  Future<void> updateVehicle(
       String uid, Map<String, dynamic> updatedData) async {
     try {
       FirebaseResponseModel? response = await _function.postData(

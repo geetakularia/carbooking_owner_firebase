@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
+import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
@@ -19,21 +20,9 @@ class Profile_screen extends StatefulWidget {
 }
 
 class _Profile_screenState extends State<Profile_screen> {
-  File? file;
-  final picker = ImagePicker();
-  Future getgalleryimage() async {
-    final pickedimage = await picker
-      .pickImage(source: ImageSource.gallery);
-      if(pickedimage !=null){
-
-      }else{
-
-      }
-   
-  }
-
   @override
   Widget build(BuildContext context) {
+    final usercontroller = Get.find<UserController>();
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -95,7 +84,8 @@ class _Profile_screenState extends State<Profile_screen> {
                   style: manageData.appTextTheme.fs16Normal,
                 ),
                 heightY(10.h),
-                Primary_txtField(hint_txt: "Mr Joe leo"),
+                Primary_txtField(
+                    hint_txt: usercontroller.userdata.data!.username),
                 heightY(20.h),
                 Text(
                   "Email ",
@@ -105,7 +95,8 @@ class _Profile_screenState extends State<Profile_screen> {
                 Row(
                   children: [
                     Expanded(
-                      child: Primary_txtField(hint_txt: "johnleo@gmail.com"),
+                      child: Primary_txtField(
+                          hint_txt: usercontroller.userdata.data!.email),
                     ),
                     widthX(20.w),
                     Iconcontainer(icon: Icons.lock_outline, onpressed: () {}),

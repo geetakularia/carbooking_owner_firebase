@@ -3,6 +3,7 @@ import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/Dialog/UploadDialog.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Thumbnail_widget.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
@@ -20,6 +21,7 @@ class Thumbnail_screen extends StatefulWidget {
 }
 
 class _Thumbnail_screenState extends State<Thumbnail_screen> {
+  final carController = Get.find<FirebaseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,17 +31,23 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
           children: [
             PrimaryButton(
               title: languageconst.uploadVehicle.tr,
-              onPressed: () {
-                Future.delayed(Duration(seconds: 2), () {
-                  Get.back();
-                  Get.to(BottomScreen(
-                    currentIndex: 3,
-                  ));
-                });
-                Get.dialog(Primary_dialog(
-                    image: manageData.appimage.vehicle,
-                    title: languageconst.vehicleAddedSuccessfully.tr,
-                    subtitle: languageconst.uploadingVehicleListPleaseWait.tr));
+              onPressed: () async {
+                final data = carController.car.copyWith();
+                await carController.addvehicle(data).whenComplete(
+                  () {
+                    Future.delayed(Duration(seconds: 2), () {
+                      Get.back();
+                      Get.to(BottomScreen(
+                        currentIndex: 3,
+                      ));
+                    });
+                    Get.dialog(Primary_dialog(
+                        image: manageData.appimage.vehicle,
+                        title: languageconst.vehicleAddedSuccessfully.tr,
+                        subtitle:
+                            languageconst.uploadingVehicleListPleaseWait.tr));
+                  },
+                );
               },
               isExpanded: true,
             ),

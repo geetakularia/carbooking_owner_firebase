@@ -5,7 +5,6 @@ import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart'
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
-import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -25,20 +24,9 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
   final _description = TextEditingController();
   final _ammount = TextEditingController();
   String? _packagetype_value;
-  late String vehicleId;
-
-  @override
-  void initState() {
-    super.initState();
-    // Retrieve vehicle ID from navigation arguments
-    final arguments = Get.arguments as Map<String, dynamic>;
-    vehicleId = arguments['vehicleId'] ?? '';
-  }
 
   @override
   Widget build(BuildContext context) {
-    print(vehicleId);
-    print("====================================");
     final carController = Get.find<FirebaseController>();
     return Scaffold(
       appBar: AppBar(
@@ -137,15 +125,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                           )),
                           widthX(15.w),
                           InkWell(
-                            onTap: () {
-                              carController.updateVehicle(
-                                  vehicleId,
-                                  Car_model(
-                                          packagetype: _packagetype_value,
-                                          ammount: double.tryParse(
-                                              _ammount.text.trim()))
-                                      .toAddvehicle());
-                            },
+                            onTap: () {},
                             child: Container(
                               margin: EdgeInsets.only(top: 30),
                               padding: EdgeInsets.all(8.sp),
@@ -172,12 +152,13 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                     child: PrimaryButton(
                       title: languageconst.continueButton.tr,
                       onPressed: () async {
-                        print("-=-=-=-");
-                        await carController.updateVehicle(vehicleId, {
-                          'packagetype': _packagetype_value,
-                          'description': _description.text.trim(),
-                          'ammount': _ammount.text.trim(),
-                        });
+                        final data = carController.car.copyWith(
+                            description: _description.text.trim(),
+                            packagetype: _packagetype_value,
+                            ammount: double.tryParse(_ammount.text.trim()));
+                        // SET DATA CAR
+                        carController.setCar(data);
+                        // NEXT SCREEN
                         Get.toNamed("/thumbnail_screen");
                       },
                       isExpanded: true,

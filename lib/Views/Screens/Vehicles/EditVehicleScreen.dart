@@ -5,6 +5,7 @@ import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart
 import 'package:car_booking_owner/Components/Text_field/Descriptiontextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -29,10 +30,39 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   String? _fuelValue;
   String? _categoryValue;
   String? _yearValue;
-  String? packagetypevalue;
+  String? _packagetypevalue;
+
   RxString initialvalue = "".obs;
+  final _platenumber = TextEditingController();
+  final _description = TextEditingController();
+  final _ammount = TextEditingController();
+
   @override
+  void initState() {
+    super.initState();
+    // _getdata();
+  }
+
+  // _getdata() {
+  //   final carcontroller = Get.find<FirebaseController>().getallcars.map((e) => e.car_id==);
+
+  //   _carmakeValue = carcontroller.car.companyname;
+  //   _carmodelValue = carcontroller.car.carmodel;
+  //   _platenumber.text = carcontroller.car.platenumber!;
+  //   _transmissionValue = carcontroller.car.transmission;
+  //   _fuelValue = carcontroller.car.fuel;
+  //   _seatingcapacityValue = carcontroller.car.seatingcapacity;
+  //   _categoryValue = carcontroller.car.category;
+  //   _yearValue = carcontroller.car.manufactureyear;
+  //   _description.text = carcontroller.car.description!;
+  //   _packagetypevalue = carcontroller.car.packagetype;
+  //   _ammount.text = carcontroller.car.ammount!.toString();
+  //   setState(() {});
+  // }
+
   Widget build(BuildContext context) {
+    final carcontroller = Get.find<FirebaseController>();
+    print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
     return Scaffold(
       appBar: AppBar(
         title: RichText(
@@ -74,6 +104,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 Primarydropdownbutton_widget(
                     hint: languageconst.chooseCarCompany.tr,
                     selectedValue: _carmakeValue,
+                    onChanged: (v) {
+                      setState(() {
+                        _carmakeValue = v;
+                      });
+                    },
                     dropdownItems: Localdata.carMakeItems,
                     title: languageconst.carMake.tr),
                 heightY(10.h),
@@ -81,6 +116,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                     hint: languageconst.select.tr,
                     selectedValue: _carmodelValue,
                     dropdownItems: Localdata.carmodelItems,
+                    onChanged: (v) {
+                      setState(() {
+                        _carmodelValue = v;
+                      });
+                    },
                     title: languageconst.carModel.tr),
                 heightY(10.h),
                 Text(
@@ -90,6 +130,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 ),
                 heightY(10.h),
                 Primary_txtField(
+                  controller: _platenumber,
                   fillcolor: true,
                   hint_txt: languageconst.enter.tr,
                   suffixicon: Icons.done,
@@ -98,6 +139,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 Primarydropdownbutton_widget(
                     hint: languageconst.select.tr,
                     selectedValue: _transmissionValue,
+                    onChanged: (v) {
+                      setState(() {
+                        _transmissionValue = v;
+                      });
+                    },
                     dropdownItems: Localdata.transmissionItems,
                     title: languageconst.transmission.tr),
                 heightY(10.h),
@@ -107,6 +153,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                       child: Primarydropdownbutton_widget(
                           hint: languageconst.select.tr,
                           selectedValue: _seatingcapacityValue,
+                          onChanged: (v) {
+                            setState(() {
+                              _seatingcapacityValue = v;
+                            });
+                          },
                           dropdownItems: Localdata.seatingcapacityItems,
                           title: languageconst.seatingCapacity.tr),
                     ),
@@ -115,6 +166,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                       child: Primarydropdownbutton_widget(
                           hint: languageconst.select.tr,
                           selectedValue: _fuelValue,
+                          onChanged: (v) {
+                            setState(() {
+                              _fuelValue = v;
+                            });
+                          },
                           dropdownItems: Localdata.fuelItems,
                           title: languageconst.fuel.tr),
                     ),
@@ -127,6 +183,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                       child: Primarydropdownbutton_widget(
                           hint: languageconst.selectCarCategory.tr,
                           selectedValue: _categoryValue,
+                          onChanged: (v) {
+                            setState(() {
+                              _categoryValue = v;
+                            });
+                          },
                           dropdownItems: Localdata.categoryItems,
                           title: languageconst.category.tr),
                     ),
@@ -135,6 +196,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                       child: Primarydropdownbutton_widget(
                           hint: languageconst.select.tr,
                           selectedValue: _yearValue,
+                          onChanged: (v) {
+                            setState(() {
+                              _yearValue = v;
+                            });
+                          },
                           dropdownItems: Localdata.yearItems,
                           title: languageconst.manufactureYear.tr),
                     ),
@@ -211,7 +277,12 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                     Expanded(
                       child: Primarydropdownbutton_widget(
                           hint: "Per Hour",
-                          selectedValue: packagetypevalue,
+                          selectedValue: _packagetypevalue,
+                          onChanged: (v) {
+                            setState(() {
+                              _packagetypevalue = v;
+                            });
+                          },
                           dropdownItems: Localdata.packagedata,
                           title: languageconst.packageType.tr),
                     ),
@@ -227,6 +298,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                         ),
                         heightY(10.h),
                         Primary_txtField(
+                          controller: _ammount,
                           hint_txt: "00.0",
                           fillcolor: true,
                         ),

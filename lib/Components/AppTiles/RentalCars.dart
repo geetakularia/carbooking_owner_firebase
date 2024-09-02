@@ -8,9 +8,15 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class RentalCarTile extends StatelessWidget {
-  const RentalCarTile({
-    super.key,
-  });
+  String carname, fuel, transmission;
+  double price, seatscpty;
+  RentalCarTile(
+      {super.key,
+      required this.carname,
+      required this.fuel,
+      required this.price,
+      required this.seatscpty,
+      required this.transmission});
 
   @override
   Widget build(BuildContext context) {
@@ -53,17 +59,17 @@ class RentalCarTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CarPartTextIcon(
-                      title: languageconst.petrol.tr,
+                      title: fuel,
                       iconpath: manageData.appsvgimg.petrol,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
-                      title: languageconst.auto.tr,
+                      title: transmission,
                       iconpath: manageData.appsvgimg.gear,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
-                      title: "7 ${languageconst.seats.tr}",
+                      title: "$seatscpty ${languageconst.seats.tr}",
                       iconpath: manageData.appsvgimg.seat,
                     ),
                   ],
@@ -73,7 +79,7 @@ class RentalCarTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "₹ 1,200",
+                      "₹ ${price}",
                       style: manageData.appTextTheme.fs18Bold.copyWith(
                         color: manageData.appColors.white,
                       ),
@@ -116,7 +122,7 @@ class RentalCarTile extends StatelessWidget {
                 ),
               ),
               child: Text(
-                "Toyota Innova",
+               carname,
                 style: manageData.appTextTheme.fs16Medium.copyWith(
                   color: manageData.appColors.white,
                 ),

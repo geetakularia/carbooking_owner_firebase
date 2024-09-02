@@ -5,6 +5,7 @@ import 'package:car_booking_owner/Components/Custom_graph.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Car_box_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
@@ -26,6 +27,7 @@ class Home_screen extends StatefulWidget {
 class _Home_screenState extends State<Home_screen> {
   int currentindex = 0;
   final usercontroller = Get.find<UserController>();
+  final controllerdata = Get.find<FirebaseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +43,36 @@ class _Home_screenState extends State<Home_screen> {
             children: [
               Row(
                 children: [
-                  Container(
-                    clipBehavior: Clip.antiAlias,
-                    height: 60,
-                    width: 60,
-                    decoration: const BoxDecoration(shape: BoxShape.circle),
-                    child: Image.asset(
-                      manageData.appimage.girlprofile,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  usercontroller.userdata.data!.image.isEmpty
+                      ? Container(
+                          padding: EdgeInsets.all(9),
+                          decoration: BoxDecoration(
+                              color: manageData.appColors.gray,
+                              shape: BoxShape.circle),
+                          child: Icon(
+                            Icons.person,
+                            color: manageData.appColors.white,
+                            size: 30,
+                          ))
+                      : ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image.network(
+                            usercontroller.userdata.data!.image,
+                            height: 50,
+                            width: 50,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                  // Container(
+                  //   clipBehavior: Clip.antiAlias,
+                  //   height: 60,
+                  //   width: 60,
+                  //   decoration: const BoxDecoration(shape: BoxShape.circle),
+                  //   child: Image.asset(
+                  //     manageData.appimage.girlprofile,
+                  //     fit: BoxFit.cover,
+                  //   ),
+                  // ),
                   widthX(14.w),
                   Expanded(
                     child: Column(
@@ -72,6 +94,8 @@ class _Home_screenState extends State<Home_screen> {
                   widthX(14.w),
                   InkWell(
                     onTap: () {
+                      print(
+                          "-====================${controllerdata.getallcars.first.fuel}-=-=-=----------");
                       Get.toNamed(RoutesName.notification);
                     },
                     child: Icon(
@@ -313,11 +337,18 @@ class _Home_screenState extends State<Home_screen> {
                     separatorBuilder: (context, index) => widthX(10.w),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: controllerdata.getallcars.length,
                     itemBuilder: (context, index) {
+                      final data = controllerdata.getallcars[index];
                       return Container(
                           width: AppServices.screenWidth(context) * 0.52,
-                          child: RentalCarTile());
+                          child: RentalCarTile(
+                            carname: data.carmodel.toString(),
+                            fuel: data.fuel.toString(),
+                            price: data.price!.toDouble(),
+                            seatscpty: data.quantity!.toDouble(),
+                            transmission: data.transmission.toString(),
+                          ));
                     },
                   ),
                 ),

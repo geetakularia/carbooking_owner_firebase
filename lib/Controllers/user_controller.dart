@@ -14,9 +14,23 @@ import 'package:get/get.dart';
 
 class UserController extends GetxController {
   final _services = NetworkapiService();
-
   DataResponse<Usermodel> _userdata = DataResponse.loading();
   DataResponse<Usermodel> get userdata => _userdata;
+  /**************************** */
+  setuserdata(DataResponse<Usermodel> model) {
+    _userdata = model;
+    update();
+  }
+
+  /**************************** */
+  /************************ for userupdate in realtime show  */
+  String _userProfile = "";
+  String get userProfile => _userProfile;
+  updateUserProfile(DataResponse<Usermodel> model) {
+    _userdata = model;
+    update();
+  }
+
 /******************************* sign up */
   Future<void> signup(Map<String, dynamic> data) async {
     final Usermodel userdata = Usermodel.fromjson(data["userdata"]);
@@ -107,6 +121,27 @@ class UserController extends GetxController {
       Get.offAllNamed(RoutesName.login_screen);
     } finally {
       update();
+    }
+  }
+
+  /*************************************update************************************************** */
+  user_update(DataResponse<Usermodel> model) {
+    try {
+      // print("user upload Function run ************");
+      print("step:-1.======================");
+      manageData.api
+          .userdoc(userdata.data!.id)
+          .update(model.data!.tomap())
+          .then(
+        (value) {
+          /************************ for userupdate in realtime show  */
+          print("step:-2.======================");
+          updateUserProfile(model);
+        },
+      );
+      print("step:-3.======================");
+    } catch (e) {
+      print(e.toString());
     }
   }
 }

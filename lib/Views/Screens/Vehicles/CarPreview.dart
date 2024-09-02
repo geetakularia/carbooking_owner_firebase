@@ -3,6 +3,7 @@ import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dialog/UploadDialog.dart';
 import 'package:car_booking_owner/Components/Dialog/logout_dialog.dart';
 import 'package:car_booking_owner/Components/Widget/RowColumn_widget.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
@@ -22,7 +23,7 @@ class CarPreviewScreen extends StatefulWidget {
 
 class _CarPreviewScreenState extends State<CarPreviewScreen> {
   int currentindex = 0;
-
+  final controllerdata = Get.find<FirebaseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,8 +42,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                       },
                       onpressed_Yes: () {},
                       title: languageconst.confirmDeleteVehicle.tr,
-                      subtitle:
-                         languageconst.deleteWarningPolicy.tr,
+                      subtitle: languageconst.deleteWarningPolicy.tr,
                     ));
               },
               child: Container(
@@ -208,7 +208,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                       text: "₹ 1,200  ",
                       style: manageData.appTextTheme.fs20Medium),
                   TextSpan(
-                      text: languageconst.day.tr, style: manageData.appTextTheme.fs20Normal)
+                      text: languageconst.day.tr,
+                      style: manageData.appTextTheme.fs20Normal)
                 ])),
               ),
               Padding(
@@ -362,13 +363,16 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           ),
                           heightY(10.h),
                           RowColumn_Widget(
-                              firsttxt: languageconst.carMake.tr, secondtxt: "Mercedes "),
+                              firsttxt: languageconst.carMake.tr,
+                              secondtxt: "Mercedes "),
                           heightY(15.h),
                           RowColumn_Widget(
-                              firsttxt: languageconst.transmission.tr, secondtxt: "Automatic"),
+                              firsttxt: languageconst.transmission.tr,
+                              secondtxt: "Automatic"),
                           heightY(15.h),
                           RowColumn_Widget(
-                              firsttxt: languageconst.color.tr, secondtxt: "Orange"),
+                              firsttxt: languageconst.color.tr,
+                              secondtxt: "Orange"),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.licensePlateNo.tr,
@@ -386,7 +390,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                     ),
                     heightY(10.h),
                     Text(
-                     languageconst.similarVehicles.tr,
+                      languageconst.similarVehicles.tr,
                       style: manageData.appTextTheme.fs16Normal,
                     ),
                     heightY(15.h),
@@ -397,11 +401,18 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         separatorBuilder: (context, index) => widthX(10.w),
                         shrinkWrap: true,
                         scrollDirection: Axis.horizontal,
-                        itemCount: 4,
+                        itemCount: controllerdata.getallcars.length,
                         itemBuilder: (context, index) {
+                          final data = controllerdata.getallcars[index];
                           return Container(
                               width: AppServices.screenWidth(context) * 0.52,
-                              child: RentalCarTile());
+                              child: RentalCarTile(
+                                carname: data.carmodel.toString(),
+                                fuel: data.fuel.toString(),
+                                price: data.price!.toDouble(),
+                                seatscpty: data.quantity!.toDouble(),
+                                transmission: data.transmission.toString(),
+                              ));
                         },
                       ),
                     ),

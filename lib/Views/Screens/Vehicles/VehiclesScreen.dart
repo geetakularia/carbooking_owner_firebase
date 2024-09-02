@@ -2,6 +2,7 @@ import 'package:car_booking_owner/Components/AppTiles/RentalCars.dart';
 import 'package:car_booking_owner/Components/Buttons/SimpleButton.dart';
 import 'package:car_booking_owner/Components/Dialog/VehiclesFilter_dialog.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
@@ -11,8 +12,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class VehiclesScreen extends StatelessWidget {
-  const VehiclesScreen({super.key});
-
+  VehiclesScreen({super.key});
+  final controllerdata = Get.find<FirebaseController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,14 +85,21 @@ class VehiclesScreen extends StatelessWidget {
                     scrollDirection: Axis.vertical,
                     // physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
-                    itemCount: 18,
+                    itemCount: controllerdata.getallcars.length,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         mainAxisSpacing: 10,
                         crossAxisSpacing: 10,
                         childAspectRatio: 0.9,
                         crossAxisCount: 2),
                     itemBuilder: (context, index) {
-                      return RentalCarTile();
+                      final data = controllerdata.getallcars[index];
+                      return RentalCarTile(
+                        carname: data.carmodel.toString(),
+                        fuel: data.fuel.toString(),
+                        price: data.price!.toDouble(),
+                        seatscpty: data.quantity!.toDouble(),
+                        transmission: data.transmission.toString(),
+                      );
                     },
                   ),
                 ),

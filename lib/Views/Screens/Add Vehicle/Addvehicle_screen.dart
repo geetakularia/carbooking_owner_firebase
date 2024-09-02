@@ -30,18 +30,13 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
   String? _categoryValue;
   String? _yearValue;
   TextEditingController _plateNumber = TextEditingController();
-  void changeColor(Color color) {
-    setState(() => pickerColor = color);
-  }
-
   Color pickerColor = Color.fromARGB(255, 235, 19, 4);
   Color currentColor = Color(0xff443a49);
 
-  // CAR CONTROLLER
   final carController = Get.find<FirebaseController>();
+
   @override
   Widget build(BuildContext context) {
-    print(_carmakeValue);
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -50,32 +45,30 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
             PrimaryButton(
               title: languageconst.next.tr,
               onPressed: () async {
-                await carController.addvehicle(
+                String? vehicleId = await carController.addvehicle(
                   Car_model(
-                      platenumber: _plateNumber.text.trim(),
-                      companyname: _carmakeValue,
-                      carmodel: _carmodelValue,
-                      transmission: _transmissionValue,
-                      seatingcapacity: _seatingcapacityValue,
-                      fuel: _fuelValue,
-                      category: _categoryValue,
-                      manufactureyear: _yearValue),
+                    platenumber: _plateNumber.text.trim(),
+                    companyname: _carmakeValue,
+                    carmodel: _carmodelValue,
+                    transmission: _transmissionValue,
+                    seatingcapacity: _seatingcapacityValue,
+                    fuel: _fuelValue,
+                    category: _categoryValue,
+                    manufactureyear: _yearValue,
+                  ),
                 );
-                // await carController.addcarData(
-                //   Carmodel(
-                //       platenumber: _plateNumber.text.trim(),
-                //       companyname: _carmakeValue,
-                //       carmodel: _carmodelValue,
-                //       transmission: _transmissionValue,
-                //       seatingcapacity: _seatingcapacityValue,
-                //       fuel: _fuelValue,
-                //       category: _categoryValue,
-                //       manufactureyear: _yearValue),
-                // );
-                Get.toNamed("/mercedesbenz_screen");
+
+                if (vehicleId != null) {
+                  Get.toNamed(
+                    "/mercedesbenz_screen",
+                    arguments: {'vehicleId': vehicleId},
+                  );
+                } else {
+                  print("Failed to add vehicle");
+                }
               },
               isExpanded: true,
-            ),
+            )
           ],
         ),
       ),
@@ -95,8 +88,9 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
               width: AppServices.screenWidth(context),
               padding: EdgeInsets.all(20.sp),
               decoration: BoxDecoration(
-                  color: manageData.appColors.white,
-                  borderRadius: BorderRadius.circular(20.r)),
+                color: manageData.appColors.white,
+                borderRadius: BorderRadius.circular(20.r),
+              ),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -220,11 +214,12 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   ),
                   heightY(12.h),
                   AddrowwithIcon_widget(
-                      title: languageconst.addColorVariant.tr,
-                      onpressed: () {
-                        setState(() => currentColor = pickerColor);
-                        Get.dialog(Dialog(child: ClrDialog()));
-                      }),
+                    title: languageconst.addColorVariant.tr,
+                    onpressed: () {
+                      setState(() => currentColor = pickerColor);
+                      Get.dialog(Dialog(child: ClrDialog()));
+                    },
+                  ),
                   heightY(15.h),
                   Row(
                     children: [
@@ -235,7 +230,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                           Text(
                             "Black",
                             style: manageData.appTextTheme.fs16Normal,
-                          )
+                          ),
                         ],
                       ),
                       widthX(20.w),
@@ -246,14 +241,14 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                           Text(
                             "Grey",
                             style: manageData.appTextTheme.fs16Normal,
-                          )
+                          ),
                         ],
-                      )
+                      ),
                     ],
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

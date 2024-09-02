@@ -6,7 +6,6 @@ enum RequestType { ADD, SET, UPDATE }
 
 class FirebaseResponseHandler {
   Future<dynamic> getDataFromFirebase(dynamic path) async {
-    // ignore: unused_local_variable
     dynamic response;
     try {
       if (path is CollectionReference) {
@@ -16,10 +15,12 @@ class FirebaseResponseHandler {
       } else {
         response = await _getDataFromQuery(path as Query);
       }
-    } catch (e) {}
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+    return response;
   }
 
-  /// collection
   Future<List<FirebaseResponseModel>> _getDataFromCollection(
       CollectionReference reff) async {
     List<FirebaseResponseModel> data = [];
@@ -29,12 +30,12 @@ class FirebaseResponseHandler {
           .map((e) => FirebaseResponseModel.fromResonse(e))
           .toList();
     } catch (e) {
+      print('Error getting data from collection: $e');
       rethrow;
     }
     return data;
   }
 
-  /// DocumentReference
   Future<FirebaseResponseModel?> _getDataFromDocumentReference(
       DocumentReference reff) async {
     FirebaseResponseModel? data;
@@ -42,28 +43,26 @@ class FirebaseResponseHandler {
       final snapshot = await reff.get();
       data = FirebaseResponseModel.fromResonse(snapshot);
     } catch (e) {
+      print('Error getting data from document reference: $e');
       rethrow;
     }
     return data;
   }
 
-  ///query
   Future<List<FirebaseResponseModel>> _getDataFromQuery(Query reff) async {
     List<FirebaseResponseModel> data = [];
     try {
       final snapshot = await reff.get();
       data = snapshot.docs
-          .map(
-            (e) => FirebaseResponseModel.fromResonse(e),
-          )
+          .map((e) => FirebaseResponseModel.fromResonse(e))
           .toList();
     } catch (e) {
+      print('Error getting data from query: $e');
       rethrow;
     }
     return data;
   }
 
-  // post Data
   Future<FirebaseResponseModel?> postData(
       dynamic path, Map<String, dynamic> data,
       [RequestType? request]) async {
@@ -79,6 +78,7 @@ class FirebaseResponseHandler {
         return FirebaseResponseModel(data, response.id);
       }
     } catch (e) {
+      print('Error posting data: $e');
       rethrow;
     }
     return null;
@@ -89,7 +89,9 @@ class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
   List<Car_model> _allCars = [];
+
   List<Car_model> get getallcars => _allCars;
+
   // user_delete() {
   //   try {
   //     _databse
@@ -109,35 +111,14 @@ class FirebaseController extends GetxController {
         _allCars = response.map((e) => Car_model.fromcars(e)).toList();
       }
     } catch (e) {
-      print("==================================${e}");
+      print("Error getting cars: ${e}");
     } finally {
       update();
     }
   }
 
-  // deletekey() async {
-  //   await _databse
-  //       .collection("addvehicle")
-  //       .doc("dQE0sfkwqxpMMTwqW26c")
-  //       .update({"companyname": FieldValue.delete()});
-  // }
-
-  // addNewProduct(Car_model model) async {
-  //   try {
-  //     final response = await _function.postData(
-  //         _databse.collection("MyCars"), model.toProduct());
-  //     if (response != null) {
-  //       _allCars.add(Car_model.fromcars(response));
-  //     }
-  //   } catch (e) {
-  //     print(e.toString());
-  //   } finally {
-  //     update();
-  //   }
-  // }
-
-  addvehicle(Car_model model) async {
-    print("-=-=-=-step1-=-=-=-=-");
+  Future<String?> addvehicle(Car_model model) async {
+    String? vehicleId;
     try {
       print("-=-=-=-step2-=-=-=-=-");
       DocumentReference docRef = _databse.collection("addvehicle").doc();
@@ -145,42 +126,64 @@ class FirebaseController extends GetxController {
       Map<String, dynamic> vehicleData = model.toAddvehicle();
       vehicleData['car_id'] = newDocId; // Add the document ID
       final response = await _function.postData(
-          docRef, vehicleData, RequestType.SET) as FirebaseResponseModel;
-      print("-=-=-=-=-=-=${response.docid}-==-=-=-=-=");
-      if (response.docid.isNotEmpty) {
+        _databse.collection("addvehicle"),
+        model.toAddvehicle(),
+      );
+
+      if (response != null) {
+        vehicleId = response.docid;
         _allCars.add(Car_model.fromAddvehicle(response));
       }
     } catch (e) {
-      print(e.toString());
+      print('Error adding vehicle: $e');
     } finally {
       update();
     }
+
+    return vehicleId;
   }
 
-// Example function call to update vehicle data in Firestore
-  Future<void> updateVehicle(
-      String uid, Map<String, dynamic> updatedData) async {
+  // Future<void>  updateVehicle(
+  //     String uid, Map<String, dynamic> updatedData) async {
+  //   try {
+  //     FirebaseResponseModel? response = await _function.postData(
+  //         _databse.collection("addvehicle").doc(uid),
+  //         updatedData,
+  //         RequestType.UPDATE);
+  //     if (response != null) {
+  //       print('Data successfully updated with ID: ${response.docid}');
+  //     }
+  //   } catch (e) {
+  //     print('Error updating vehicle data: $e');
+  //   }
+  // }
+  updateVehicle(String uid, Car_model updatedData) async {
     try {
       print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-");
-      // Construct the document reference using the UID
-      DocumentReference documentRef =
-          _databse.collection("addvehicle").doc(uid);
-      // Call postData with the document reference, data, and request type
-      FirebaseResponseModel? response = await _function.postData(
-        documentRef, // Pass the correct document reference
-        updatedData, // Data to update
-        RequestType.UPDATE, // Specify that this is an update request
-      );
-      // Check if the response is not null and contains a document ID
-      if (response != null && response.docid.isNotEmpty) {
-        print('Data successfully updated with ID: ${response.docid}');
+      // Reference to the document to update
+      DocumentReference docRef = _databse.collection("addvehicle").doc(uid);
+      // Fetch current data from the document
+      DocumentSnapshot currentDoc = await docRef.get();
+      if (currentDoc.exists) {
+        Map<String, dynamic> existingData =
+            currentDoc.data() as Map<String, dynamic>;
+        // Convert updated model to a map
+        Map<String, dynamic> dataToUpdate = updatedData.toAddvehicle();
+
+        // Merge existing data with the new data, preferring new data values
+        Map<String, dynamic> mergedData = {...existingData, ...dataToUpdate};
+
+        // Update only the fields specified in mergedData
+        await docRef.update(mergedData);
+
+        print('Data successfully updated with ID: $uid');
       } else {
-        print('Failed to retrieve the updated document ID.');
+        print('Document does not exist.');
       }
     } catch (e) {
       print('Failed to update vehicle data: $e');
     } finally {
-      update(); // Update the state
+      update();
     }
   }
 }

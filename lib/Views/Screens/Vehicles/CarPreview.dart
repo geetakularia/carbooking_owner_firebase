@@ -5,6 +5,7 @@ import 'package:car_booking_owner/Components/Dialog/logout_dialog.dart';
 import 'package:car_booking_owner/Components/Widget/RowColumn_widget.dart';
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
@@ -24,8 +25,16 @@ class CarPreviewScreen extends StatefulWidget {
 class _CarPreviewScreenState extends State<CarPreviewScreen> {
   int currentindex = 0;
   final controllerdata = Get.find<FirebaseController>();
+
   @override
   Widget build(BuildContext context) {
+    final carcontroller = Get.find<FirebaseController>();
+    final id = Get.arguments["car_id"];
+    print(id);
+    final data = controllerdata.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+    print("===================");
+    print(data.manufactureyear);
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -58,9 +67,9 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 title: languageconst.edit.tr,
                 isExpanded: true,
                 onPressed: () {
-                  Get.toNamed(
-                    RoutesName.EditVehiclesScreen,
-                  );
+                  Get.toNamed(RoutesName.EditVehiclesScreen, arguments: {
+                    "car_id": carcontroller.getallcars.first.car_id
+                  });
                 })
           ],
         ),
@@ -126,11 +135,11 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         RichText(
                             text: TextSpan(children: [
                           TextSpan(
-                              text: "Toyota Innova",
+                              text: data.carmodel,
                               style: manageData.appTextTheme.fs24Normal
                                   .copyWith(color: manageData.appColors.black)),
                           TextSpan(
-                              text: " ( 2023 )",
+                              text: " ( ${data.manufactureyear} ) ",
                               style: manageData.appTextTheme.fs16Normal
                                   .copyWith(color: manageData.appColors.black))
                         ])),
@@ -207,7 +216,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 child: RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "₹ 1,200  ",
+                      text: "₹ 1,200 ",
                       style: manageData.appTextTheme.fs20Medium),
                   TextSpan(
                       text: languageconst.day.tr,
@@ -229,7 +238,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                     ),
                     heightY(15.h),
                     Text(
-                      "Lorem ipsum dolor sit amet consectetur. Tempus egestas consequat sed ut consectetur id magna commodo. Ac eget mauris dui pretium. Sed mauris nulla curabitur facilisis tristique enim fringilla ipsum. Nibh et laoreet egestas tortor sodales. Fringilla enim egestas sapien nisl.",
+                      data.description.toString(),
                       style: manageData.appTextTheme.fs14Normal
                           .copyWith(color: manageData.appColors.gray),
                     ),
@@ -366,23 +375,24 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           heightY(10.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.carMake.tr,
-                              secondtxt: "Mercedes "),
+                              secondtxt: data.companyname.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.transmission.tr,
-                              secondtxt: "Automatic"),
+                              secondtxt: data.transmission.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.color.tr,
-                              secondtxt: "Orange"),
+                              secondtxt: data.carcolor.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.licensePlateNo.tr,
-                              secondtxt: "HR4204 45AC "),
+                              secondtxt: data.platenumber.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.seatingCapacity.tr,
-                              secondtxt: "4 ${languageconst.seats.tr}"),
+                              secondtxt:
+                                  "${data.seatingcapacity.toString()} ${languageconst.seats.tr}"),
                         ],
                       ),
                     ),

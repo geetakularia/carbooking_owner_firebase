@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 /************************************new car model ******************* */
 class Car_model {
   String? car_id;
@@ -178,6 +179,7 @@ class Car_model {
     );
   }
 }
+
 class CreatePackageModel {
   String? packagetype, ammount;
   CreatePackageModel({
@@ -205,6 +207,7 @@ class CreatePackageModel {
     };
   }
 }
+
 class FirebaseResponseModel {
   Map<String, dynamic> data;
   String docid;

@@ -1,4 +1,5 @@
 import 'package:car_booking_owner/Components/CarPartTextIcon.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
@@ -7,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class RentalCarTile extends StatelessWidget {
   String carname, fuel, transmission, seatscpty;
   double price;
@@ -20,9 +22,12 @@ class RentalCarTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final carcontroller = Get.find<FirebaseController>();
+
     return InkWell(
       onTap: () {
-        Get.toNamed(RoutesName.CarPreviewScreen);
+        Get.toNamed(RoutesName.CarPreviewScreen,
+            arguments: {"car_id": carcontroller.getallcars.first.car_id});
       },
       child: Stack(
         children: [
@@ -122,7 +127,7 @@ class RentalCarTile extends StatelessWidget {
                 ),
               ),
               child: Text(
-               carname,
+                carname,
                 style: manageData.appTextTheme.fs16Medium.copyWith(
                   color: manageData.appColors.white,
                 ),

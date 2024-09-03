@@ -101,14 +101,11 @@ class FirebaseController extends GetxController {
 
   getCars() async {
     try {
-      final response =
-          await _function.getDataFromFirebase(_databse.collection("MyCars"));
-      _allCars = await (response as List<FirebaseResponseModel>)
-          .map((e) => Car_model.fromAddvehicle(e))
-          .toList();
-      // if (response is List) {
-      //   _allCars = response.map((e) => Car_model.fromcars(e)).toList();
-      // }
+      final response = await _function
+          .getDataFromFirebase(_databse.collection("addvehicle"));
+      if (response is List) {
+        _allCars = response.map((e) => Car_model.fromAddvehicle(e)).toList();
+      }
     } catch (e) {
       print("Error getting cars: ${e}");
     } finally {

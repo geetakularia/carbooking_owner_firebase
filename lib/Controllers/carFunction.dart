@@ -99,24 +99,16 @@ class FirebaseController extends GetxController {
     update();
   }
 
-  user_delete() {
-    try {
-      _databse
-          .collection("MyCars")
-          .doc("VnFwBDL807XUowNVn34y")
-          .update({"title": FieldValue.delete()});
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   getCars() async {
     try {
       final response =
           await _function.getDataFromFirebase(_databse.collection("MyCars"));
-      if (response is List) {
-        _allCars = response.map((e) => Car_model.fromcars(e)).toList();
-      }
+      _allCars = await (response as List<FirebaseResponseModel>)
+          .map((e) => Car_model.fromAddvehicle(e))
+          .toList();
+      // if (response is List) {
+      //   _allCars = response.map((e) => Car_model.fromcars(e)).toList();
+      // }
     } catch (e) {
       print("Error getting cars: ${e}");
     } finally {
@@ -140,7 +132,7 @@ class FirebaseController extends GetxController {
 
       if (response != null) {
         vehicleId = response.docid;
-         _allCars.add(Car_model.fromAddvehicle(response));
+        _allCars.add(Car_model.fromAddvehicle(response));
         // print(";;;;;;;;;;;;;${response};;;;;;;;;;;;;;;;;;;;;");
       }
     } catch (e) {

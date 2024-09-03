@@ -5,7 +5,9 @@ import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart'
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
+import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,6 +30,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
   @override
   Widget build(BuildContext context) {
     final carController = Get.find<FirebaseController>();
+    List<CreatePackageModel> CreatePackagelist = [];
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 40.w,
@@ -87,9 +90,8 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                             style: manageData.appTextTheme.fs16Normal,
                           ),
                           InkWell(
-                            onTap: (){},
-                            
-                             child: SvgPicture.asset(manageData.appsvgimg.add))
+                              onTap: () {},
+                              child: SvgPicture.asset(manageData.appsvgimg.add))
                         ],
                       ),
                       heightY(17.h),
@@ -123,6 +125,11 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                                 controller: _ammount,
                                 hint_txt: "650",
                                 fillcolor: true,
+                                onChanged: (v) {
+                                  setState(() {
+                                    _ammount.text = v;
+                                  });
+                                },
                               ),
                             ],
                           )),
@@ -157,12 +164,21 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                       onPressed: () async {
                         final data = carController.car.copyWith(
                             description: _description.text.trim(),
-                            packagetype: _packagetype_value,
-                            ammount: double.tryParse(_ammount.text.trim()));
+                            createpackagedata: [
+                              CreatePackageModel(
+                                  ammount: _ammount.text.trim(),
+                                  packagetype: _packagetype_value)
+                            ]);
+                        // final data = carController.car.copyWith(
+
+                        //   // createpackagedata: CreatePackagelist,
+                        //     description: _description.text.trim(),
+                        //     packagetype: _packagetype_value,
+                        //     ammount: double.tryParse(_ammount.text.trim()));
                         // SET DATA CAR
                         carController.setCar(data);
                         // NEXT SCREEN
-                        Get.toNamed("/thumbnail_screen");
+                        Get.toNamed(RoutesName.thumbnail_screen);
                       },
                       isExpanded: true,
                     ),

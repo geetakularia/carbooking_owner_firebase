@@ -25,13 +25,14 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     //   await addCarModelToFirebase(carModel);
     // }
     // await CarController();
-
+    
     Future.delayed(Duration(milliseconds: 400), () async {
       await Get.find<UserController>().relogin();
-
-      Get.find<FirebaseController>().getCars();
-
-      // Get.to(CarModelDropdown());
+     final data3= Get.find<FirebaseController>().getCars();
+      final data = await Get.find<FirebaseController>().getallcars;
+      print(".......................................${data3.map(
+        (e) => e.companyname,
+      )}.........................................");
     });
   }
 

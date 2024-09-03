@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 /************************************new car model ******************* */
 class Car_model {
   String? car_id;
@@ -20,48 +21,37 @@ class Car_model {
   String? category;
   String? manufactureyear;
   String? description;
-
-  List<String>? carcolor;
+  String? carcolor;
   List<String>? videos;
   List<String>? image;
+  bool? carstatus;
   List<CreatePackageModel>? createpackagedata;
-  Car_model({
-    this.addedAt,
-    this.car_id,
-    this.createdAt,
-    this.dicountCode,
-    this.discount,
-    this.image,
-    this.isAvailable,
-    this.price,
-    this.quantity,
-    this.title,
-    this.updateAt,
-    this.companyname,
-    this.carmodel,
-    this.platenumber,
-    this.transmission,
-    this.seatingcapacity,
-    this.fuel,
-    this.category,
-    this.manufactureyear,
-    this.description,
-    this.carcolor,
-    this.videos,
-    this.createpackagedata,
-  });
+  Car_model(
+      {this.addedAt,
+      this.car_id,
+      this.createdAt,
+      this.dicountCode,
+      this.discount,
+      this.image,
+      this.isAvailable,
+      this.price,
+      this.quantity,
+      this.title,
+      this.updateAt,
+      this.companyname,
+      this.carmodel,
+      this.platenumber,
+      this.transmission,
+      this.seatingcapacity,
+      this.fuel,
+      this.category,
+      this.manufactureyear,
+      this.description,
+      this.carcolor,
+      this.videos,
+      this.createpackagedata,
+      this.carstatus});
   Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
-
-  Map<String, dynamic> toOrderjson() {
-    return {
-      "title": title ?? "",
-      "price": price ?? 0.0,
-      "isAvailable": isAvailable ?? true,
-      "quantity": quantity ?? 1,
-      "discount": discount ?? 0.0,
-      "discountCode": dicountCode ?? "",
-    };
-  }
 
   Car_model.fromAddvehicle(FirebaseResponseModel json)
       : car_id = json.docid,
@@ -81,9 +71,7 @@ class Car_model {
         category = json.data["category"] ?? "",
         manufactureyear = json.data["manufactureyear"] ?? "",
         description = json.data["description"] ?? "",
-        carcolor = json.data["carcolor"] != null
-            ? (json.data["carcolor"] as List).map((e) => e.toString()).toList()
-            : [],
+        carcolor = json.data["carcolor"] ?? "",
         videos = json.data["videos"] != null
             ? (json.data["videos"] as List).map((e) => e.toString()).toList()
             : [],
@@ -93,7 +81,8 @@ class Car_model {
                   (e) => CreatePackageModel.fromjson(e),
                 )
                 .toList()
-            : null;
+            : null,
+        carstatus = json.data["carstatus"] ?? false;
 
   Map<String, dynamic> toAddvehicle() {
     return {
@@ -112,6 +101,7 @@ class Car_model {
       "createpackagedata":
           createpackagedata?.map((e) => e.tomap()).toList() ?? [],
       "image": image,
+      "carstatus": carstatus
     };
   }
 
@@ -146,7 +136,7 @@ class Car_model {
     String? description,
     double? ammount,
     String? packagetype,
-    List<String>? carcolor,
+    String? carcolor,
     List<String>? videos,
     List<String>? image,
     List<CreatePackageModel>? createpackagedata,
@@ -178,6 +168,7 @@ class Car_model {
     );
   }
 }
+
 class CreatePackageModel {
   String? packagetype, ammount;
   CreatePackageModel({
@@ -205,6 +196,7 @@ class CreatePackageModel {
     };
   }
 }
+
 class FirebaseResponseModel {
   Map<String, dynamic> data;
   String docid;

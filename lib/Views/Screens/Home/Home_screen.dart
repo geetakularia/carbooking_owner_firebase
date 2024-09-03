@@ -343,13 +343,7 @@ class _Home_screenState extends State<Home_screen> {
                       return Container(
                           width: AppServices.screenWidth(context) * 0.52,
                           child: RentalCarTile(
-                            carname: data.carmodel.toString(),
-                            fuel: data.fuel.toString(),
-                          price: data.price != null
-                                ? data.price!.toDouble()
-                                : 0.0,
-                            seatscpty: data.seatingcapacity.toString(),
-                            transmission: data.transmission.toString(),
+                            madel: data,
                           ));
                     },
                   ),

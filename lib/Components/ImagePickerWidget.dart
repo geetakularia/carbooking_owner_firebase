@@ -19,6 +19,7 @@ Future<String> getImageFormGallery() async {
 
 Future<String> getImageFormCamra() async {
   var getImage =
+      // ignore: invalid_use_of_visible_for_testing_member
       await ImagePicker.platform.getImageFromSource(source: ImageSource.camera);
   String imageFile = "";
   if (getImage != null) {
@@ -28,9 +29,11 @@ Future<String> getImageFormCamra() async {
 }
 
 Future<String> delete_img() async {
+  // ignore: invalid_use_of_visible_for_testing_member
   var getImagegallery = await ImagePicker.platform
       .getImageFromSource(source: ImageSource.gallery);
   var getImagecamera =
+      // ignore: invalid_use_of_visible_for_testing_member
       await ImagePicker.platform.getImageFromSource(source: ImageSource.camera);
   String imageFile = "";
   if (getImagegallery != null) {

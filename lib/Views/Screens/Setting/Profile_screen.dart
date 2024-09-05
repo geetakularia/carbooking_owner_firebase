@@ -1,6 +1,5 @@
 import 'dart:io';
-
-import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
+  import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
@@ -26,15 +25,10 @@ class Profile_screen extends StatefulWidget {
 class _Profile_screenState extends State<Profile_screen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getdata();
   }
-
-  File? file;
-  // File
   File? imageFile;
-  // File? bottomsheeetfile;
   String image = "";
   final _name_controller = TextEditingController();
   final _phn_controller = TextEditingController();

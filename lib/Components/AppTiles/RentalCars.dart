@@ -1,4 +1,5 @@
 import 'package:car_booking_owner/Components/CarPartTextIcon.dart';
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -10,17 +11,20 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class RentalCarTile extends StatelessWidget {
-  Car_model madel;
+  Car_model model;
   RentalCarTile({
     super.key,
-    required this.madel,
+    required this.model,
   });
 
   @override
   Widget build(BuildContext context) {
+    final carcontroller = Get.find<FirebaseController>();
+
     return InkWell(
       onTap: () {
-        Get.toNamed(RoutesName.CarPreviewScreen);
+        Get.toNamed(RoutesName.CarPreviewScreen,
+            arguments: {"car_id": carcontroller.getallcars.first.car_id});
       },
       child: Stack(
         children: [
@@ -57,18 +61,18 @@ class RentalCarTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CarPartTextIcon(
-                      title: madel.fuel.toString(),
+                      title: model.fuel.toString(),
                       iconpath: manageData.appsvgimg.petrol,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
-                      title: madel.transmission.toString(),
+                      title: model.transmission.toString(),
                       iconpath: manageData.appsvgimg.gear,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
                       title:
-                          "${madel.seatingcapacity} ${languageconst.seats.tr}",
+                          "${model.seatingcapacity} ${languageconst.seats.tr}",
                       iconpath: manageData.appsvgimg.seat,
                     ),
                   ],
@@ -78,7 +82,7 @@ class RentalCarTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "₹ ${madel.createpackagedata!.map((e) => e.ammount)}",
+                      "₹${model.createpackagedata!.map((e) => e.ammount)}",
                       style: manageData.appTextTheme.fs18Bold.copyWith(
                         color: manageData.appColors.white,
                       ),
@@ -121,7 +125,7 @@ class RentalCarTile extends StatelessWidget {
                 ),
               ),
               child: Text(
-                madel.companyname.toString(),
+                model.companyname.toString(),
                 style: manageData.appTextTheme.fs16Medium.copyWith(
                   color: manageData.appColors.white,
                 ),

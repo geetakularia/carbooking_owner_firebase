@@ -5,10 +5,21 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 Future<String> getImageFormGallery() async {
+  // ignore: invalid_use_of_visible_for_testing_member
   var getImage = await ImagePicker.platform
       .getImageFromSource(source: ImageSource.gallery);
+  String imageFile = "";
+  if (getImage != null) {
+    imageFile = getImage.path;
+  }
+  return imageFile;
+}
+
+Future<String> getvideoFormGallery() async {
+  // ignore: invalid_use_of_visible_for_testing_member
+  var getImage =
+      await ImagePicker.platform.getVideo(source: ImageSource.gallery);
   String imageFile = "";
   if (getImage != null) {
     imageFile = getImage.path;
@@ -19,6 +30,16 @@ Future<String> getImageFormGallery() async {
 Future<String> getImageFormCamra() async {
   var getImage =
       await ImagePicker.platform.getImageFromSource(source: ImageSource.camera);
+  String imageFile = "";
+  if (getImage != null) {
+    imageFile = getImage.path;
+  }
+  return imageFile;
+}
+
+Future<String> getvideoFormCamra() async {
+  var getImage =
+      await ImagePicker.platform.getVideo(source: ImageSource.camera);
   String imageFile = "";
   if (getImage != null) {
     imageFile = getImage.path;

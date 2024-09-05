@@ -8,6 +8,7 @@ import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -40,39 +41,25 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   @override
   void initState() {
     super.initState();
-    // _getdata();
   }
-
-  // _getdata() {
-  //   final carcontroller = Get.find<FirebaseController>().getallcars.map((e) => e.car_id==);
-
-  //   _carmakeValue = carcontroller.car.companyname;
-  //   _carmodelValue = carcontroller.car.carmodel;
-  //   _platenumber.text = carcontroller.car.platenumber!;
-  //   _transmissionValue = carcontroller.car.transmission;
-  //   _fuelValue = carcontroller.car.fuel;
-  //   _seatingcapacityValue = carcontroller.car.seatingcapacity;
-  //   _categoryValue = carcontroller.car.category;
-  //   _yearValue = carcontroller.car.manufactureyear;
-  //   _description.text = carcontroller.car.description!;
-  //   _packagetypevalue = carcontroller.car.packagetype;
-  //   _ammount.text = carcontroller.car.ammount!.toString();
-  //   setState(() {});
-  // }
 
   Widget build(BuildContext context) {
     final carcontroller = Get.find<FirebaseController>();
-    print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
+    // print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
+    final id = Get.arguments["car_id"];
+    print(id);
+    final data = carcontroller.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
     return Scaffold(
       appBar: AppBar(
         title: RichText(
             text: TextSpan(children: [
           TextSpan(
-              text: "Toyota Innova",
+              text: data.carmodel,
               style: manageData.appTextTheme.fs24Normal
                   .copyWith(color: manageData.appColors.black)),
           TextSpan(
-              text: " ( 2023 )",
+              text: " ( ${data.manufactureyear} ) ",
               style: manageData.appTextTheme.fs16Normal
                   .copyWith(color: manageData.appColors.black))
         ])),
@@ -102,7 +89,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 ),
                 heightY(10.h),
                 Primarydropdownbutton_widget(
-                    hint: languageconst.chooseCarCompany.tr,
+                    hint: data.companyname.toString(),
                     selectedValue: _carmakeValue,
                     onChanged: (v) {
                       setState(() {
@@ -113,7 +100,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                     title: languageconst.carMake.tr),
                 heightY(10.h),
                 Primarydropdownbutton_widget(
-                    hint: languageconst.select.tr,
+                    hint: data.carmodel.toString(),
                     selectedValue: _carmodelValue,
                     dropdownItems: Localdata.carmodelItems,
                     onChanged: (v) {
@@ -132,12 +119,12 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 Primary_txtField(
                   controller: _platenumber,
                   fillcolor: true,
-                  hint_txt: languageconst.enter.tr,
+                  hint_txt: data.platenumber.toString(),
                   suffixicon: Icons.done,
                 ),
                 heightY(10.h),
                 Primarydropdownbutton_widget(
-                    hint: languageconst.select.tr,
+                    hint: data.transmission.toString(),
                     selectedValue: _transmissionValue,
                     onChanged: (v) {
                       setState(() {
@@ -151,7 +138,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                   children: [
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: languageconst.select.tr,
+                          hint: data.seatingcapacity.toString(),
                           selectedValue: _seatingcapacityValue,
                           onChanged: (v) {
                             setState(() {
@@ -164,7 +151,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                     widthX(15.w),
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: languageconst.select.tr,
+                          hint: data.fuel.toString(),
                           selectedValue: _fuelValue,
                           onChanged: (v) {
                             setState(() {
@@ -181,7 +168,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                   children: [
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: languageconst.selectCarCategory.tr,
+                          hint: data.category.toString(),
                           selectedValue: _categoryValue,
                           onChanged: (v) {
                             setState(() {
@@ -194,7 +181,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                     widthX(15.w),
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: languageconst.select.tr,
+                          hint: data.manufactureyear.toString(),
                           selectedValue: _yearValue,
                           onChanged: (v) {
                             setState(() {
@@ -257,6 +244,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
 
                 heightY(15.h),
                 Descriptiontextfield(
+                  controller: _description,
                   hint: languageconst.writeCarIntro.tr,
                 ),
                 heightY(15.h),

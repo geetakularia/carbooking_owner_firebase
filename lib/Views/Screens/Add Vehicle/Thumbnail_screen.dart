@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/Dialog/UploadDialog.dart';
+import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Thumbnail_widget.dart';
 import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
@@ -22,6 +26,10 @@ class Thumbnail_screen extends StatefulWidget {
 
 class _Thumbnail_screenState extends State<Thumbnail_screen> {
   final carController = Get.find<FirebaseController>();
+  // File? file;
+  // File
+  File? imageFile;
+  // File? videoFile;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,11 +40,13 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
             PrimaryButton(
               title: languageconst.uploadVehicle.tr,
               onPressed: () async {
-                final data = carController.car.copyWith();
+                final image = await uploadecarimg(imageFile!);
+                // final video = await uploadecarvideo(videoFile!);
+                final data = carController.car.copyWith(image: [image]);
                 await carController.addvehicle(data).whenComplete(
                   () {
-                    Future.delayed(Duration(seconds: 2), () {
-                      Get.back();
+                    Future.delayed(Duration(seconds: 2), () async {
+                      //     Get.back();
                       Get.to(BottomScreen(
                         currentIndex: 3,
                       ));
@@ -102,20 +112,49 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
                 AddrowwithIcon_widget(
                     title: languageconst.addPhotos.tr,
                     onpressed: () {
-                      Future.delayed(Duration(seconds: 3), () {
-                        Get.back();
-                      });
+                      // Future.delayed(Duration(seconds: 3), () async {
+                      //   // Get.back();
+                      // });
                       Get.dialog(Dialog(
                         clipBehavior: Clip.antiAlias,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(12.r)),
-                        child: UploadDialog(),
+                        child: InkWell(
+                            onTap: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  builder: (context) =>
+                                      imagePickerbottomsheet(context, (v) {
+                                        if (v.path.isNotEmpty) {
+                                          setState(() {
+                                            imageFile = v;
+                                          });
+                                        } else {
+                                          null;
+                                        }
+                                      }, () {
+                                        setState(() {
+                                          imageFile = null;
+                                        });
+                                        Get.back();
+                                      }));
+                            },
+                            child: UploadDialog()),
                       ));
                     }),
                 heightY(10.h),
                 Row(
                   children: [
-                    Image.asset(manageData.appimage.bmw),
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: imageFile == null
+                            ? null
+                            : Image.file(
+                                File(imageFile!.path),
+                                height: 100,
+                                width: 100,
+                                fit: BoxFit.cover,
+                              )),
                     widthX(20.w),
                     Image.asset(manageData.appimage.bmw),
                   ],
@@ -124,10 +163,37 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
                 AddrowwithIcon_widget(
                   title: languageconst.addVideos.tr,
                   onpressed: () {
-                    Get.toNamed("/VideoScreen");
+                    // showModalBottomSheet(
+                    //     context: context,
+                    //     builder: (context) =>
+                    //         imagePickerbottomsheet(context, (v) {
+                    //           if (v.path.isNotEmpty) {
+                    //             setState(() {
+                    //               videoFile = v;
+                    //             });
+                    //           } else {
+                    //             null;
+                    //           }
+                    //         }, () {
+                    //           setState(() {
+                    //             videoFile = null;
+                    //           });
+                    //           Get.back();
+                    //         }));
+                    // Get.toNamed("/VideoScreen");
                   },
                 ),
                 heightY(15.h),
+                // ClipRRect(
+                //     borderRadius: BorderRadius.circular(12),
+                //     child: videoFile == null
+                //         ? SizedBox()
+                //         : Image.file(
+                //             File(videoFile!.path),
+                //             height: 100,
+                //             width: 100,
+                //             fit: BoxFit.cover,
+                //           )),
                 Stack(alignment: Alignment.center, children: [
                   Image.asset(manageData.appimage.bmw),
                   SvgPicture.asset(manageData.appsvgimg.playbtn)

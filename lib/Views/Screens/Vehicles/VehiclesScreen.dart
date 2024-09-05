@@ -93,7 +93,7 @@ class VehiclesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final data = controllerdata.getallcars[index];
                       return RentalCarTile(
-                        madel: data,
+                        model: data,
                       );
                     },
                   ),

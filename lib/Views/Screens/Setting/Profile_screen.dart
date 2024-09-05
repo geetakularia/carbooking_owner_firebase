@@ -68,12 +68,13 @@ class _Profile_screenState extends State<Profile_screen> {
               onPressed: () async {
                 if (imageFile != null) {
                   if (image.isEmpty) {
-                    image = await uploadeImage(imageFile!);
+                    image = await uploadeprofile(imageFile!);
                     //  print("Profil imag ;::::::: ${image}");
                   } else {
                     image = await upDateImage(image, imageFile!);
                   }
                 }
+                
                 Usermodel updatedUserModel = controllerdata.userdata.data!
                     .copywith(
                         image: image,

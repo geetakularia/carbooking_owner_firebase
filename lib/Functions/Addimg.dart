@@ -11,11 +11,29 @@ import 'package:get/instance_manager.dart';
 final storage = FirebaseStorage.instance;
 final firestore = FirebaseFirestore.instance;
 /*****************************firebase storage********************* */
-//**************** */ Uploade
-Future<String> uploadeImage(File file) async {
+//**************** */ Uploade profile
+Future<String> uploadeprofile(File file) async {
   String id = DateTime.now().microsecondsSinceEpoch.toString() +
       file.path.split("/").last;
-  final reference = await storage.ref().child("media/$id");
+  final reference = await storage.ref().child("profile/$id");
+  await reference.putFile(file);
+  return await reference.getDownloadURL();
+}
+
+//**************** */ Uploade car image
+Future<String> uploadecarimg(File file) async {
+  String id = DateTime.now().microsecondsSinceEpoch.toString() +
+      file.path.split("/").last;
+  final reference = await storage.ref().child("carimg/$id");
+  await reference.putFile(file);
+  return await reference.getDownloadURL();
+}
+
+//**************** */ Uploade car image
+Future<String> uploadecarvideo(File file) async {
+  String id = DateTime.now().microsecondsSinceEpoch.toString() +
+      file.path.split("/").last;
+  final reference = await storage.ref().child("carvideo/$id");
   await reference.putFile(file);
   return await reference.getDownloadURL();
 }

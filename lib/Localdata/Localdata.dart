@@ -80,13 +80,16 @@ class Localdata {
   static List<String> fuelItems = ["Petrol", "Diesel", "Gas"];
 //////++++++++++------transmissionItems
 
-  static List<String> transmissionItems = ["select"];
+  static List<String> transmissionItems = [
+    "Auto",
+    "Manual",
+  ];
 //////++++++++++------carmodelItems
 
   static List<String> carmodelItems = ["X Classic", "AGT XX", "Punch"];
 /////========================Packagetypedata==============
   ///
-  static List<String> packagedata = ["Per hour", "Per week "];
+  static List<String> packagedata = ["Per Hour", "Per Day ", "Per Week "];
 /////========================amountdata==============
 
 /////========================cardata==============
@@ -275,4 +278,3 @@ class Paymentmethod_data {
     },
   ];
 }
-

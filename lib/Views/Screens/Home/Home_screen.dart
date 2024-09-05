@@ -343,7 +343,7 @@ class _Home_screenState extends State<Home_screen> {
                       return Container(
                           width: AppServices.screenWidth(context) * 0.52,
                           child: RentalCarTile(
-                            madel: data,
+                            model: data,
                           ));
                     },
                   ),

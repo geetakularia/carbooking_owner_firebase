@@ -30,7 +30,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
   @override
   Widget build(BuildContext context) {
     final carController = Get.find<FirebaseController>();
-    List<CreatePackageModel> CreatePackagelist = [];
+    // List<CreatePackageModel> CreatePackagelist = [];
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 40.w,
@@ -67,121 +67,107 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
               decoration: BoxDecoration(
                   color: manageData.appColors.white,
                   borderRadius: BorderRadius.circular(20.r)),
-              child: Expanded(
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        languageconst.addBookingPriceAndDescription.tr,
-                        style: manageData.appTextTheme.fs14Normal
-                            .copyWith(color: manageData.appColors.gray),
-                      ),
-                      heightY(10.h),
-                      Descriptiontextfield(
-                        controller: _description,
-                        hint: "write something about  your car as Intro",
-                      ),
-                      heightY(15.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            languageconst.createPackage.tr,
-                            style: manageData.appTextTheme.fs16Normal,
-                          ),
-                          InkWell(
-                              onTap: () {},
-                              child: SvgPicture.asset(manageData.appsvgimg.add))
-                        ],
-                      ),
-                      heightY(17.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Primarydropdownbutton_widget(
-                                hint: "Per hour",
-                                onChanged: (p0) {
-                                  setState(() {
-                                    _packagetype_value = p0;
-                                  });
-                                },
-                                selectedValue: packagetypevalue,
-                                dropdownItems: Localdata.packagedata,
-                                title: languageconst.packageType.tr),
-                          ),
-                          widthX(15.w),
-                          Expanded(
-                              child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                languageconst.amount.tr,
-                                style: manageData.appTextTheme.fs16Normal
-                                    .copyWith(
-                                        color: manageData.appColors.primary),
-                              ),
-                              heightY(10.h),
-                              Primary_txtField(
-                                controller: _ammount,
-                                hint_txt: "650",
-                                fillcolor: true,
-                                onChanged: (v) {
-                                  setState(() {
-                                    _ammount.text = v;
-                                  });
-                                },
-                              ),
-                            ],
-                          )),
-                          widthX(15.w),
-                          InkWell(
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      languageconst.addBookingPriceAndDescription.tr,
+                      style: manageData.appTextTheme.fs14Normal
+                          .copyWith(color: manageData.appColors.gray),
+                    ),
+                    heightY(10.h),
+                    Descriptiontextfield(
+                      controller: _description,
+                      hint: "Write something about your car as an introduction",
+                    ),
+                    heightY(15.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          languageconst.createPackage.tr,
+                          style: manageData.appTextTheme.fs16Normal,
+                        ),
+                        InkWell(
                             onTap: () {},
-                            child: Container(
-                              margin: EdgeInsets.only(top: 30),
-                              padding: EdgeInsets.all(8.sp),
-                              decoration: BoxDecoration(
-                                  color: manageData.appColors.bgclr,
-                                  borderRadius: BorderRadius.circular(10.r)),
-                              child: Icon(
-                                Icons.delete_outlined,
-                                color: manageData.appColors.red,
-                                size: 30.sp,
-                              ),
+                            child: SvgPicture.asset(manageData.appsvgimg.add))
+                      ],
+                    ),
+                    heightY(17.h),
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Primarydropdownbutton_widget(
+                              hint: "Per hour",
+                              onChanged: (p0) {
+                                setState(() {
+                                  _packagetype_value = p0;
+                                });
+                              },
+                              selectedValue: packagetypevalue,
+                              dropdownItems: Localdata.packagedata,
+                              title: languageconst.packageType.tr),
+                        ),
+                        widthX(15.w),
+                        Expanded(
+                            child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              languageconst.amount.tr,
+                              style: manageData.appTextTheme.fs16Normal
+                                  .copyWith(
+                                      color: manageData.appColors.primary),
                             ),
-                          )
-                        ],
-                      ),
-                    ]),
-              ),
+                            heightY(10.h),
+                            Primary_txtField(
+                              controller: _ammount,
+                              hint_txt: "650",
+                              fillcolor: true,
+                            ),
+                          ],
+                        )),
+                        widthX(15.w),
+                        InkWell(
+                          onTap: () {},
+                          child: Container(
+                            margin: EdgeInsets.only(top: 30),
+                            padding: EdgeInsets.all(8.sp),
+                            decoration: BoxDecoration(
+                                color: manageData.appColors.bgclr,
+                                borderRadius: BorderRadius.circular(10.r)),
+                            child: Icon(
+                              Icons.delete_outlined,
+                              color: manageData.appColors.red,
+                              size: 30.sp,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ]),
             ),
             Padding(
               padding: EdgeInsets.all(20.0.sp),
               child: Row(
                 children: [
-                  Expanded(
-                    child: PrimaryButton(
-                      title: languageconst.continueButton.tr,
-                      onPressed: () async {
-                        final data = carController.car.copyWith(
-                            description: _description.text.trim(),
-                            createpackagedata: [
-                              CreatePackageModel(
-                                  ammount: _ammount.text.trim(),
-                                  packagetype: _packagetype_value)
-                            ]);
-                        // final data = carController.car.copyWith(
-
-                        //   // createpackagedata: CreatePackagelist,
-                        //     description: _description.text.trim(),
-                        //     packagetype: _packagetype_value,
-                        //     ammount: double.tryParse(_ammount.text.trim()));
-                        // SET DATA CAR
-                        carController.setCar(data);
-                        // NEXT SCREEN
-                        Get.toNamed(RoutesName.thumbnail_screen);
-                      },
-                      isExpanded: true,
-                    ),
+                  PrimaryButton(
+                    title: languageconst.continueButton.tr,
+                    onPressed: () async {
+                      final data = carController.car.copyWith(
+                          description: _description.text.trim(),
+                          createpackagedata: [
+                            CreatePackageModel(
+                                ammount: _ammount.text.trim(),
+                                packagetype: _packagetype_value)
+                          ]);
+                      // SET DATA CAR
+                      carController.setCar(data);
+                      // NEXT SCREEN
+                      Get.toNamed("/thumbnail_screen");
+                     
+                    },
+                    isExpanded: true,
                   ),
                 ],
               ),

@@ -42,8 +42,9 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
               onPressed: () async {
                 final image = await uploadecarimg(imageFile!);
                 // final video = await uploadecarvideo(videoFile!);
-                final data = carController.car.copyWith(image: [image]);
-                await carController.addvehicle(data).whenComplete(
+                final data = carController.car
+                    .copyWith(image: [image], carstatus: "Available");
+                await carController.addvehicle(data.toAddvehicle()).whenComplete(
                   () {
                     Future.delayed(Duration(seconds: 2), () async {
                       //     Get.back();

@@ -98,7 +98,7 @@ class UserController extends GetxController {
   Future<void> relogin() async {
     try {
       final String userId = prefrance.getstring(prefrance.userkey);
-      print(userId);
+      // print(userId);
       if (userId.isNotEmpty) {
         final data = await Apis().userdoc(jsonDecode(userId)["id"]).get();
 

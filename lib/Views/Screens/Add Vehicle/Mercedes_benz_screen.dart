@@ -7,7 +7,6 @@ import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
-import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -158,14 +157,13 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                           description: _description.text.trim(),
                           createpackagedata: [
                             CreatePackageModel(
-                                ammount: _ammount.text.trim(),
+                                ammount: int.tryParse(_ammount.text.trim()),
                                 packagetype: _packagetype_value)
                           ]);
                       // SET DATA CAR
                       carController.setCar(data);
                       // NEXT SCREEN
                       Get.toNamed("/thumbnail_screen");
-                     
                     },
                     isExpanded: true,
                   ),

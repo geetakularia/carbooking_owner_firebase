@@ -34,9 +34,7 @@ class RentalCarTile extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14.r),
               image: DecorationImage(
-                fit: BoxFit.cover,
-                image: AssetImage(manageData.appimage.innova),
-              ),
+                  fit: BoxFit.cover, image: NetworkImage(model.image!.first)),
             ),
           ),
           Container(
@@ -82,7 +80,7 @@ class RentalCarTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "₹${model.createpackagedata!.map((e) => e.ammount)}",
+                      "₹${model.createpackagedata!.last.ammount}",
                       style: manageData.appTextTheme.fs18Bold.copyWith(
                         color: manageData.appColors.white,
                       ),

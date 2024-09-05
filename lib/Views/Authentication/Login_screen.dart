@@ -108,7 +108,7 @@ class _Login_screenState extends State<Login_screen> {
                         .copyWith(color: manageData.appColors.white),
                     onChanged: (v) {
                       if (initialvalue.isEmpty) {
-                        initialvalue(v);
+                        // initialvalue(v);
                       } else {
                         initialvalue("");
                       }

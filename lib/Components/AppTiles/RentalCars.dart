@@ -1,6 +1,7 @@
 import 'package:car_booking_owner/Components/CarPartTextIcon.dart';
 import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
@@ -10,15 +11,11 @@ import 'package:get/get.dart';
 
 // ignore: must_be_immutable
 class RentalCarTile extends StatelessWidget {
-  String carname, fuel, transmission, seatscpty;
-  double price;
-  RentalCarTile(
-      {super.key,
-      required this.carname,
-      required this.fuel,
-      required this.price,
-      required this.seatscpty,
-      required this.transmission});
+  Car_model model;
+  RentalCarTile({
+    super.key,
+    required this.model,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -64,17 +61,18 @@ class RentalCarTile extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     CarPartTextIcon(
-                      title: fuel,
+                      title: model.fuel.toString(),
                       iconpath: manageData.appsvgimg.petrol,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
-                      title: transmission,
+                      title: model.transmission.toString(),
                       iconpath: manageData.appsvgimg.gear,
                     ),
                     SizedBox(width: 5.w),
                     CarPartTextIcon(
-                      title: "$seatscpty ${languageconst.seats.tr}",
+                      title:
+                          "${model.seatingcapacity} ${languageconst.seats.tr}",
                       iconpath: manageData.appsvgimg.seat,
                     ),
                   ],
@@ -84,7 +82,12 @@ class RentalCarTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      "₹ ${price}",
+                      model.createpackagedata!.map(
+                        (e) {
+                          e.ammount;
+                        },
+                      ).toString(),
+                      // "₹ ${madel.createpackagedata!.map((e) => e.ammount)}",
                       style: manageData.appTextTheme.fs18Bold.copyWith(
                         color: manageData.appColors.white,
                       ),
@@ -127,7 +130,7 @@ class RentalCarTile extends StatelessWidget {
                 ),
               ),
               child: Text(
-                carname,
+                model.companyname.toString(),
                 style: manageData.appTextTheme.fs16Medium.copyWith(
                   color: manageData.appColors.white,
                 ),

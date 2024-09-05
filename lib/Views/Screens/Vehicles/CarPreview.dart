@@ -216,7 +216,9 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 child: RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "₹ 1,200 ",
+                      text: "₹${data.createpackagedata!.map(
+                            (e) => e.ammount,
+                          ).toString()} ",
                       style: manageData.appTextTheme.fs20Medium),
                   TextSpan(
                       text: languageconst.day.tr,
@@ -383,7 +385,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.color.tr,
-                              secondtxt: data.carcolor.toString()),
+                              secondtxt: "red"),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.licensePlateNo.tr,
@@ -419,13 +421,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           return Container(
                               width: AppServices.screenWidth(context) * 0.52,
                               child: RentalCarTile(
-                                carname: data.carmodel.toString(),
-                                fuel: data.fuel.toString(),
-                                price: data.price != null
-                                    ? data.price!.toDouble()
-                                    : 0.0,
-                                seatscpty: data.seatingcapacity.toString(),
-                                transmission: data.transmission.toString(),
+                                model: data,
                               ));
                         },
                       ),

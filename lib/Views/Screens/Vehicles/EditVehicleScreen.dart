@@ -37,14 +37,15 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   final _platenumber = TextEditingController();
   final _description = TextEditingController();
   final _ammount = TextEditingController();
-
+  final carcontroller = Get.find<FirebaseController>();
+  bool isAvailableSelected = false;
+  bool isUnavailableSelected = false;
   @override
   void initState() {
     super.initState();
   }
 
   Widget build(BuildContext context) {
-    final carcontroller = Get.find<FirebaseController>();
     print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
     final id = Get.arguments["car_id"];
     print(id);
@@ -67,7 +68,23 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
       bottomNavigationBar: Padding(
         padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
         child: PrimaryButton(
-            title: languageconst.saveChanges.tr, onPressed: () {}),
+            title: languageconst.saveChanges.tr,
+            onPressed: () {
+              Car_model updatecardata = data.copyWith(
+                  companyname: _carmakeValue,
+                  carmodel: _carmodelValue,
+                  platenumber: _platenumber.text.trim(),
+                  transmission: _transmissionValue,
+                  seatingcapacity: _seatingcapacityValue,
+                  fuel: _fuelValue,
+                  category: _categoryValue,
+                  manufactureyear: _yearValue,
+                  description: _description.text.trim(),
+                  packagetype: _packagetypevalue,
+                  ammount: double.tryParse(_ammount.text.trim()));
+
+              carcontroller.updateVehicle(id, updatecardata.toAddvehicle());
+            }),
       ),
       body: ScrollConfiguration(
         behavior: ScrollBehavior().copyWith(overscroll: false),
@@ -245,7 +262,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 heightY(15.h),
                 Descriptiontextfield(
                   controller: _description,
-                  hint: languageconst.writeCarIntro.tr,
+                  hint: data.description.toString(),
                 ),
                 heightY(15.h),
                 Row(
@@ -264,7 +281,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                   children: [
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: "Per Hour",
+                          hint: data.createpackagedata!
+                              .map(
+                                (e) => e.packagetype,
+                              )
+                              .toString(),
                           selectedValue: _packagetypevalue,
                           onChanged: (v) {
                             setState(() {
@@ -287,7 +308,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                         heightY(10.h),
                         Primary_txtField(
                           controller: _ammount,
-                          hint_txt: "00.0",
+                          hint_txt: data.createpackagedata!
+                              .map(
+                                (e) => e.ammount,
+                              )
+                              .toString(),
                           fillcolor: true,
                         ),
                       ],
@@ -409,7 +434,6 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                                 } else {
                                   initialvalue("");
                                 }
-                                print(initialvalue);
                               },
                               value: initialvalue.value),
                         ),

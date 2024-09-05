@@ -99,17 +99,6 @@ class FirebaseController extends GetxController {
     update();
   }
 
-  user_delete() {
-    try {
-      _databse
-          .collection("MyCars")
-          .doc("VnFwBDL807XUowNVn34y")
-          .update({"title": FieldValue.delete()});
-    } catch (e) {
-      print(e.toString());
-    }
-  }
-
   getCars() async {
     try {
       final response =

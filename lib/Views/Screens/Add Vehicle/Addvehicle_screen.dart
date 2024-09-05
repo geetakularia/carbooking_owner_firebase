@@ -47,6 +47,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
               title: languageconst.next.tr,
               onPressed: () async {
                 final vehicle = Car_model(
+                  
                   platenumber: _plateNumber.text.trim(),
                   companyname: _carmakeValue,
                   carmodel: _carmodelValue,
@@ -55,6 +56,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   fuel: _fuelValue,
                   category: _categoryValue,
                   manufactureyear: _yearValue,
+
                 );
                 carController.setCar(vehicle);
                 Get.toNamed(RoutesName.mercedesbenz_screen);

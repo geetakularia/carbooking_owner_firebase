@@ -82,12 +82,9 @@ class RentalCarTile extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text(
-                      model.createpackagedata!.map(
-                        (e) {
-                          e.ammount;
-                        },
-                      ).toString(),
-                      // "₹ ${madel.createpackagedata!.map((e) => e.ammount)}",
+                      "₹${model.createpackagedata!.map(
+                            (e) => e.ammount,
+                          ).toString()}",
                       style: manageData.appTextTheme.fs18Bold.copyWith(
                         color: manageData.appColors.white,
                       ),

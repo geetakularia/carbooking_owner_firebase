@@ -46,7 +46,8 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   }
 
   Widget build(BuildContext context) {
-    print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
+    final carcontroller = Get.find<FirebaseController>();
+    // print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
     final id = Get.arguments["car_id"];
     print(id);
     final data = carcontroller.getallcars

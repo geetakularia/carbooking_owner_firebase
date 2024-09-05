@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class Car_model {
   String? car_id;
   String? title;
-  double? price;
   DateTime? createdAt;
   DateTime? updateAt;
   bool? isAvailable;
@@ -34,7 +33,6 @@ class Car_model {
       this.discount,
       this.image,
       this.isAvailable,
-      this.price,
       this.quantity,
       this.title,
       this.updateAt,
@@ -105,19 +103,18 @@ class Car_model {
     };
   }
 
-  Car_model.fromCarOrder(FirebaseResponseModel json)
-      : car_id = json.docid,
-        title = json.data["title"] ?? "",
-        price = json.data["price"]?.toDouble(),
-        isAvailable = json.data["isAvailable"] ?? true,
-        quantity = json.data["quantity"].toInt(),
-        discount = json.data["discount"].toDouble(),
-        dicountCode = json.data["dicountCode"] ?? "";
+  // Car_model.fromCarOrder(FirebaseResponseModel json)
+  //     : car_id = json.docid,
+  //       title = json.data["title"] ?? "",
+
+  //       isAvailable = json.data["isAvailable"] ?? true,
+  //       quantity = json.data["quantity"].toInt(),
+  //       discount = json.data["discount"].toDouble(),
+  //       dicountCode = json.data["dicountCode"] ?? "";
 
   Car_model copyWith({
     String? car_id,
     String? title,
-    double? price,
     DateTime? createdAt,
     DateTime? updateAt,
     bool? isAvailable,
@@ -144,7 +141,6 @@ class Car_model {
     return Car_model(
       car_id: car_id ?? this.car_id,
       title: title ?? this.title,
-      price: price ?? this.price,
       createdAt: createdAt ?? this.createdAt,
       updateAt: updateAt ?? this.updateAt,
       isAvailable: isAvailable ?? this.isAvailable,

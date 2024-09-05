@@ -30,11 +30,10 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
   Widget build(BuildContext context) {
     final carcontroller = Get.find<FirebaseController>();
     final id = Get.arguments["car_id"];
-    print(id);
+  
     final data = controllerdata.getallcars
         .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
-    print("===================");
-    print(data.manufactureyear);
+    // print(data.manufactureyear);
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),

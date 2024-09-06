@@ -52,7 +52,7 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
                     .addvehicle(data.toAddvehicle())
                     .whenComplete(
                   () {
-                    Future.delayed(Duration(seconds: 2), () async {
+                    Future.delayed(Duration(milliseconds: 300), () async {
                       Get.back();
                       Get.to(BottomScreen(
                         currentIndex: 3,
@@ -119,9 +119,9 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
                 AddrowwithIcon_widget(
                     title: languageconst.addPhotos.tr,
                     onpressed: () {
-                      // Future.delayed(Duration(seconds: 3), () async {
-                      //   // Get.back();
-                      // });
+                      Future.delayed(Duration(seconds: 1), () async {
+                        Get.back();
+                      });
                       Get.dialog(Dialog(
                         clipBehavior: Clip.antiAlias,
                         shape: RoundedRectangleBorder(
@@ -153,7 +153,7 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
                 Row(
                   children: [
                     ClipRRect(
-                        borderRadius: BorderRadius.circular(12),
+                        borderRadius: BorderRadius.circular(12.r),
                         child: imageFile == null
                             ? null
                             : Image.file(

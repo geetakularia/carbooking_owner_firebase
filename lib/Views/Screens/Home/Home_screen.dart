@@ -36,16 +36,17 @@ class _Home_screenState extends State<Home_screen> {
         Container(
           decoration: BoxDecoration(
               borderRadius:
-                  const BorderRadius.vertical(bottom: Radius.circular(40)),
+                   BorderRadius.vertical(bottom: Radius.circular(40.r)),
               color: manageData.appColors.primary),
           padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
           child: Column(
             children: [
+
               Row(
                 children: [
                   usercontroller.userdata.data!.image.isEmpty
                       ? Container(
-                          padding: EdgeInsets.all(9),
+                          padding: EdgeInsets.all(9.sp),
                           decoration: BoxDecoration(
                               color: manageData.appColors.gray,
                               shape: BoxShape.circle),

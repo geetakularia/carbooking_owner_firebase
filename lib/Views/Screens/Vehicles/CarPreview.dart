@@ -30,10 +30,10 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
   Widget build(BuildContext context) {
     final carcontroller = Get.find<FirebaseController>();
     final id = Get.arguments["car_id"];
-  
+
     final data = controllerdata.getallcars
         .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
-    // print(data.manufactureyear);
+
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -53,7 +53,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                       subtitle: languageconst.deleteWarningPolicy.tr,
                     ));
               },
-              child: Container(
+              child: Container( 
                 padding: EdgeInsets.all(12.sp),
                 decoration: BoxDecoration(
                     color: manageData.appColors.gray.withOpacity(0.6),
@@ -67,7 +67,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 isExpanded: true,
                 onPressed: () {
                   Get.toNamed(RoutesName.EditVehiclesScreen, arguments: {
-                    "car_id": carcontroller.getallcars.first.car_id
+                    "car_id": carcontroller.getallcars.first.car_id 
                   });
                 })
           ],
@@ -91,18 +91,25 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         ClipRRect(
                             clipBehavior: Clip.antiAlias,
                             borderRadius: BorderRadius.circular(12),
-                            child: Image.asset(manageData.appimage.innova)),
+                            child: Image.network(
+                              data.image!.first,
+                              height: 200.h,
+                              width: AppServices.screenWidth(context),
+                              fit: BoxFit.cover,
+                            )),
                         Positioned(
                             right: 0,
-                            top: 10,
+                            top: 13,
                             child: Container(
                               padding: EdgeInsets.symmetric(
                                   horizontal: 11.w, vertical: 4.h),
                               decoration: BoxDecoration(
-                                  color: manageData.appColors.green,
+                                  color: data.carstatus == "Available"
+                                      ? manageData.appColors.green
+                                      : manageData.appColors.red,
                                   borderRadius: BorderRadius.horizontal(
                                       left: Radius.circular(5))),
-                              child: Text(languageconst.available.tr,
+                              child: Text(data.carstatus.toString(),
                                   style: manageData.appTextTheme.fs12Normal
                                       .copyWith(
                                           color: manageData.appColors.white)),
@@ -179,7 +186,6 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           size: 15,
                           filledIcon: Icons.star,
                           emptyIcon: Icons.star_border,
-                          // onRatingChanged: (value) => debugPrint('$value'),
                           initialRating: 3,
                           maxRating: 5,
                         ),
@@ -253,7 +259,6 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         borderRadius: BorderRadius.circular(12.r),
                       ),
                       child: Row(
-                        // crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           InkWell(
                             onTap: () {
@@ -292,8 +297,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                                     borderRadius: BorderRadius.circular(12),
                                     // color: Colors.black,
                                     image: DecorationImage(
-                                      image: AssetImage(manageData.appimage
-                                          .bmw), // Replace with your image URL
+                                      image:
+                                          AssetImage(manageData.appimage.bmw),
                                       fit: BoxFit.cover,
                                     ),
                                   ),
@@ -304,7 +309,11 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           widthX(10.w),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RoutesName.PhotovideoScreen);
+                              Get.toNamed(RoutesName.PhotovideoScreen,
+                                  arguments: {
+                                    "car_id":
+                                        carcontroller.getallcars[0].car_id,
+                                  });
                             },
                             child: Stack(
                               alignment: Alignment.center,

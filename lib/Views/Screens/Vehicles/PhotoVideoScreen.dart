@@ -1,3 +1,4 @@
+import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/Views/Screens/Vehicles/ImageShowScreen.dart';
@@ -26,6 +27,11 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
   ];
   @override
   Widget build(BuildContext context) {
+    final carcontroller = Get.find<FirebaseController>();
+    // final id = Get.arguments["car_id"];
+
+    // final data = carcontroller.getallcars
+    //     .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -42,20 +48,37 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
             children: [
               GridView.builder(
                 shrinkWrap: true,
-                itemCount: imagelist.length,
+                itemCount: carcontroller.getallcars.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 1,
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),
                 itemBuilder: (context, index) {
+                  String imageUrl = carcontroller.getallcars[index].image![0];
                   return GestureDetector(
                     onTap: () {
                       Get.to(ImageShowScreen(
-                          image: imagelist[index], imageList: imagelist));
+                        image: imageUrl,
+                        imageList: carcontroller.getallcars
+                            .map((e) => e.image![0])
+                            .toList(),
+                        // data.image!
+                        //     .map(
+                        //       (e) => e,
+                        //     )
+                        
+                      ));
                     },
-                    child: Image.asset(
-                      imagelist[index],
+                    child: Image.network(
+                      imageUrl,
+                      // data.image!
+                      //     .map(
+                      //       (e) => e,
+                      //     )
+                      //     .toString(),
+
+                    
                       fit: BoxFit.cover,
                     ),
                   );
@@ -75,10 +98,9 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                     width: AppServices.screenWidth(context),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      // color: Colors.black,
                       image: DecorationImage(
                         image: AssetImage(manageData
-                            .appimage.innova), // Replace with your image URL
+                            .appimage.innova),
                         fit: BoxFit.cover,
                       ),
                     ),

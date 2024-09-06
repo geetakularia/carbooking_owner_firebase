@@ -1,6 +1,6 @@
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:get/get_state_manager/src/simple/get_controllers.dart';
+import 'package:get/get.dart';
 
 enum RequestType { ADD, SET, UPDATE }
 
@@ -99,6 +99,58 @@ class FirebaseController extends GetxController {
     update();
   }
 
+/******************************** updateStatus */
+  updateStatus(bool status) async {
+    try {
+      var std = status ? 'Available' : "Unvailable";
+      await _databse
+          .collection("Vehicle")
+          .doc(getallcars.first.car_id)
+          .update({"carstatus": std});
+      _allCars.first.carstatus = std;
+      update();
+    } catch (e) {
+      print(e);
+    }
+  }
+
+/*********************************** add vehicle */
+
+  Future<String?> addvehicle(Map<String, dynamic> model) async {
+    // print("");
+    String? vehicleId;
+    try {
+      print("-=-=-=-step2-=-=-=-=-");
+      DocumentReference docRef =
+          await _databse.collection("Vehicle").doc(vehicleId);
+      final docid = docRef.id;
+      model["car_id"] = docid;
+      // String newDocId = docRef.id;
+      // Map<String, dynamic> vehicleData = model.toAddvehicle();
+      // vehicleData['car_id'] = newDocId;
+      // Add the document ID
+      await _function.postData(docRef, model, RequestType.SET);
+      final car = Car_model.fromAddvehicle(FirebaseResponseModel(model, docid));
+      _allCars.add(car);
+      // if (response != null) {
+      //   // vehicleId = response.docid;
+      //   print("-=-=================================================");
+      //   print(vehicleId);
+      //   print("-=-==================================================");
+      //   _allCars.add(Car_model.fromAddvehicle(response));
+      //   print(";;;;;;;;;;;;;${response};;;;;;;;;;;;;;;;;;;;;");
+      // }
+    } catch (e) {
+      print('Error adding vehicle: $e');
+      // print("-=-=-=----------------------------------------------------------");
+    } finally {
+      update();
+    }
+
+    return vehicleId;
+  }
+
+  /****************************************** getcars */
   getCars() async {
     try {
       final response =
@@ -112,34 +164,6 @@ class FirebaseController extends GetxController {
     } finally {
       update();
     }
-  }
-
-  Future<String?> addvehicle(Car_model model) async {
-    print("");
-    String? vehicleId;
-    try {
-      print("-=-=-=-step2-=-=-=-=-");
-      DocumentReference docRef = _databse.collection("Vehicle").doc();
-      String newDocId = docRef.id;
-      Map<String, dynamic> vehicleData = model.toAddvehicle();
-      vehicleData['car_id'] = newDocId; // Add the document ID
-      final response = await _function.postData(
-        _databse.collection("Vehicle"),
-        model.toAddvehicle(),
-      );
-
-      if (response != null) {
-        vehicleId = response.docid;
-        _allCars.add(Car_model.fromAddvehicle(response));
-        // print(";;;;;;;;;;;;;${response};;;;;;;;;;;;;;;;;;;;;");
-      }
-    } catch (e) {
-      print('Error adding vehicle: $e');
-    } finally {
-      update();
-    }
-
-    return vehicleId;
   }
 
   Future<void> updateVehicle(

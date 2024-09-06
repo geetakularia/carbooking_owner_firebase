@@ -23,7 +23,7 @@ class Car_model {
   String? carcolor;
   List<String>? videos;
   List<String>? image;
-  bool? carstatus;
+  String? carstatus;
   List<CreatePackageModel>? createpackagedata;
   Car_model(
       {this.addedAt,
@@ -49,7 +49,7 @@ class Car_model {
       this.videos,
       this.createpackagedata,
       this.carstatus});
-  Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
+  // Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
 
   Car_model.fromAddvehicle(FirebaseResponseModel json)
       : car_id = json.docid,
@@ -80,7 +80,7 @@ class Car_model {
                 )
                 .toList()
             : null,
-        carstatus = json.data["carstatus"] ?? false;
+        carstatus = json.data["carstatus"] ?? "";
 
   Map<String, dynamic> toAddvehicle() {
     return {
@@ -102,15 +102,6 @@ class Car_model {
       "carstatus": carstatus
     };
   }
-
-  // Car_model.fromCarOrder(FirebaseResponseModel json)
-  //     : car_id = json.docid,
-  //       title = json.data["title"] ?? "",
-
-  //       isAvailable = json.data["isAvailable"] ?? true,
-  //       quantity = json.data["quantity"].toInt(),
-  //       discount = json.data["discount"].toDouble(),
-  //       dicountCode = json.data["dicountCode"] ?? "";
 
   Car_model copyWith({
     String? car_id,
@@ -134,46 +125,48 @@ class Car_model {
     double? ammount,
     String? packagetype,
     String? carcolor,
+    String? carstatus,
     List<String>? videos,
     List<String>? image,
     List<CreatePackageModel>? createpackagedata,
   }) {
     return Car_model(
-      car_id: car_id ?? this.car_id,
-      title: title ?? this.title,
-      createdAt: createdAt ?? this.createdAt,
-      updateAt: updateAt ?? this.updateAt,
-      isAvailable: isAvailable ?? this.isAvailable,
-      quantity: quantity ?? this.quantity,
-      discount: discount ?? this.discount,
-      dicountCode: dicountCode ?? this.dicountCode,
-      addedAt: addedAt ?? this.addedAt,
-      companyname: companyname ?? this.companyname,
-      carmodel: carmodel ?? this.carmodel,
-      platenumber: platenumber ?? this.platenumber,
-      transmission: transmission ?? this.transmission,
-      seatingcapacity: seatingcapacity ?? this.seatingcapacity,
-      fuel: fuel ?? this.fuel,
-      category: category ?? this.category,
-      manufactureyear: manufactureyear ?? this.manufactureyear,
-      description: description ?? this.description,
-      carcolor: carcolor ?? this.carcolor,
-      videos: videos ?? this.videos,
-      image: image ?? this.image,
-      createpackagedata: createpackagedata ?? this.createpackagedata,
-    );
+        car_id: car_id ?? this.car_id,
+        title: title ?? this.title,
+        createdAt: createdAt ?? this.createdAt,
+        updateAt: updateAt ?? this.updateAt,
+        isAvailable: isAvailable ?? this.isAvailable,
+        quantity: quantity ?? this.quantity,
+        discount: discount ?? this.discount,
+        dicountCode: dicountCode ?? this.dicountCode,
+        addedAt: addedAt ?? this.addedAt,
+        companyname: companyname ?? this.companyname,
+        carmodel: carmodel ?? this.carmodel,
+        platenumber: platenumber ?? this.platenumber,
+        transmission: transmission ?? this.transmission,
+        seatingcapacity: seatingcapacity ?? this.seatingcapacity,
+        fuel: fuel ?? this.fuel,
+        category: category ?? this.category,
+        manufactureyear: manufactureyear ?? this.manufactureyear,
+        description: description ?? this.description,
+        carcolor: carcolor ?? this.carcolor,
+        videos: videos ?? this.videos,
+        image: image ?? this.image,
+        createpackagedata: createpackagedata ?? this.createpackagedata,
+        carstatus: carstatus ?? this.carstatus);
   }
 }
 
 class CreatePackageModel {
-  String? packagetype, ammount;
+  String? packagetype;
+  int? ammount;
   CreatePackageModel({
     this.packagetype,
     this.ammount,
   });
   CreatePackageModel copywith({
     String? packagetype,
-    String? ammount,
+    int? ammount,
   }) {
     return CreatePackageModel(
       packagetype: packagetype ?? this.packagetype,
@@ -182,8 +175,8 @@ class CreatePackageModel {
   }
 
   CreatePackageModel.fromjson(Map<String, dynamic> json)
-      : packagetype = json["packagetype"],
-        ammount = json["ammount"];
+      : packagetype = json["packagetype"] ?? "",
+        ammount = json["ammount"] ?? "";
 
   Map<String, dynamic> tomap() {
     return {

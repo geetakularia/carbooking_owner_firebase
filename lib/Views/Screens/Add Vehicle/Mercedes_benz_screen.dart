@@ -156,7 +156,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                           description: _description.text.trim(),
                           createpackagedata: [
                             CreatePackageModel(
-                                ammount: _ammount.text.trim(),
+                                ammount: int.tryParse(_ammount.text.trim()),
                                 packagetype: _packagetype_value)
                           ]);
                       // SET DATA CAR

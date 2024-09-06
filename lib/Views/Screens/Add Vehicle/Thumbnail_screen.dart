@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/Dialog/UploadDialog.dart';
@@ -26,8 +25,6 @@ class Thumbnail_screen extends StatefulWidget {
 
 class _Thumbnail_screenState extends State<Thumbnail_screen> {
   final carController = Get.find<FirebaseController>();
-  // File? file;
-  // File
   File? imageFile;
   File? videoFile;
   @override
@@ -48,10 +45,12 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
 
                 final image = await uploadecarvideo(imageFile!);
 
-                final data = carController.car
-                    .copyWith(image: [image], videos: [videoUrl]);
+                final data = carController.car.copyWith(
+                    image: [image], videos: [videoUrl], carstatus: "Available");
                 // videos: [videoUrl]);
-                await carController.addvehicle(data).whenComplete(
+                await carController
+                    .addvehicle(data.toAddvehicle())
+                    .whenComplete(
                   () {
                     Future.delayed(Duration(seconds: 2), () async {
                       Get.back();

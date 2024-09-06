@@ -43,10 +43,29 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   @override
   void initState() {
     super.initState();
+    getfun();
+  }
+
+  getfun() {
+    final carcontroller = Get.find<FirebaseController>();
+    _platenumber.text = carcontroller.getallcars.first.platenumber!;
+    _carmakeValue = carcontroller.getallcars.first.companyname!;
+    _carmodelValue = carcontroller.getallcars.first.carmodel!;
+    _transmissionValue = carcontroller.getallcars.first.transmission!;
+    _seatingcapacityValue = carcontroller.getallcars.first.seatingcapacity!;
+    _fuelValue = carcontroller.getallcars.first.fuel!;
+    _categoryValue = carcontroller.getallcars.first.category!;
+    _yearValue = carcontroller.getallcars.first.manufactureyear!;
+    _description.text = carcontroller.getallcars.first.description!;
+    _packagetypevalue =
+        carcontroller.getallcars.first.createpackagedata!.first.packagetype!;
+    _ammount.text = carcontroller
+        .getallcars.first.createpackagedata!.first.ammount!
+        .toString();
+    initialvalue = carcontroller.getallcars.first.carstatus.toString().obs;
   }
 
   Widget build(BuildContext context) {
-    final carcontroller = Get.find<FirebaseController>();
     // print("-=-=-=-=-=-=-${carcontroller.car.companyname}---------");
     final id = Get.arguments["car_id"];
     print(id);
@@ -72,6 +91,8 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
             title: languageconst.saveChanges.tr,
             onPressed: () {
               Car_model updatecardata = data.copyWith(
+                  carstatus: initialvalue.toString(),
+                  car_id: id,
                   companyname: _carmakeValue,
                   carmodel: _carmodelValue,
                   platenumber: _platenumber.text.trim(),
@@ -137,7 +158,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 Primary_txtField(
                   controller: _platenumber,
                   fillcolor: true,
-                  hint_txt: data.platenumber.toString(),
+                  hint_txt: "",
                   suffixicon: Icons.done,
                 ),
                 heightY(10.h),
@@ -430,6 +451,10 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                           child: CheckBoxListTile_widget(
                               title: languageconst.available.tr,
                               onChanged: (v) {
+                                // carcontroller.updateStatus(v);
+                                if (initialvalue.isNotEmpty) {
+                                  initialvalue(v);
+                                }
                                 if (initialvalue.isEmpty) {
                                   initialvalue(v);
                                 } else {
@@ -442,6 +467,9 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                           child: CheckBoxListTile_widget(
                               title: languageconst.unavailable.tr,
                               onChanged: (v) {
+                                if (initialvalue.isNotEmpty) {
+                                  initialvalue(v);
+                                }
                                 if (initialvalue.isEmpty) {
                                   initialvalue(v);
                                 } else {

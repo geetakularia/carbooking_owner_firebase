@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
-import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';

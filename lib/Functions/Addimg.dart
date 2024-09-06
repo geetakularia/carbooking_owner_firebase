@@ -6,6 +6,7 @@ import 'package:car_booking_owner/Response/DataResponse.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:get/instance_manager.dart';
 
 final storage = FirebaseStorage.instance;
@@ -21,6 +22,7 @@ Future<String> uploadeprofile(File file) async {
 }
 
 //**************** */ Uploade car image
+
 Future<String> uploadecarimg(File file) async {
   String id = DateTime.now().microsecondsSinceEpoch.toString() +
       file.path.split("/").last;
@@ -29,13 +31,25 @@ Future<String> uploadecarimg(File file) async {
   return await reference.getDownloadURL();
 }
 
-//**************** */ Uploade car image
+//**************** */ Uploade car video
+
 Future<String> uploadecarvideo(File file) async {
-  String id = DateTime.now().microsecondsSinceEpoch.toString() +
-      file.path.split("/").last;
-  final reference = await storage.ref().child("carvideo/$id");
-  await reference.putFile(file);
-  return await reference.getDownloadURL();
+  String url = "";
+  try {
+    String id = DateTime.now().microsecondsSinceEpoch.toString() +
+        file.path.split("/").last;
+    final reference = FirebaseStorage.instance.ref().child("videos/$id");
+
+    print("Uploading video with ID: $id");
+
+    await reference.putFile(file);
+
+    url = await reference.getDownloadURL();
+    print("Video uploaded successfully. URL: $url");
+  } catch (e) {
+    print("Error uploading video: $e");
+  }
+  return url;
 }
 
 //**************** */ UpDate

@@ -29,7 +29,6 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
   @override
   Widget build(BuildContext context) {
     final carController = Get.find<FirebaseController>();
-    // List<CreatePackageModel> CreatePackagelist = [];
     return Scaffold(
       appBar: AppBar(
         leadingWidth: 40.w,
@@ -77,7 +76,7 @@ class _Mercedesbenz_screenState extends State<Mercedesbenz_screen> {
                     heightY(10.h),
                     Descriptiontextfield(
                       controller: _description,
-                      hint: "Write something about your car as an introduction",
+                      hint: "write something about  your car as Intro",
                     ),
                     heightY(15.h),
                     Row(

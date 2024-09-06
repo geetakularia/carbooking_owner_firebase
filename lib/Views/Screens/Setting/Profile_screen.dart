@@ -1,7 +1,5 @@
 import 'dart:io';
-
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
-import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
@@ -26,15 +24,11 @@ class Profile_screen extends StatefulWidget {
 class _Profile_screenState extends State<Profile_screen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _getdata();
   }
 
-  File? file;
-  // File
   File? imageFile;
-  // File? bottomsheeetfile;
   String image = "";
   final _name_controller = TextEditingController();
   final _phn_controller = TextEditingController();
@@ -74,7 +68,7 @@ class _Profile_screenState extends State<Profile_screen> {
                     image = await upDateImage(image, imageFile!);
                   }
                 }
-                
+
                 Usermodel updatedUserModel = controllerdata.userdata.data!
                     .copywith(
                         image: image,
@@ -143,23 +137,25 @@ class _Profile_screenState extends State<Profile_screen> {
                         right: 0,
                         child: GestureDetector(
                           onTap: () {
-                            showModalBottomSheet(
-                                context: context,
-                                builder: (context) =>
-                                    imagePickerbottomsheet(context, (v) {
-                                      if (v.path.isNotEmpty) {
-                                        setState(() {
-                                          imageFile = v;
-                                        });
-                                      } else {
-                                        null;
-                                      }
-                                    }, () {
-                                      // App_service(context).popTo();
-                                      setState(() {
-                                        imageFile = null;
-                                      });
-                                    }));
+                            // showModalBottomSheet(
+                            //     context: context,
+                            //     builder: (context) =>
+                            //         imagePickerbottomsheet(context, (v) {
+                            //           if (v.path.isNotEmpty) {
+                            //             setState(() {
+                            //               imageFile = v;
+                            //     });
+                            //   } else {
+                            //     null;
+                            //   }
+                            // }, () {
+                            //   // App_service(context).popTo();
+                            //   setState(() {
+                            //     imageFile = null;
+                            //   });
+                            // },
+                            // )
+                            // );
                           },
                           child: Container(
                             padding: EdgeInsets.all(8),

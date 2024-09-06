@@ -37,31 +37,32 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   final _platenumber = TextEditingController();
   final _description = TextEditingController();
   final _ammount = TextEditingController();
-
+  final carcontroller = Get.find<FirebaseController>();
+  bool isAvailableSelected = false;
+  bool isUnavailableSelected = false;
   @override
   void initState() {
     super.initState();
     getfun();
   }
 
-  final carcontroller = Get.find<FirebaseController>();
   getfun() {
     final carcontroller = Get.find<FirebaseController>();
-    _platenumber.text = carcontroller.getallcars.first.platenumber!;
-    _carmakeValue = carcontroller.getallcars.first.companyname!;
-    _carmodelValue = carcontroller.getallcars.first.carmodel!;
-    _transmissionValue = carcontroller.getallcars.first.transmission!;
-    _seatingcapacityValue = carcontroller.getallcars.first.seatingcapacity!;
-    _fuelValue = carcontroller.getallcars.first.fuel!;
-    _categoryValue = carcontroller.getallcars.first.category!;
-    _yearValue = carcontroller.getallcars.first.manufactureyear!;
-    _description.text = carcontroller.getallcars.first.description!;
-    _packagetypevalue =
-        carcontroller.getallcars.first.createpackagedata!.first.packagetype!;
-    _ammount.text = carcontroller
-        .getallcars.first.createpackagedata!.first.ammount!
-        .toString();
-    initialvalue = carcontroller.getallcars.first.carstatus.toString().obs;
+    final id = Get.arguments["car_id"];
+    final dataId = carcontroller.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+    _platenumber.text = dataId.platenumber!;
+    _carmakeValue = dataId.companyname!;
+    _carmodelValue = dataId.carmodel!;
+    _transmissionValue = dataId.transmission!;
+    _seatingcapacityValue = dataId.seatingcapacity!;
+    _fuelValue = dataId.fuel!;
+    _categoryValue = dataId.category!;
+    _yearValue = dataId.manufactureyear!;
+    _description.text = dataId.description!;
+    _packagetypevalue = dataId.createpackagedata!.first.packagetype!;
+    _ammount.text = dataId.createpackagedata!.first.ammount!.toString();
+    initialvalue = dataId.carstatus.toString().obs;
   }
 
   Widget build(BuildContext context) {
@@ -283,7 +284,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                 heightY(15.h),
                 Descriptiontextfield(
                   controller: _description,
-                  hint: languageconst.writeCarIntro.tr,
+                  hint: data.description.toString(),
                 ),
                 heightY(15.h),
                 Row(
@@ -302,7 +303,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                   children: [
                     Expanded(
                       child: Primarydropdownbutton_widget(
-                          hint: "Per Hour",
+                          hint: data.createpackagedata!
+                              .map(
+                                (e) => e.packagetype,
+                              )
+                              .toString(),
                           selectedValue: _packagetypevalue,
                           onChanged: (v) {
                             setState(() {
@@ -325,7 +330,11 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                         heightY(10.h),
                         Primary_txtField(
                           controller: _ammount,
-                          hint_txt: "00.0",
+                          hint_txt: data.createpackagedata!
+                              .map(
+                                (e) => e.ammount,
+                              )
+                              .toString(),
                           fillcolor: true,
                         ),
                       ],
@@ -451,7 +460,6 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
                                 } else {
                                   initialvalue("");
                                 }
-                                print(initialvalue);
                               },
                               value: initialvalue.value),
                         ),

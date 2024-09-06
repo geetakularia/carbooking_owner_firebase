@@ -28,6 +28,9 @@ class _Splash_ScreenState extends State<Splash_Screen> {
     
     Future.delayed(Duration(milliseconds: 400), () async {
       await Get.find<UserController>().relogin();
+     final data3= Get.find<FirebaseController>().getCars();
+      final data = await Get.find<FirebaseController>().getallcars;
+     
 Get.find<FirebaseController>().getCars();
       
     });

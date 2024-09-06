@@ -28,14 +28,14 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final carcontroller = Get.find<FirebaseController>();
     final id = Get.arguments["car_id"];
     // print("===================");
     // print(id);
     // print("===================");
-    final data = controllerdata.getallcars
+    final dataId = controllerdata.getallcars
         .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
-    // print(data.manufactureyear);
+    // print(
+    //     "-=-=-=-=-=-=-=-=-=-=-=-=${dataId.car_id}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -68,9 +68,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 title: languageconst.edit.tr,
                 isExpanded: true,
                 onPressed: () {
-                  Get.toNamed(RoutesName.EditVehiclesScreen, arguments: {
-                    "car_id": carcontroller.getallcars.first.car_id
-                  });
+                  Get.toNamed(RoutesName.EditVehiclesScreen,
+                      arguments: {"car_id": dataId.car_id});
                 })
           ],
         ),
@@ -136,14 +135,15 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         RichText(
                             text: TextSpan(children: [
                           TextSpan(
-                              text: data.carmodel,
+                              text: dataId.carmodel,
                               style: manageData.appTextTheme.fs24Normal
                                   .copyWith(color: manageData.appColors.black)),
                           TextSpan(
-                              text: " ( ${data.manufactureyear} ) ",
+                              text: " ( ${dataId.manufactureyear} ) ",
                               style: manageData.appTextTheme.fs16Normal
                                   .copyWith(color: manageData.appColors.black))
                         ])),
+                        /************** image and video **********************************************************/
                         InkWell(
                           onTap: () {
                             Get.dialog(
@@ -155,6 +155,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                                           BorderRadius.circular(12.r)),
                                   child: UploadDialog(
                                     isshowcheck: true,
+                                    onpressed: () {},
                                   ),
                                 ));
                           },
@@ -217,7 +218,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                 child: RichText(
                     text: TextSpan(children: [
                   TextSpan(
-                      text: "₹ 1,200 ",
+                      text: "₹${dataId.createpackagedata!.first.ammount} ",
                       style: manageData.appTextTheme.fs20Medium),
                   TextSpan(
                       text: languageconst.day.tr,
@@ -239,7 +240,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                     ),
                     heightY(15.h),
                     Text(
-                      data.description.toString(),
+                      dataId.description.toString(),
                       style: manageData.appTextTheme.fs14Normal
                           .copyWith(color: manageData.appColors.gray),
                     ),
@@ -376,24 +377,24 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           heightY(10.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.carMake.tr,
-                              secondtxt: data.companyname.toString()),
+                              secondtxt: dataId.companyname.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.transmission.tr,
-                              secondtxt: data.transmission.toString()),
+                              secondtxt: dataId.transmission.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.color.tr,
-                              secondtxt: data.carcolor.toString()),
+                              secondtxt: "red"),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.licensePlateNo.tr,
-                              secondtxt: data.platenumber.toString()),
+                              secondtxt: dataId.platenumber.toString()),
                           heightY(15.h),
                           RowColumn_Widget(
                               firsttxt: languageconst.seatingCapacity.tr,
                               secondtxt:
-                                  "${data.seatingcapacity.toString()} ${languageconst.seats.tr}"),
+                                  "${dataId.seatingcapacity.toString()} ${languageconst.seats.tr}"),
                         ],
                       ),
                     ),
@@ -420,6 +421,7 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           return Container(
                               width: AppServices.screenWidth(context) * 0.52,
                               child: RentalCarTile(
+                                onpressed: () {},
                                 model: data,
                               ));
                         },

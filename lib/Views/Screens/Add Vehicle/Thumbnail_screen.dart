@@ -41,19 +41,16 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
               title: languageconst.uploadVehicle.tr,
               onPressed: () async {
                 // Upload the video ///////////
-                if (videoFile != null) {
-                  final videoUrl = await uploadecarvideo(videoFile!);
-                  if (videoUrl.isNotEmpty) {
-                    carController.car.copyWith(videos: [videoUrl]);
-                  }
-                } else {
-                  print("No video file selected.");
-                }
+
+                final videoUrl = await uploadecarvideo(videoFile!);
+
                 // Upload the  image ///////////
 
                 final image = await uploadecarvideo(imageFile!);
 
-                final data = carController.car.copyWith(image: [image]);
+                final data = carController.car
+                    .copyWith(image: [image], videos: [videoUrl]);
+                // videos: [videoUrl]);
                 await carController.addvehicle(data).whenComplete(
                   () {
                     Future.delayed(Duration(seconds: 2), () async {

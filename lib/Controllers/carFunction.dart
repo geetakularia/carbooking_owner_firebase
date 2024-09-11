@@ -89,6 +89,7 @@ class FirebaseController extends GetxController {
   final _databse = FirebaseFirestore.instance;
   final _function = FirebaseResponseHandler();
 
+  // MAIN ALL CAR DATA
   List<Car_model> _allCars = [];
   List<Car_model> get getallcars => _allCars;
 
@@ -99,20 +100,28 @@ class FirebaseController extends GetxController {
     update();
   }
 
-/******************************** updateStatus */
-  updateStatus(bool status) async {
-    try {
-      var std = status ? 'Available' : "Unvailable";
-      await _databse
-          .collection("Vehicle")
-          .doc(getallcars.first.car_id)
-          .update({"carstatus": std});
-      _allCars.first.carstatus = std;
-      update();
-    } catch (e) {
-      print(e);
-    }
+  //  UPDATE CAR DATA
+  updateCardata(Car_model model) {
+    final index =
+        _allCars.indexWhere((element) => element.car_id == model.car_id);
+    _allCars[index] = model;
+    update();
   }
+
+/******************************** updateStatus */
+  // updateStatus(bool status) async {
+  //   try {
+  //     var std = status ? 'Available' : "Unvailable";
+  //     await _databse
+  //         .collection("Vehicle")
+  //         .doc(getallcars.first.car_id)
+  //         .update({"carstatus": std});
+  //     _allCars.first.carstatus = std;
+  //     update();
+  //   } catch (e) {
+  //     print(e);
+  //   }
+  // }
 
 /*********************************** add vehicle */
 
@@ -120,13 +129,13 @@ class FirebaseController extends GetxController {
     // print("");
     String? vehicleId;
     try {
-      print("-=-=-=-step2-=-=-=-=-");
+      // print("-=-=-=-step2-=-=-=-=-");
       DocumentReference docRef =
           await _databse.collection("Vehicle").doc(vehicleId);
       final docid = docRef.id;
-      model["car_id"] = docid;
       // String newDocId = docRef.id;
       // Map<String, dynamic> vehicleData = model.toAddvehicle();
+      model["car_id"] = docid;
       // vehicleData['car_id'] = newDocId;
       // Add the document ID
       await _function.postData(docRef, model, RequestType.SET);
@@ -166,6 +175,7 @@ class FirebaseController extends GetxController {
     }
   }
 
+/*************************** update */
   Future<void> updateVehicle(
       String uid, Map<String, dynamic> updatedData) async {
     try {
@@ -178,6 +188,15 @@ class FirebaseController extends GetxController {
       }
     } catch (e) {
       print('Error updating vehicle data: $e');
+    }
+  }
+
+  /**************************** delete Vehicle */
+  vehicleDelete(Car_model model) {
+    try {
+      _databse.collection("Vehicle").doc(_allCars.first.car_id).delete();
+    } catch (e) {
+      print('Error Delete vehicle data: $e');
     }
   }
 }

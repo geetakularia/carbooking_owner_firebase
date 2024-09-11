@@ -9,16 +9,29 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 
-class TieredDiscount extends StatefulWidget {
-  const TieredDiscount({super.key});
+// ignore: must_be_immutable
+class TieredDiscountScreen extends StatefulWidget {
+  TextEditingController spendvalue,
+      discountvalue,
+      discountunit,
+      validfrom,
+      validtill;
+  TieredDiscountScreen(
+      {super.key,
+      required this.discountunit,
+      required this.discountvalue,
+      required this.spendvalue,
+      required this.validfrom,
+      required this.validtill});
 
   @override
-  State<TieredDiscount> createState() => _TieredDiscountState();
+  State<TieredDiscountScreen> createState() => _TieredDiscountScreenState();
 }
 
-class _TieredDiscountState extends State<TieredDiscount> {
+class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
   bool showvaluecontainer = false;
   DateTime selectedDate = DateTime.now();
+
   final TextEditingController datecontrollrs = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -44,6 +57,7 @@ class _TieredDiscountState extends State<TieredDiscount> {
                   ),
                   heightY(10.h),
                   Textfieldwithtitle(
+                    controller: widget.spendvalue,
                     title:
                         "${languageconst.SpendThreshold.tr} (${languageconst.minimumspentvalue.tr})",
                     hint: "₹0.0",
@@ -53,6 +67,7 @@ class _TieredDiscountState extends State<TieredDiscount> {
                     children: [
                       Expanded(
                         child: Textfieldwithtitle(
+                          controller: widget.discountvalue,
                           title: "${languageconst.DiscountValue.tr} ",
                           hint: "₹0.0",
                         ),
@@ -60,6 +75,7 @@ class _TieredDiscountState extends State<TieredDiscount> {
                       widthX(10.w),
                       Expanded(
                         child: Textfieldwithtitle(
+                          controller: widget.discountunit,
                           title: languageconst.DiscountUnit.tr,
                           hint: languageconst.enter.tr,
                         ),
@@ -71,6 +87,7 @@ class _TieredDiscountState extends State<TieredDiscount> {
                     children: [
                       Expanded(
                         child: Datetimetextfield(
+                            controller: widget.validfrom,
                             title: languageconst.ValidForm.tr,
                             hint: "DD/MM/YY",
                             onpressed: () async {
@@ -91,6 +108,7 @@ class _TieredDiscountState extends State<TieredDiscount> {
                       widthX(10.w),
                       Expanded(
                         child: Datetimetextfield(
+                            controller: widget.validtill,
                             title: languageconst.ValidTill.tr,
                             hint: "DD/MM/YY",
                             onpressed: () async {

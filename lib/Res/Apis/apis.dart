@@ -7,7 +7,7 @@ class Apis {
       _Database.collection("Owner");
   //collection of car
   CollectionReference<Map<String, dynamic>> get getcarcollection =>
-      _Database.collection("Cars");
+      _Database.collection("Vehicle");
   //collection of Allcar
   CollectionReference<Map<String, dynamic>> get getoffercollection =>
       _Database.collection("Offers");

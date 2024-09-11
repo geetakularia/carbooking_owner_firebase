@@ -8,11 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Datetimetextfield extends StatelessWidget {
   String title, hint;
   Function onpressed;
+  TextEditingController? controller;
   Datetimetextfield(
       {super.key,
       required this.title,
       required this.hint,
-      required this.onpressed});
+      required this.onpressed,
+      this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +28,7 @@ class Datetimetextfield extends StatelessWidget {
         ),
         heightY(10.h),
         Primary_txtField(
+          controller: controller,
           suffix_onpressed: () {
             onpressed();
           },

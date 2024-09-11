@@ -35,7 +35,7 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
       final ImagePicker _picker = ImagePicker();
       final List<XFile>? selectedImages = await _picker.pickMultiImage();
       if (selectedImages != null) {
-        setState(() { 
+        setState(() {
           imageFiles = selectedImages.map((xfile) => File(xfile.path)).toList();
         });
       }
@@ -216,7 +216,7 @@ Future<List<String>> uploadImages(List<File> images) async {
   for (var image in images) {
     try {
       // Assume this function uploads an image and returns its URL
-      final imageUrl = await uploadecarvideo(image);
+      final imageUrl = await uploadecarimg(image);
       imageUrls.add(imageUrl);
     } catch (e) {
       print("Error uploading image: $e");

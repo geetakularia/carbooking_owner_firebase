@@ -1,6 +1,7 @@
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
+import 'package:car_booking_owner/Components/offerContainerWidget.dart';
+import 'package:car_booking_owner/Controllers/OfferController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
-import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -8,10 +9,12 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 class OfferScreen extends StatelessWidget {
-  const OfferScreen({super.key});
-
+  OfferScreen({super.key});
+  final offercontroller = Get.find<OfferController>();
   @override
   Widget build(BuildContext context) {
+    // print(
+    //     "-=-=--=-=-=-${offercontroller.getofferdata.first.OfferId}-==-======-=-");
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -22,6 +25,8 @@ class OfferScreen extends StatelessWidget {
                     title: languageconst.addoffers.tr,
                     onPressed: () {
                       Get.toNamed("/addoffer");
+                      // print(
+                      //     "-=--=-=-=-=-=-=-=-=-=-=-=-${offercontroller.getofferdata.first["OfferId"]}--------------------");
                     }))
           ],
         ),
@@ -48,153 +53,14 @@ class OfferScreen extends StatelessWidget {
                 ListView.separated(
                   separatorBuilder: (context, index) => heightY(15.h),
                   scrollDirection: Axis.vertical,
-                  itemCount: Localdata.homeslideritems.length,
+                  itemCount: offercontroller.getofferdata.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                          border: Border.all(
-                              color:
-                                  manageData.appColors.gray.withOpacity(0.3)),
-                          borderRadius: BorderRadius.circular(12.r),
-                          color: manageData.appColors.white),
-                      child: Row(
-                        children: [
-                          Expanded(
-                            child: Padding(
-                              padding: EdgeInsets.all(8.0.sp),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    Localdata.homeslideritems[index]["title"],
-                                    style: manageData.appTextTheme.fs20Medium,
-                                  ),
-                                  heightY(5.h),
-                                  Text(
-                                    Localdata.homeslideritems[index]
-                                        ["subtitle"],
-                                    style: manageData.appTextTheme.fs14Normal
-                                        .copyWith(
-                                            color:
-                                                manageData.appColors.primary),
-                                  ),
-                                  heightY(10.h),
-                                  Text(
-                                    languageconst.startingat.tr,
-                                    style: manageData.appTextTheme.fs12Normal,
-                                  ),
-                                  RichText(
-                                      text: TextSpan(
-                                          style: manageData
-                                              .appTextTheme.fs12Normal
-                                              .copyWith(color: Colors.black),
-                                          children: [
-                                        TextSpan(
-                                          text: Localdata.homeslideritems[index]
-                                              ["rupess"],
-                                          style: manageData
-                                              .appTextTheme.fs16Bold
-                                              .copyWith(color: Colors.black),
-                                        ),
-                                        TextSpan(
-                                          text: Localdata.homeslideritems[index]
-                                              ["discount"],
-                                        )
-                                      ]))
-                                ],
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.r),
-                                  child: Stack(
-                                      alignment: Alignment.topRight,
-                                      children: [
-                                        Image.asset(
-                                          height: 170.h,
-                                          Localdata.homeslideritems[index]
-                                              ["image"],
-                                          fit: BoxFit.cover,
-                                        ),
-                                        PopupMenuButton(
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                              Radius.circular(10.0.r),
-                                            ),
-                                          ),
-                                          padding: EdgeInsets.zero,
-                                          icon: Container(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 4.h, horizontal: 4.w),
-                                            decoration: BoxDecoration(
-                                              boxShadow: [
-                                                BoxShadow(
-                                                    color: manageData
-                                                        .appColors.gray
-                                                        .withOpacity(0.2),
-                                                    blurRadius: 1,
-                                                    spreadRadius: 1,
-                                                    offset: Offset(0, 0))
-                                              ],
-                                              shape: BoxShape.circle,
-                                              color: manageData.appColors.white,
-                                            ),
-                                            child: Icon(
-                                              Icons.more_vert,
-                                              color:
-                                                  manageData.appColors.primary,
-                                            ),
-                                          ),
-                                          color: Colors.white,
-                                          itemBuilder: (BuildContext context) {
-                                            return [
-                                              PopupMenuItem(
-                                                value: languageconst.edit.tr,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(languageconst.edit.tr),
-                                                    IconButton(
-                                                        onPressed: () {
-                                                          Get.toNamed(
-                                                              "/AddOfferDetails");
-                                                        },
-                                                        icon: Icon(Icons
-                                                            .edit_outlined))
-                                                  ],
-                                                ),
-                                              ),
-                                              PopupMenuItem(
-                                                value: languageconst.Delete.tr,
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Text(languageconst
-                                                        .Delete.tr),
-                                                    IconButton(
-                                                      onPressed: () {},
-                                                      icon: Icon(
-                                                        Icons.delete_outline,
-                                                        color: manageData
-                                                            .appColors.red,
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                              ),
-                                            ];
-                                          },
-                                        ),
-                                      ])))
-                        ],
-                      ),
-                    );
+                    final data = offercontroller.getofferdata[index];
+                    return OffercontainerWidget(
+                        model: data,
+                        deleteOnPressed: () {},
+                        editOnPressed: () {});
                   },
                 )
               ],

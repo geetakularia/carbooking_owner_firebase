@@ -12,19 +12,16 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class RentalCarTile extends StatelessWidget {
   Car_model model;
-  RentalCarTile({
-    super.key,
-    required this.model,
-  });
+  Function onpressed;
+  RentalCarTile({super.key, required this.model, required this.onpressed});
 
   @override
   Widget build(BuildContext context) {
-    final carcontroller = Get.find<FirebaseController>();
+    // final carcontroller = Get.find<FirebaseController>();
 
     return InkWell(
       onTap: () {
-        Get.toNamed(RoutesName.CarPreviewScreen,
-            arguments: {"car_id": carcontroller.getallcars.first.car_id});
+        onpressed();
       },
       child: Stack(
         children: [

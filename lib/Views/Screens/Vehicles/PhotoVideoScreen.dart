@@ -1,7 +1,7 @@
 import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
-import 'package:car_booking_owner/Views/Screens/Vehicles/ImageShowScreen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -28,10 +28,14 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
   @override
   Widget build(BuildContext context) {
     final carcontroller = Get.find<FirebaseController>();
-    // final id = Get.arguments["car_id"];
+    final id = Get.arguments["car_id"];
 
-    // final data = carcontroller.getallcars
-    //     .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+    final dataId = carcontroller.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+
+    List<String>? images = dataId.image;
+    print('Images List: $images');
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -48,37 +52,18 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
             children: [
               GridView.builder(
                 shrinkWrap: true,
-                itemCount: carcontroller.getallcars.length,
+                itemCount: images!.length,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     childAspectRatio: 1,
                     crossAxisCount: 3,
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),
                 itemBuilder: (context, index) {
-                  String imageUrl = carcontroller.getallcars[index].image![0];
+                  String imageUrl = dataId.image![index];
                   return GestureDetector(
-                    onTap: () {
-                      Get.to(ImageShowScreen(
-                        image: imageUrl,
-                        imageList: carcontroller.getallcars
-                            .map((e) => e.image![0])
-                            .toList(),
-                        // data.image!
-                        //     .map(
-                        //       (e) => e,
-                        //     )
-                        
-                      ));
-                    },
+                    onTap: () {},
                     child: Image.network(
                       imageUrl,
-                      // data.image!
-                      //     .map(
-                      //       (e) => e,
-                      //     )
-                      //     .toString(),
-
-                    
                       fit: BoxFit.cover,
                     ),
                   );
@@ -99,8 +84,7 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                       image: DecorationImage(
-                        image: AssetImage(manageData
-                            .appimage.innova),
+                        image: AssetImage(manageData.appimage.innova),
                         fit: BoxFit.cover,
                       ),
                     ),

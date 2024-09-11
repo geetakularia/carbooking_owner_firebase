@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 class VehiclesScreen extends StatelessWidget {
   VehiclesScreen({super.key});
   final controllerdata = Get.find<FirebaseController>();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +94,11 @@ class VehiclesScreen extends StatelessWidget {
                     itemBuilder: (context, index) {
                       final data = controllerdata.getallcars[index];
                       return RentalCarTile(
+                        onpressed: () {
+                          Get.toNamed(RoutesName.CarPreviewScreen, arguments: {
+                            "car_id": controllerdata.getallcars[index].car_id
+                          });
+                        },
                         model: data,
                       );
                     },

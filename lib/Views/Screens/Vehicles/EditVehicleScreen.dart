@@ -48,21 +48,21 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
 
   getfun() {
     final carcontroller = Get.find<FirebaseController>();
-    _platenumber.text = carcontroller.getallcars.first.platenumber!;
-    _carmakeValue = carcontroller.getallcars.first.companyname!;
-    _carmodelValue = carcontroller.getallcars.first.carmodel!;
-    _transmissionValue = carcontroller.getallcars.first.transmission!;
-    _seatingcapacityValue = carcontroller.getallcars.first.seatingcapacity!;
-    _fuelValue = carcontroller.getallcars.first.fuel!;
-    _categoryValue = carcontroller.getallcars.first.category!;
-    _yearValue = carcontroller.getallcars.first.manufactureyear!;
-    _description.text = carcontroller.getallcars.first.description!;
-    _packagetypevalue =
-        carcontroller.getallcars.first.createpackagedata!.first.packagetype!;
-    _ammount.text = carcontroller
-        .getallcars.first.createpackagedata!.first.ammount!
-        .toString();
-    initialvalue = carcontroller.getallcars.first.carstatus.toString().obs;
+    final id = Get.arguments["car_id"];
+    final dataId = carcontroller.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+    _platenumber.text = dataId.platenumber!;
+    _carmakeValue = dataId.companyname!;
+    _carmodelValue = dataId.carmodel!;
+    _transmissionValue = dataId.transmission!;
+    _seatingcapacityValue = dataId.seatingcapacity!;
+    _fuelValue = dataId.fuel!;
+    _categoryValue = dataId.category!;
+    _yearValue = dataId.manufactureyear!;
+    _description.text = dataId.description!;
+    _packagetypevalue = dataId.createpackagedata!.first.packagetype!;
+    _ammount.text = dataId.createpackagedata!.first.ammount!.toString();
+    initialvalue = dataId.carstatus.toString().obs;
   }
 
   Widget build(BuildContext context) {

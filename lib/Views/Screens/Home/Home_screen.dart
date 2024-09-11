@@ -36,12 +36,11 @@ class _Home_screenState extends State<Home_screen> {
         Container(
           decoration: BoxDecoration(
               borderRadius:
-                   BorderRadius.vertical(bottom: Radius.circular(40.r)),
+                  BorderRadius.vertical(bottom: Radius.circular(40.r)),
               color: manageData.appColors.primary),
           padding: const EdgeInsets.fromLTRB(20, 40, 20, 0),
           child: Column(
             children: [
-
               Row(
                 children: [
                   usercontroller.userdata.data!.image.isEmpty
@@ -344,6 +343,13 @@ class _Home_screenState extends State<Home_screen> {
                       return Container(
                           width: AppServices.screenWidth(context) * 0.52,
                           child: RentalCarTile(
+                            onpressed: () {
+                              Get.toNamed(RoutesName.CarPreviewScreen,
+                                  arguments: {
+                                    "car_id":
+                                        controllerdata.getallcars[index].car_id
+                                  });
+                            },
                             model: data,
                           ));
                     },

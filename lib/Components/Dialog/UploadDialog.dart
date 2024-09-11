@@ -11,7 +11,13 @@ import 'package:get/get.dart';
 
 class UploadDialog extends StatelessWidget {
   final bool isshowcheck;
-  UploadDialog({super.key, this.isshowcheck = false});
+  Function onpressed;
+
+  UploadDialog({
+    super.key,
+    this.isshowcheck = false,
+    required this.onpressed,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +79,26 @@ class UploadDialog extends StatelessWidget {
                       : SizedBox(),
                   isshowcheck ? heightY(4.h) : SizedBox(),
                   heightY(15.h),
-                  Container(
-                    width: AppServices.screenWidth(context),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 35.h),
-                    decoration: BoxDecoration(
-                        color: styledata.appColors.lightgray.withOpacity(0.5),
-                        borderRadius: BorderRadius.circular(10.r)),
-                    child: Column(
-                      children: [
-                        SvgPicture.asset(styledata.appsvgimg.download_icon_2),
-                        heightY(10.h),
-                        Text(languageconst.uploadimagevideo.tr,
-                            style: styledata.appTextTheme.fs16Normal
-                                .copyWith(color: styledata.appColors.gray))
-                      ],
+                  InkWell(
+                    onTap: () {
+                      onpressed;
+                    },
+                    child: Container(
+                      width: AppServices.screenWidth(context),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 35.h),
+                      decoration: BoxDecoration(
+                          color: styledata.appColors.lightgray.withOpacity(0.5),
+                          borderRadius: BorderRadius.circular(10.r)),
+                      child: Column(
+                        children: [
+                          SvgPicture.asset(styledata.appsvgimg.download_icon_2),
+                          heightY(10.h),
+                          Text(languageconst.uploadimagevideo.tr,
+                              style: styledata.appTextTheme.fs16Normal
+                                  .copyWith(color: styledata.appColors.gray))
+                        ],
+                      ),
                     ),
                   ),
                   heightY(15.h),

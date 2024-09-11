@@ -29,13 +29,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
   @override
   Widget build(BuildContext context) {
     final id = Get.arguments["car_id"];
-    // print("===================");
-    // print(id);
-    // print("===================");
     final dataId = controllerdata.getallcars
         .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
-    // print(
-    //     "-=-=-=-=-=-=-=-=-=-=-=-=${dataId.car_id}-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -50,7 +45,11 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                       onpressed_No: () {
                         Get.back();
                       },
-                      onpressed_Yes: () {},
+                      onpressed_Yes: () {
+                        setState(() {
+                          controllerdata.vehicleDelete(dataId);
+                        });
+                      },
                       title: languageconst.confirmDeleteVehicle.tr,
                       subtitle: languageconst.deleteWarningPolicy.tr,
                     ));
@@ -258,7 +257,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                         children: [
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RoutesName.PhotovideoScreen);
+                              Get.toNamed(RoutesName.PhotovideoScreen,
+                                  arguments: {"car_id": dataId.car_id});
                             },
                             child: Stack(
                               alignment: Alignment.center,
@@ -305,7 +305,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                           widthX(10.w),
                           InkWell(
                             onTap: () {
-                              Get.toNamed(RoutesName.PhotovideoScreen);
+                              Get.toNamed(RoutesName.PhotovideoScreen,
+                                  arguments: {"car_id": dataId.car_id});
                             },
                             child: Stack(
                               alignment: Alignment.center,

@@ -42,7 +42,7 @@ class _ImageShowScreenState extends State<ImageShowScreen> {
         child: Column(
           children: [
             InteractiveViewer(
-              child: Image.asset(
+              child: Image.network(
                 widget.image,
                 fit: BoxFit.contain,
                 width: AppServices.screenWidth(context),
@@ -77,7 +77,7 @@ class _ImageShowScreenState extends State<ImageShowScreen> {
                           borderRadius: BorderRadius.circular(10.r)),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.r),
-                        child: Image.asset(
+                        child: Image.network(
                           widget.imageList[index],
                           width: 50.w,
                           fit: BoxFit.cover,

@@ -7,7 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 // ignore: must_be_immutable
 class Textfieldwithtitle extends StatelessWidget {
   String title, hint;
-  Textfieldwithtitle({super.key, required this.title, required this.hint});
+  TextEditingController? controller;
+  Textfieldwithtitle(
+      {super.key, required this.title, required this.hint, this.controller});
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +23,7 @@ class Textfieldwithtitle extends StatelessWidget {
         ),
         heightY(10.h),
         Primary_txtField(
+          controller: controller,
           hint_txt: hint,
           fillcolor: true,
         ),

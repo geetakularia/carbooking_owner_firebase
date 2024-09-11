@@ -1,4 +1,5 @@
 import 'package:car_booking_owner/Models/carmodel.dart';
+import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
@@ -182,10 +183,25 @@ class FirebaseController extends GetxController {
     }
   }
 
+  /**************************** remove from list Vehicle */
+  remove_vehicle(String id) {
+    _allCars.removeWhere((e) => e.car_id == id);
+    update();
+  }
+
   /**************************** delete Vehicle */
-  vehicleDelete(Car_model model) {
+  vehicleDelete(String id) {
     try {
-      _databse.collection("Vehicle").doc(_allCars.first.car_id).delete();
+      _databse
+          .collection("Vehicle")
+          .doc(id)
+          .delete()
+          .then(
+            (value) => remove_vehicle(id),
+          )
+          .whenComplete(() {
+        Get.toNamed(RoutesName.vehicle);
+      });
     } catch (e) {
       print('Error Delete vehicle data: $e');
     }

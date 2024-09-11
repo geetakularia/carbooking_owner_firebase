@@ -35,7 +35,7 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
       final ImagePicker _picker = ImagePicker();
       final List<XFile>? selectedImages = await _picker.pickMultiImage();
       if (selectedImages != null) {
-        setState(() { 
+        setState(() {
           imageFiles = selectedImages.map((xfile) => File(xfile.path)).toList();
         });
       }
@@ -74,19 +74,21 @@ class _Thumbnail_screenState extends State<Thumbnail_screen> {
 
                 await carController
                     .addvehicle(data.toAddvehicle())
-                    .whenComplete(() {
-                  Future.delayed(Duration(seconds: 2), () async {
-                    Get.back();
-                    Get.to(BottomScreen(currentIndex: 3));
-                  });
-                  Get.dialog(
-                    Primary_dialog(
-                      image: manageData.appimage.vehicle,
-                      title: languageconst.vehicleAddedSuccessfully.tr,
-                      subtitle: languageconst.uploadingVehicleListPleaseWait.tr,
-                    ),
-                  );
-                });
+                    .whenComplete(
+                  () {
+                    Future.delayed(Duration(milliseconds: 300), () async {
+                      Get.back();
+                      Get.to(BottomScreen(
+                        currentIndex: 3,
+                      ));
+                    });
+                    Get.dialog(Primary_dialog(
+                        image: manageData.appimage.vehicle,
+                        title: languageconst.vehicleAddedSuccessfully.tr,
+                        subtitle:
+                            languageconst.uploadingVehicleListPleaseWait.tr));
+                  },
+                );
               },
               isExpanded: true,
             ),
@@ -214,7 +216,7 @@ Future<List<String>> uploadImages(List<File> images) async {
   for (var image in images) {
     try {
       // Assume this function uploads an image and returns its URL
-      final imageUrl = await uploadecarvideo(image);
+      final imageUrl = await uploadecarimg(image);
       imageUrls.add(imageUrl);
     } catch (e) {
       print("Error uploading image: $e");

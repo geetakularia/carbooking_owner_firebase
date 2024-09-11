@@ -64,11 +64,16 @@ class OfferController extends GetxController {
     }
   }
 
+  /**************************** remove from list Vehicle */
+  remove_offer(String id) {
+    _addoffers.removeWhere((e) => e.OfferId == id);
+    update();
+  }
+
   /****************** delete offers */
-  offerdelete(OfferDetails model) {
+  offerdelete(String id) {
     try {
-      manageData.api.offerdoc(_addoffers.first.OfferId).delete();
-    
+      manageData.api.offerdoc(id).delete().then((value) => remove_offer(id));
     } catch (e) {
       print('Error Delete offers data: $e');
     }

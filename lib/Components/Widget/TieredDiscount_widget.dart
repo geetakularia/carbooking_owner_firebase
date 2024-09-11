@@ -91,16 +91,16 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                             title: languageconst.ValidForm.tr,
                             hint: "DD/MM/YY",
                             onpressed: () async {
-                              final DateTime? picked = await showDatePicker(
-                                  context: context,
-                                  initialDate: selectedDate,
-                                  firstDate: DateTime(2015),
-                                  lastDate: selectedDate);
-                              if (picked != null && picked != selectedDate) {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2101),
+                              );
+                              if (pickedDate != null) {
                                 setState(() {
-                                  datecontrollrs.text =
-                                      "${picked.toLocal()}".split(" ")[0];
-                                  selectedDate = picked;
+                                  widget.validfrom.text =
+                                      "${pickedDate.toLocal()}".split(' ')[0];
                                 });
                               }
                             }),
@@ -112,16 +112,16 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                             title: languageconst.ValidTill.tr,
                             hint: "DD/MM/YY",
                             onpressed: () async {
-                              final DateTime? picked = await showDatePicker(
-                                  context: context,
-                                  initialDate: selectedDate,
-                                  firstDate: DateTime(2015),
-                                  lastDate: selectedDate);
-                              if (picked != null && picked != selectedDate) {
+                              DateTime? pickedDate = await showDatePicker(
+                                context: context,
+                                initialDate: DateTime.now(),
+                                firstDate: DateTime.now(),
+                                lastDate: DateTime(2101),
+                              );
+                              if (pickedDate != null) {
                                 setState(() {
-                                  datecontrollrs.text =
-                                      "${picked.toLocal()}".split(" ")[0];
-                                  selectedDate = picked;
+                                  widget.validtill.text =
+                                      "${pickedDate.toLocal()}".split(' ')[0];
                                 });
                               }
                             }),

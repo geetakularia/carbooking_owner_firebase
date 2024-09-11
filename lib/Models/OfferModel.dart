@@ -59,7 +59,7 @@ class OfferDetails {
   String? bundleType; // Only for Bundle Discount
 
   OfferDetails(
-      { this.discountType,
+      {this.discountType,
       this.OfferId,
       this.generalDiscount,
       this.bannerimg,
@@ -75,7 +75,7 @@ class OfferDetails {
   OfferDetails.fromofferdetails(FirebaseResponseModel json)
       : OfferId = json.docid,
         generalDiscount = json.data['generalDiscount'] ?? 0.0,
-        bannerimg = json.data['thumbnail'] ?? '',
+        bannerimg = json.data['bannerimg'] ?? '',
         title = json.data['title'] ?? '',
         couponCode = json.data['couponCode'] ?? '',
         description = json.data['description'] ?? '',
@@ -103,7 +103,7 @@ class OfferDetails {
     return {
       'OfferId': OfferId,
       'generalDiscount': generalDiscount,
-      'thumbnail': bannerimg,
+      'bannerimg': bannerimg,
       'title': title,
       'couponCode': couponCode,
       'description': description,
@@ -119,7 +119,7 @@ class OfferDetails {
   OfferDetails copyWith({
     String? OfferId,
     double? generalDiscount,
-    String? thumbnail,
+    String? bannerimg,
     String? title,
     String? couponCode,
     String? description,
@@ -133,7 +133,7 @@ class OfferDetails {
     return OfferDetails(
       OfferId: OfferId ?? this.OfferId,
       generalDiscount: generalDiscount ?? this.generalDiscount,
-      bannerimg: thumbnail ?? this.bannerimg,
+      bannerimg: bannerimg ?? this.bannerimg,
       title: title ?? this.title,
       couponCode: couponCode ?? this.couponCode,
       description: description ?? this.description,
@@ -191,10 +191,6 @@ class Benefitsmodel {
       'validTill': validTill,
     };
   }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory Benefitsmodel.fromJson(String source) => Benefitsmodel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 // Model for Tiered Discount

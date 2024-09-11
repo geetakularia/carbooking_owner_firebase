@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 /************************************new car model ******************* */
+enum Packageenum { PerDay, PerKilometer, PerHour }
+
 class Car_model {
   String? car_id;
   String? title;
@@ -24,6 +26,7 @@ class Car_model {
   List<String>? videos;
   List<String>? image;
   String? carstatus;
+  Packageenum? packageenum;
   List<CreatePackageModel>? createpackagedata;
   Car_model(
       {this.addedAt,
@@ -48,7 +51,8 @@ class Car_model {
       this.carcolor,
       this.videos,
       this.createpackagedata,
-      this.carstatus});
+      this.carstatus,
+      this.packageenum});
   // Car_model.fromcars(FirebaseResponseModel map) : car_id = map.docid;
 
   Car_model.fromAddvehicle(FirebaseResponseModel json)
@@ -80,7 +84,8 @@ class Car_model {
                 )
                 .toList()
             : null,
-        carstatus = json.data["carstatus"] ?? "";
+        carstatus = json.data["carstatus"] ?? "",
+        packageenum = json.data["packageenum"] ?? "";
 
   Map<String, dynamic> toAddvehicle() {
     return {
@@ -99,37 +104,38 @@ class Car_model {
       "createpackagedata":
           createpackagedata?.map((e) => e.tomap()).toList() ?? [],
       "image": image,
-      "carstatus": carstatus
+      "carstatus": carstatus,
+      "packageenum": packageenum
     };
   }
 
-  Car_model copyWith({
-    String? car_id,
-    String? title,
-    DateTime? createdAt,
-    DateTime? updateAt,
-    bool? isAvailable,
-    int? quantity,
-    double? discount,
-    String? dicountCode,
-    DateTime? addedAt,
-    String? companyname,
-    String? carmodel,
-    String? platenumber,
-    String? transmission,
-    String? seatingcapacity,
-    String? fuel,
-    String? category,
-    String? manufactureyear,
-    String? description,
-    double? ammount,
-    String? packagetype,
-    String? carcolor,
-    String? carstatus,
-    List<String>? videos,
-    List<String>? image,
-    List<CreatePackageModel>? createpackagedata,
-  }) {
+  Car_model copyWith(
+      {String? car_id,
+      String? title,
+      DateTime? createdAt,
+      DateTime? updateAt,
+      bool? isAvailable,
+      int? quantity,
+      double? discount,
+      String? dicountCode,
+      DateTime? addedAt,
+      String? companyname,
+      String? carmodel,
+      String? platenumber,
+      String? transmission,
+      String? seatingcapacity,
+      String? fuel,
+      String? category,
+      String? manufactureyear,
+      String? description,
+      double? ammount,
+      String? packagetype,
+      String? carcolor,
+      String? carstatus,
+      List<String>? videos,
+      List<String>? image,
+      List<CreatePackageModel>? createpackagedata,
+      Packageenum? packageenum}) {
     return Car_model(
         car_id: car_id ?? this.car_id,
         title: title ?? this.title,
@@ -153,7 +159,8 @@ class Car_model {
         videos: videos ?? this.videos,
         image: image ?? this.image,
         createpackagedata: createpackagedata ?? this.createpackagedata,
-        carstatus: carstatus ?? this.carstatus);
+        carstatus: carstatus ?? this.carstatus,
+        packageenum: packageenum ?? this.packageenum);
   }
 }
 

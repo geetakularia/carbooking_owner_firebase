@@ -128,18 +128,18 @@ class UserController extends GetxController {
   user_update(DataResponse<Usermodel> model) {
     try {
       // print("user upload Function run ************");
-      print("step:-1.======================");
+      // print("step:-1.======================");
       manageData.api
           .userdoc(userdata.data!.id)
           .update(model.data!.tomap())
           .then(
         (value) {
           /************************ for userupdate in realtime show  */
-          print("step:-2.======================");
+          // print("step:-2.======================");
           updateUserProfile(model);
         },
       );
-      print("step:-3.======================");
+      // print("step:-3.======================");
     } catch (e) {
       print(e.toString());
     }

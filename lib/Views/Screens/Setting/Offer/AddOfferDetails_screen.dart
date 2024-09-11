@@ -74,7 +74,13 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                           discountValue:
                               double.tryParse(_tieredspendvalue.text.trim()),
                           spendvalue:
-                              double.tryParse(_tieredspendvalue.text.trim()))
+                              double.tryParse(_tieredspendvalue.text.trim()),
+                          validfrom: DateTime.tryParse(_tieredvaildfrom.text)!
+                              .millisecondsSinceEpoch
+                              .toString(),
+                          validtill: DateTime.tryParse(_tieredvaildtill.text)!
+                              .millisecondsSinceEpoch
+                              .toString())
                     ],
                     couponCode: _couponcode.text.trim(),
                     description: _description.text.trim(),
@@ -83,16 +89,20 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                     usesPerCustomer: int.tryParse(_totaluses.text.trim()),
                     benefitsmodel: [
                       Benefitsmodel(
-                          validFrom: DateTime.now().toIso8601String(),
-                          validTill: DateTime.now().toIso8601String(),
+                          validFrom: DateTime.tryParse(_datefrom.text)!
+                              .millisecondsSinceEpoch
+                              .toString(),
+                          validTill: DateTime.tryParse(_datetill.text)!
+                              .millisecondsSinceEpoch
+                              .toString(),
                           discountUnit: _discountunit.text.trim(),
                           discountValue:
                               double.tryParse(_discountvalue.text.trim()))
                     ]);
                 offerController.addOffer(addData.toJson()).whenComplete(
-                 () {
+                  () {
                     Get.toNamed(RoutesName.offer);
-                  }, 
+                  },
                 );
               },
               isExpanded: true,
@@ -224,20 +234,20 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                                 controller: _datetill,
                                 title: languageconst.ValidTill.tr,
                                 hint: "DD/MM/YY",
-                                onpressed: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2101),
-                                  );
-                                  if (pickedDate != null) {
-                                    setState(() {
-                                      _datetill.text = "${pickedDate.toLocal()}"
-                                          .split(' ')[0];
-                                    });
-                                  }
-                                }),
+                                  onpressed: () async {
+                                    DateTime? pickedDate = await showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000),
+                                      lastDate: DateTime(2101),
+                                    );
+                                    if (pickedDate != null) {
+                                      setState(() {
+                                        _datetill.text = "${pickedDate.toLocal()}"
+                                            .split(' ')[0];
+                                      });
+                                    }
+                                  }),
                           ),
                         ],
                       ),

@@ -56,6 +56,7 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                     crossAxisSpacing: 10,
                     mainAxisSpacing: 10),
                 itemBuilder: (context, index) {
+                  String imageUrl = dataId.image![index];
                   return GestureDetector(
                     onTap: () {
                       Get.to(ImageShowScreen(
@@ -83,10 +84,8 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                     width: AppServices.screenWidth(context),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      // color: Colors.black,
                       image: DecorationImage(
-                        image: AssetImage(manageData
-                            .appimage.innova), // Replace with your image URL
+                        image: AssetImage(manageData.appimage.innova),
                         fit: BoxFit.cover,
                       ),
                     ),

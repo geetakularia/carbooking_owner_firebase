@@ -1,5 +1,6 @@
 import 'package:car_booking_owner/Components/CarPartTextIcon.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/BookingCarModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
@@ -7,16 +8,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
+// ignore: must_be_immutable
 class BookingsCarTile extends StatelessWidget {
-  const BookingsCarTile({
-    super.key,
-  });
+  BookingModel model;
+  Function onpressed;
+  BookingsCarTile({super.key, required this.model, required this.onpressed});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        Get.toNamed(RoutesName.BookingDetailsScreen);
+        onpressed();
+       
       },
       child: Stack(
         children: [
@@ -26,7 +29,7 @@ class BookingsCarTile extends StatelessWidget {
             decoration: BoxDecoration(
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(manageData.appimage.innova),
+                image: NetworkImage(model.cars!.first.image!.first),
               ),
               borderRadius: BorderRadius.circular(14.r),
             ),
@@ -70,17 +73,17 @@ class BookingsCarTile extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             CarPartTextIcon(
-                              title: languageconst.petrol.tr,
+                              title: model.cars!.first.fuel ?? "",
                               iconpath: manageData.appsvgimg.petrol,
                             ),
                             heightY(10.h),
                             CarPartTextIcon(
-                              title: languageconst.automatic.tr,
+                              title: model.cars!.first.transmission ?? "",
                               iconpath: manageData.appsvgimg.gear,
                             ),
                             heightY(10.h),
                             CarPartTextIcon(
-                              title: "2 ${languageconst.seats.tr}",
+                              title: model.cars!.first.seatingcapacity ?? "",
                               iconpath: manageData.appsvgimg.seat,
                             ),
                           ],
@@ -100,7 +103,7 @@ class BookingsCarTile extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.end,
                           children: [
                             Text(
-                              "#451110",
+                              model.bookingID ?? "",
                               style: manageData.appTextTheme.fs16Bold.copyWith(
                                 color: manageData.appColors.white,
                               ),
@@ -123,13 +126,14 @@ class BookingsCarTile extends StatelessWidget {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: "₹ 1,200",
+                          text: "${model.amount}",
                           style: manageData.appTextTheme.fs24Bold.copyWith(
                             color: manageData.appColors.white,
                           ),
                           children: <TextSpan>[
                             TextSpan(
-                              text: "/${languageconst.day.tr}",
+                              text:
+                                  "/${model.cars!.first.createpackagedata!.first.packagetype}",
                               style: manageData.appTextTheme.fs14Normal,
                             ),
                           ],

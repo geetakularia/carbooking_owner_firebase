@@ -67,9 +67,10 @@ class OffercontainerWidget extends StatelessWidget {
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(10.r),
                   child: Stack(alignment: Alignment.topRight, children: [
-                    Image.asset(
+                    Image.network(
                       height: 170.h,
-                      manageData.appimage.wedding_img,
+                      width: AppServices.screenWidth(context) * .5,
+                      model.bannerimg!,
                       fit: BoxFit.cover,
                     ),
                     PopupMenuButton(

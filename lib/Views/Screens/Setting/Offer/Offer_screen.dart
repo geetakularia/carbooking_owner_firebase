@@ -52,20 +52,25 @@ class OfferScreen extends StatelessWidget {
             Expanded(
               child: ScrollConfiguration(
                 behavior: ScrollBehavior().copyWith(overscroll: false),
-                child: ListView.separated(
-                  physics: BouncingScrollPhysics(),
-                  separatorBuilder: (context, index) => heightY(15.h),
-                  scrollDirection: Axis.vertical,
-                  itemCount: offercontroller.getofferdata.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    final data = offercontroller.getofferdata[index];
-                    return OffercontainerWidget(
-                        model: data,
-                        deleteOnPressed: () {
-                          offercontroller.offerdelete(data.OfferId!);
-                        },
-                        editOnPressed: () {});
+                child: GetBuilder<OfferController>(
+                  builder: (controller) {
+                    return ListView.separated(
+                      physics: BouncingScrollPhysics(),
+                      separatorBuilder: (context, index) => heightY(15.h),
+                      scrollDirection: Axis.vertical,
+                      itemCount: offercontroller.getofferdata.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final data = offercontroller.getofferdata[index];
+                        return OffercontainerWidget(
+                            model: data,
+                            deleteOnPressed: () {
+                              offercontroller.offerdelete(
+                                  data.OfferId!, data.bannerimg!);
+                            },
+                            editOnPressed: () {});
+                      },
+                    );
                   },
                 ),
               ),

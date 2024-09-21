@@ -3,7 +3,7 @@ import 'package:car_booking_owner/Components/Dialog/ClrDialog.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
@@ -34,7 +34,7 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
   Color pickerColor = Color.fromARGB(255, 235, 19, 4);
   Color currentColor = Color(0xff443a49);
 
-  final carController = Get.find<FirebaseController>();
+  final carController = Get.find<CarController>();
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +47,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
               title: languageconst.next.tr,
               onPressed: () async {
                 final vehicle = Car_model(
-                  
                   platenumber: _plateNumber.text.trim(),
                   companyname: _carmakeValue,
                   carmodel: _carmodelValue,
@@ -56,7 +55,6 @@ class _Addvehicle_screenState extends State<Addvehicle_screen> {
                   fuel: _fuelValue,
                   category: _categoryValue,
                   manufactureyear: _yearValue,
-
                 );
                 carController.setCar(vehicle);
                 Get.toNamed(RoutesName.mercedesbenz_screen);

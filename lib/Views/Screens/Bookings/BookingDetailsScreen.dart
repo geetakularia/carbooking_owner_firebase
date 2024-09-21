@@ -3,18 +3,28 @@ import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/Dialog/logout_dialog.dart';
 import 'package:car_booking_owner/Components/Widget/BookingDetailCard.dart';
 import 'package:car_booking_owner/Components/Widget/RowColumn_widget.dart';
+import 'package:car_booking_owner/Controllers/BookingController.dart';
+import 'package:car_booking_owner/Functions/UserSpot.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/BookingCarModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
+import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class BookingDetailsScreen extends StatelessWidget {
-  const BookingDetailsScreen({super.key});
-
+  BookingDetailsScreen({super.key});
+  final fn = MyFunctions();
+  final id = Get.arguments["bookingID"];
+  final bookingcontroller = Get.find<BookingController>();
   @override
   Widget build(BuildContext context) {
+    final dataId = bookingcontroller.getbookingcar
+        .firstWhere((e) => e.bookingID == id, orElse: () => BookingModel());
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -61,24 +71,50 @@ class BookingDetailsScreen extends StatelessWidget {
                       ),
                       child: ListTile(
                         contentPadding: EdgeInsets.zero,
-                        leading: Image.asset(manageData.appimage.girlprofile),
+                        leading: dataId.user!.image!.isEmpty
+                            ? Container(
+                                padding: EdgeInsets.all(9.sp),
+                                decoration: BoxDecoration(
+                                    color: manageData.appColors.gray,
+                                    shape: BoxShape.circle),
+                                child: Icon(
+                                  Icons.person,
+                                  color: manageData.appColors.white,
+                                  size: 30,
+                                ))
+                            : ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.network(
+                                  dataId.user!.image!,
+                                  width: 52,
+                                  fit: BoxFit.cover,
+                                )),
                         title: Text(
-                          " Mr Rakesh sharma",
+                          dataId.user!.name.toString(),
                           style: manageData.appTextTheme.fs20Normal,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
                         subtitle: Text(
-                          "rajeshshrr98@gmail.com",
+                          dataId.user!.email.toString(),
                           style: manageData.appTextTheme.fs16Normal,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
                         ),
-                        trailing: Container(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 10, vertical: 6),
-                          decoration: BoxDecoration(
-                              color: manageData.appColors.lightgray,
-                              shape: BoxShape.circle),
-                          child: Icon(
-                            Icons.phone,
-                            size: 20,
+                        trailing: InkWell(
+                          onTap: () {
+                            fn.launchPhone(dataId.user!.phonenumber.toString());
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 6),
+                            decoration: BoxDecoration(
+                                color: manageData.appColors.lightgray,
+                                shape: BoxShape.circle),
+                            child: Icon(
+                              Icons.phone,
+                              size: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -86,9 +122,14 @@ class BookingDetailsScreen extends StatelessWidget {
                     heightY(15.h),
                     BookingDetailCard(
                         image: manageData.appimage.lambo,
-                        carname: "Mercedes Benz ( 2023 )",
+                        carname:
+                            "${dataId.cars!.first.companyname.toString()} (${dataId.cars!.first.manufactureyear.toString()})",
                         year: "year",
-                        rate: "1,200",
+                        fuel: dataId.cars!.first.fuel.toString(),
+                        seat: dataId.cars!.first.seatingcapacity.toString(),
+                        transmission:
+                            dataId.cars!.first.transmission.toString(),
+                        rate: dataId.amount.toString(),
                         offer: "(5% off)"),
                     heightY(15.h),
                     Divider(thickness: 1),
@@ -110,7 +151,7 @@ class BookingDetailsScreen extends StatelessWidget {
                           ),
                           heightY(10.h),
                           Text(
-                            "Rishi nagar 90 - S 99 gali 1",
+                            dataId.address.toString(),
                             style: manageData.appTextTheme.fs16Normal,
                           ),
                           heightY(15.h),
@@ -121,7 +162,7 @@ class BookingDetailsScreen extends StatelessWidget {
                           ),
                           heightY(10.h),
                           Text(
-                            "Hansi Gate Sec - 89",
+                            dataId.destination.toString(),
                             style: manageData.appTextTheme.fs16Normal,
                           ),
                         ],
@@ -156,7 +197,8 @@ class BookingDetailsScreen extends StatelessWidget {
                                   ),
                                   heightY(5.h),
                                   Text(
-                                    "10:00am",
+                                    DateFormat('HH:mm a')
+                                        .format(DateTime.parse(dataId.time!)),
                                     style: manageData.appTextTheme.fs16Normal,
                                   )
                                 ],
@@ -173,7 +215,8 @@ class BookingDetailsScreen extends StatelessWidget {
                                   ),
                                   heightY(5.h),
                                   Text(
-                                    "12/06/24",
+                                    DateFormat('dd/MM/yy')
+                                        .format(DateTime.parse(dataId.time!)),
                                     style: manageData.appTextTheme.fs16Normal,
                                   )
                                 ],
@@ -209,11 +252,12 @@ class BookingDetailsScreen extends StatelessWidget {
               children: [
                 // heightY(10.h),
                 RowColumn_Widget(
-                    firsttxt: languageconst.amount.tr, secondtxt: "₹ 1,200"),
+                    firsttxt: languageconst.amount.tr,
+                    secondtxt: "₹ ${dataId.amount.toString()}"),
                 heightY(11.h),
                 RowColumn_Widget(
                     firsttxt: languageconst.modeOfPayment.tr,
-                    secondtxt: "Online"),
+                    secondtxt: dataId.paymentType.toString()),
                 heightY(11.h),
                 RowColumn_Widget(
                     firsttxt: languageconst.couponCodeApplied.tr,
@@ -228,7 +272,7 @@ class BookingDetailsScreen extends StatelessWidget {
                       .copyWith(color: manageData.appColors.gray),
                 ),
                 Text(
-                  "₹ 1000",
+                  "₹ ${dataId.amount.toString()}",
                   style: manageData.appTextTheme.fs24Bold,
                 ),
                 heightY(15.h),
@@ -245,18 +289,33 @@ class BookingDetailsScreen extends StatelessWidget {
                                 onpressed_No: () {
                                   Get.back();
                                 },
-                                onpressed_Yes: () {},
+                                onpressed_Yes: () {
+                                  final data = BookingModel(
+                                      bookingState: BookingState.REJECTED);
+                                  bookingcontroller.updateBooking(
+                                      dataId.id!, data.tomap());
+                                  Get.offAll(BottomScreen(
+                                    currentIndex: 1,
+                                  ));
+                                },
                                 title: languageconst.confirmRejectBooking.tr,
                                 subtitle: languageconst
                                     .notifyingCustomerPleaseWait.tr,
                               ));
                         }),
                     widthX(15.w),
+                    /************************** accept booking */
                     PrimaryButton(
                       title: languageconst.accept.tr,
                       onPressed: () {
                         Future.delayed(Duration(seconds: 2), () {
-                          Get.back();
+                          final data =
+                              BookingModel(bookingState: BookingState.ACCEPT);
+                          bookingcontroller.updateBooking(
+                              dataId.id!, data.tomap());
+                          Get.offAll(BottomScreen(
+                            currentIndex: 1,
+                          ));
                         });
                         Get.dialog(
                             barrierDismissible: false,

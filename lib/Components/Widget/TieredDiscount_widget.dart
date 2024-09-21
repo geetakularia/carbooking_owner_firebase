@@ -87,6 +87,7 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                     children: [
                       Expanded(
                         child: Datetimetextfield(
+                            readOnly: true,
                             controller: widget.validfrom,
                             title: languageconst.ValidForm.tr,
                             hint: "DD/MM/YY",
@@ -108,6 +109,7 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                       widthX(10.w),
                       Expanded(
                         child: Datetimetextfield(
+                            readOnly: true,
                             controller: widget.validtill,
                             title: languageconst.ValidTill.tr,
                             hint: "DD/MM/YY",

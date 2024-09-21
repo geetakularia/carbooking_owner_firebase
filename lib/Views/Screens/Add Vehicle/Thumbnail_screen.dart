@@ -5,7 +5,7 @@ import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Thumbnail_widget.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -25,7 +25,7 @@ class Thumbnail_screen extends StatefulWidget {
 }
 
 class _Thumbnail_screenState extends State<Thumbnail_screen> {
-  final carController = Get.find<FirebaseController>();
+  final carController = Get.find<CarController>();
   List<File> imageFiles = [];
   File? videoFile;
 

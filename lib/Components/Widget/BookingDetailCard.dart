@@ -9,14 +9,17 @@ import 'package:get/get.dart';
 // ignore: must_be_immutable
 class BookingDetailCard extends StatelessWidget {
   String image;
-  String carname, year, rate, offer;
+  String carname, year, rate, offer, fuel, transmission, seat;
   BookingDetailCard(
       {super.key,
       required this.image,
       required this.carname,
       required this.year,
       required this.rate,
-      required this.offer});
+      required this.offer,
+      required this.fuel,
+      required this.seat,
+      required this.transmission});
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +76,21 @@ class BookingDetailCard extends StatelessWidget {
                     Row(
                       children: [
                         CarPartTextIcon(
-                            title: languageconst.petrol.tr,
+                            title: fuel,
                             iconpath: manageData.appsvgimg.petrol,
                             svgclr: manageData.appColors.primary,
                             style: manageData.appTextTheme.fs10Normal
                                 .copyWith(color: manageData.appColors.black)),
                         widthX(10.w),
                         CarPartTextIcon(
-                            title: languageconst.automatic.tr,
+                            title: transmission,
                             iconpath: manageData.appsvgimg.gear,
                             svgclr: manageData.appColors.primary,
                             style: manageData.appTextTheme.fs10Normal
                                 .copyWith(color: manageData.appColors.black)),
                         widthX(10.w),
                         CarPartTextIcon(
-                            title: "2 ${languageconst.seats.tr}",
+                            title: "$seat ${languageconst.seats.tr}",
                             iconpath: manageData.appsvgimg.seat,
                             svgclr: manageData.appColors.primary,
                             style: manageData.appTextTheme.fs10Normal

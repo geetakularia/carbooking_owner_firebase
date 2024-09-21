@@ -139,7 +139,7 @@ class _SignupScreenState extends State<SignupScreen> {
     if (_formkey.currentState!.validate()) {
       // Get.toNamed(RoutesName.BottomScreen);
       final modeldata = Usermodel(
-          username: _namecontroller.text.trim(),
+          name: _namecontroller.text.trim(),
           email: _gmailcontroller.text.trim());
       UserController().signup({
         "userdata": modeldata.tomap(),

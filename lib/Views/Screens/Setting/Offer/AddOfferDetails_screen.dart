@@ -1,11 +1,14 @@
+import 'dart:io';
+
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart';
 import 'package:car_booking_owner/Components/Text_field/Datetimetextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Descriptiontextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Textfieldwithtitle.dart';
-import 'package:car_booking_owner/Components/Widget/AddOfferdetail.dart';
+import 'package:car_booking_owner/Components/Widget/Thumbnail_Banner_widget.dart';
 import 'package:car_booking_owner/Components/Widget/TieredDiscount_widget.dart';
 import 'package:car_booking_owner/Controllers/OfferController.dart';
+import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/OfferModel.dart';
@@ -25,6 +28,8 @@ class AddOfferDetails_screen extends StatefulWidget {
 
 class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
   String? _offervalue;
+  File? imageFile;
+  bool isbanner = false;
   DateTime selectedDate = DateTime.now();
   /********* */
   // final _datecontrollrs = TextEditingController();
@@ -62,25 +67,19 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
             widthX(10.w),
             PrimaryButton(
               title: languageconst.UploadData.tr,
-              onPressed: () {
+              onPressed: () async {
                 final addData = OfferDetails(
                     discountType: offerType,
                     bundleType: _offervalue,
                     generalDiscount: 77,
-                    bannerimg: "image",
+                    bannerimg: await uploadeofferbanner(imageFile!),
                     tieredDiscounts: [
                       TieredDiscount(
                           discountUnit: _tiereddiscountunit.text.trim(),
                           discountValue:
-                              double.tryParse(_tieredspendvalue.text.trim()),
+                              int.tryParse(_tieredspendvalue.text.trim()),
                           spendvalue:
-                              double.tryParse(_tieredspendvalue.text.trim()),
-                          validfrom: DateTime.tryParse(_tieredvaildfrom.text)!
-                              .millisecondsSinceEpoch
-                              .toString(),
-                          validtill: DateTime.tryParse(_tieredvaildtill.text)!
-                              .millisecondsSinceEpoch
-                              .toString())
+                              int.tryParse(_tieredspendvalue.text.trim()))
                     ],
                     couponCode: _couponcode.text.trim(),
                     description: _description.text.trim(),
@@ -89,19 +88,15 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                     usesPerCustomer: int.tryParse(_totaluses.text.trim()),
                     benefitsmodel: [
                       Benefitsmodel(
-                          validFrom: DateTime.tryParse(_datefrom.text)!
-                              .millisecondsSinceEpoch
-                              .toString(),
-                          validTill: DateTime.tryParse(_datetill.text)!
-                              .millisecondsSinceEpoch
-                              .toString(),
+                          validFrom: DateTime.now().toIso8601String(),
+                          validTill: DateTime.now().toIso8601String(),
                           discountUnit: _discountunit.text.trim(),
                           discountValue:
-                              double.tryParse(_discountvalue.text.trim()))
+                              int.tryParse(_discountvalue.text.trim()))
                     ]);
                 offerController.addOffer(addData.toJson()).whenComplete(
                   () {
-                    Get.toNamed(RoutesName.offer);
+                    Get.offNamed(RoutesName.offer);
                   },
                 );
               },
@@ -157,7 +152,17 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                         style: manageData.appTextTheme.fs14Normal,
                       ),
                       heightY(15.h),
-                      Thumbnail_Banner_widget(),
+                      // isbanner
+                      //     ?
+                      Photo_upload(
+                        selectedImage: (v) {
+                          setState(() {
+                            imageFile = v;
+                          });
+                        },
+                      )
+                      // : SizedBox(),
+                      ,
                       heightY(15.h),
                       Text(
                         "${languageconst.aboutdiscount.tr} ${"(%)"}",
@@ -210,6 +215,7 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                         children: [
                           Expanded(
                             child: Datetimetextfield(
+                                readOnly: true,
                                 controller: _datefrom,
                                 title: languageconst.ValidForm.tr,
                                 hint: "DD/MM/YY",
@@ -231,23 +237,24 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                           widthX(10.w),
                           Expanded(
                             child: Datetimetextfield(
+                                readOnly: true,
                                 controller: _datetill,
                                 title: languageconst.ValidTill.tr,
                                 hint: "DD/MM/YY",
-                                  onpressed: () async {
-                                    DateTime? pickedDate = await showDatePicker(
-                                      context: context,
-                                      initialDate: DateTime.now(),
-                                      firstDate: DateTime(2000),
-                                      lastDate: DateTime(2101),
-                                    );
-                                    if (pickedDate != null) {
-                                      setState(() {
-                                        _datetill.text = "${pickedDate.toLocal()}"
-                                            .split(' ')[0];
-                                      });
-                                    }
-                                  }),
+                                onpressed: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                    context: context,
+                                    initialDate: DateTime.now(),
+                                    firstDate: DateTime(2000),
+                                    lastDate: DateTime(2101),
+                                  );
+                                  if (pickedDate != null) {
+                                    setState(() {
+                                      _datetill.text = "${pickedDate.toLocal()}"
+                                          .split(' ')[0];
+                                    });
+                                  }
+                                }),
                           ),
                         ],
                       ),

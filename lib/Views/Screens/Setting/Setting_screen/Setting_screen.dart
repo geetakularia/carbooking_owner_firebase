@@ -29,12 +29,19 @@ class Setting_screen extends StatelessWidget {
             Stack(alignment: Alignment.topCenter, children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(10.r),
-                child: Image.asset(
-                  manageData2.appimage.accountcar,
-                  width: AppServices.screenWidth(context),
-                  height: 150.h,
-                  fit: BoxFit.cover,
-                ),
+                child: usercontroller.userdata.data!.image!.isEmpty
+                    ? Image.asset(
+                        manageData2.appimage.accountcar,
+                        width: AppServices.screenWidth(context),
+                        height: 150.h,
+                        fit: BoxFit.cover,
+                      )
+                    : Image.network(
+                        usercontroller.userdata.data!.image!,
+                        height: 150,
+                        fit: BoxFit.cover,
+                        width: AppServices.screenWidth(context),
+                      ),
               ),
               Positioned(
                 top: 10,
@@ -62,12 +69,17 @@ class Setting_screen extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      usercontroller.userdata.data!.username,
+                      usercontroller.userdata.data!.name.toString(),
                       style: manageData.appTextTheme.fs24Normal
                           .copyWith(color: manageData.appColors.white),
                     ),
                     Text(
-                      "+91 89540 26482",
+                      usercontroller.userdata.data!.phonenumber
+                              .toString()
+                              .isEmpty
+                          ? "+91 1111111111"
+                          : usercontroller.userdata.data!.phonenumber
+                              .toString(),
                       style: manageData.appTextTheme.fs16Normal
                           .copyWith(color: manageData.appColors.white),
                     ),

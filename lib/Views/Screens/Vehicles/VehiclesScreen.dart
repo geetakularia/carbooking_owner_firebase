@@ -2,7 +2,7 @@ import 'package:car_booking_owner/Components/AppTiles/RentalCars.dart';
 import 'package:car_booking_owner/Components/Buttons/SimpleButton.dart';
 import 'package:car_booking_owner/Components/Dialog/VehiclesFilter_dialog.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
@@ -13,8 +13,8 @@ import 'package:get/get.dart';
 
 class VehiclesScreen extends StatelessWidget {
   VehiclesScreen({super.key});
-  final controllerdata = Get.find<FirebaseController>();
-  
+  final controllerdata = Get.find<CarController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

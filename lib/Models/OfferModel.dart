@@ -46,7 +46,7 @@ import 'package:car_booking_owner/Models/carmodel.dart';
 // Main model class
 class OfferDetails {
   String? OfferId;
-  double? generalDiscount;
+  int? generalDiscount;
   String? bannerimg;
   String? title;
   String? couponCode;
@@ -118,7 +118,7 @@ class OfferDetails {
 
   OfferDetails copyWith({
     String? OfferId,
-    double? generalDiscount,
+    int? generalDiscount,
     String? bannerimg,
     String? title,
     String? couponCode,
@@ -153,7 +153,7 @@ class OfferDetails {
 }
 
 class Benefitsmodel {
-  double? discountValue;
+  int? discountValue;
   String? discountUnit;
   String? validFrom;
   String? validTill;
@@ -170,7 +170,7 @@ class Benefitsmodel {
         validTill = json["validTill"] ?? "";
 
   Benefitsmodel copyWith({
-    double? discountValue,
+    int? discountValue,
     String? discountUnit,
     String? validFrom,
     String? validTill,
@@ -195,8 +195,8 @@ class Benefitsmodel {
 
 // Model for Tiered Discount
 class TieredDiscount {
-  double? spendvalue;
-  double? discountValue;
+  int? spendvalue;
+  int? discountValue;
   String? discountUnit;
   String? validfrom;
   String? validtill;
@@ -209,8 +209,8 @@ class TieredDiscount {
       this.validtill});
 
   TieredDiscount.fromJson(Map<String, dynamic> json)
-      : spendvalue = json['spendvalue'] ?? 0.0,
-        discountValue = json['discountValue'] ?? 0.0,
+      : spendvalue = json['spendvalue'] ?? 0,
+        discountValue = json['discountValue'] ?? 0,
         discountUnit = json['discountUnit'] ?? '',
         validfrom = json['validfrom'] ?? '',
         validtill = json['validtill'] ?? '';
@@ -226,8 +226,8 @@ class TieredDiscount {
   }
 
   TieredDiscount copyWith({
-    double? spendThreshold,
-    double? discountValue,
+    int? spendThreshold,
+    int? discountValue,
     String? discountUnit,
     String? validFrom,
     String? validTill,

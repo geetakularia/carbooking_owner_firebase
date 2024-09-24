@@ -90,9 +90,9 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                               double.tryParse(_discountvalue.text.trim()))
                     ]);
                 offerController.addOffer(addData.toJson()).whenComplete(
-                 () {
+                  () {
                     Get.toNamed(RoutesName.offer);
-                  }, 
+                  },
                 );
               },
               isExpanded: true,

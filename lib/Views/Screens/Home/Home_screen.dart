@@ -5,7 +5,9 @@ import 'package:car_booking_owner/Components/Custom_graph.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Car_box_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/BookingController.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
+import 'package:car_booking_owner/Controllers/OfferController.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
@@ -27,9 +29,12 @@ class Home_screen extends StatefulWidget {
 class _Home_screenState extends State<Home_screen> {
   int currentindex = 0;
   final usercontroller = Get.find<UserController>();
-  final controllerdata = Get.find<FirebaseController>();
+  final controllerdata = Get.find<CarController>();
+  final OfferControllerdata = Get.find<OfferController>();
+  final BookingControllerdata = Get.find<BookingController>();
   @override
   Widget build(BuildContext context) {
+    // print("-=-=-=-=-=-=-=-=-=-=${BookingControllerdata.getbookingcar.}");
     return Scaffold(
         body: Column(
       children: [
@@ -43,7 +48,7 @@ class _Home_screenState extends State<Home_screen> {
             children: [
               Row(
                 children: [
-                  usercontroller.userdata.data!.image.isEmpty
+                  usercontroller.userdata.data!.image!.isEmpty
                       ? Container(
                           padding: EdgeInsets.all(9.sp),
                           decoration: BoxDecoration(
@@ -57,7 +62,7 @@ class _Home_screenState extends State<Home_screen> {
                       : ClipRRect(
                           borderRadius: BorderRadius.circular(100),
                           child: Image.network(
-                            usercontroller.userdata.data!.image,
+                            usercontroller.userdata.data!.image!,
                             height: 50,
                             width: 50,
                             fit: BoxFit.cover,
@@ -79,12 +84,12 @@ class _Home_screenState extends State<Home_screen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          usercontroller.userdata.data!.username,
+                          usercontroller.userdata.data!.name.toString(),
                           style: manageData.appTextTheme.fs20Normal
                               .copyWith(color: manageData.appColors.white),
                         ),
                         Text(
-                          usercontroller.userdata.data!.email,
+                          usercontroller.userdata.data!.email.toString(),
                           style: manageData.appTextTheme.fs14Normal
                               .copyWith(color: manageData.appColors.white),
                         )
@@ -94,8 +99,6 @@ class _Home_screenState extends State<Home_screen> {
                   widthX(14.w),
                   InkWell(
                     onTap: () {
-                      print(
-                          "-====================${controllerdata.getallcars.first.fuel}-=-=-=---------");
                       Get.toNamed(RoutesName.notification);
                     },
                     child: Icon(
@@ -119,6 +122,10 @@ class _Home_screenState extends State<Home_screen> {
                     widthX(10.w),
                     Iconcontainer(
                       onpressed: () {
+                        print(
+                            "------------${BookingControllerdata.getbookingcar.map(
+                          (e) => e.bookingID,
+                        )}===============");
                         // Get.to(TestingScreen());
                       },
                       icon: Icons.search,
@@ -169,7 +176,7 @@ class _Home_screenState extends State<Home_screen> {
                         });
                       },
                     ),
-                    items: Localdata.homeslideritems.map(
+                    items: OfferControllerdata.getofferdata.map(
                       (e) {
                         return Container(
                           decoration: BoxDecoration(
@@ -185,13 +192,13 @@ class _Home_screenState extends State<Home_screen> {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Text(
-                                        e["title"],
+                                        e.title.toString(),
                                         style:
                                             manageData.appTextTheme.fs20Normal,
                                       ),
                                       heightY(10.h),
                                       Text(
-                                        e["subtitle"],
+                                        e.description.toString(),
                                         style: manageData
                                             .appTextTheme.fs14Normal
                                             .copyWith(
@@ -212,15 +219,16 @@ class _Home_screenState extends State<Home_screen> {
                                                       color: Colors.black),
                                               children: [
                                             TextSpan(
-                                              text: e["rupess"],
+                                              text:
+                                                  e.generalDiscount.toString(),
                                               style: manageData
                                                   .appTextTheme.fs16Normal
                                                   .copyWith(
                                                       color: Colors.black),
                                             ),
-                                            TextSpan(
-                                              text: e["discount"],
-                                            )
+                                            // TextSpan(
+                                            //   text: e["discount"],
+                                            // )
                                           ]))
                                     ],
                                   ),
@@ -229,8 +237,8 @@ class _Home_screenState extends State<Home_screen> {
                               Expanded(
                                   child: ClipRRect(
                                       borderRadius: BorderRadius.circular(10.r),
-                                      child: Image.asset(
-                                        e["image"],
+                                      child: Image.network(
+                                        e.bannerimg!,
                                         height:
                                             AppServices.screenHeight(context),
                                         fit: BoxFit.cover,
@@ -245,7 +253,7 @@ class _Home_screenState extends State<Home_screen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ...List.generate(
-                      Localdata.onboardingitems.length,
+                      OfferControllerdata.getofferdata.length,
                       (index) {
                         return Container(
                             alignment: Alignment.center,
@@ -274,6 +282,7 @@ class _Home_screenState extends State<Home_screen> {
                 heightY(15.h),
                 LineChartSample2(),
                 heightY(15.h),
+                /**************************** booking */
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -293,6 +302,7 @@ class _Home_screenState extends State<Home_screen> {
                   ],
                 ),
                 heightY(15.h),
+                /**************************** booking  cars*/
                 AspectRatio(
                   aspectRatio: 1.7,
                   child: ListView.separated(
@@ -302,15 +312,25 @@ class _Home_screenState extends State<Home_screen> {
                     separatorBuilder: (context, index) => widthX(10.w),
                     shrinkWrap: true,
                     scrollDirection: Axis.horizontal,
-                    itemCount: 4,
+                    itemCount: BookingControllerdata.getbookingcar.length,
                     itemBuilder: (context, index) {
                       return Container(
                           width: AppServices.screenWidth(context) * 0.93,
-                          child: BookingsCarTile());
+                          child: BookingsCarTile(
+                            onpressed: () {
+                              Get.toNamed(RoutesName.BookingDetailsScreen,
+                                  arguments: {
+                                    "bookingID": BookingControllerdata
+                                        .getbookingcar[index].bookingID
+                                  });
+                            },
+                            model: BookingControllerdata.getbookingcar[index],
+                          ));
                     },
                   ),
                 ),
                 heightY(15.h),
+                //************************** vehicle */
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

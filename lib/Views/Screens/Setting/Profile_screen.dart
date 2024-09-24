@@ -1,8 +1,9 @@
 import 'dart:io';
+
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
-import 'package:car_booking_owner/Components/ImagePickerWidget.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
+import 'package:car_booking_owner/Components/Widget/Thumbnail_Banner_widget.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
@@ -45,8 +46,10 @@ class _Profile_screenState extends State<Profile_screen> {
   /**********************auto fill textformfield function*********************** */
   _getdata() {
     final controllerdata = Get.find<UserController>();
-    _name_controller.text = controllerdata.userdata.data!.username;
-    image = controllerdata.userdata.data!.image;
+    _name_controller.text = controllerdata.userdata.data!.name!;
+    image = controllerdata.userdata.data!.image!;
+    _phn_controller.text = controllerdata.userdata.data!.phonenumber!;
+    _address_controller.text = controllerdata.userdata.data!.titleAddress!;
     setState(() {});
   }
 
@@ -69,13 +72,12 @@ class _Profile_screenState extends State<Profile_screen> {
                     image = await upDateImage(image, imageFile!);
                   }
                 }
-
                 Usermodel updatedUserModel = controllerdata.userdata.data!
-                    .copywith(
+                    .copyWith(
                         image: image,
-                        username: _name_controller.text.trim(),
+                        name: _name_controller.text.trim(),
                         phonenumber: _phn_controller.text.trim(),
-                        address: _address_controller.text.trim());
+                        titleAddress: _address_controller.text.trim());
                 DataResponse<Usermodel> updatedUserResponse =
                     DataResponse.completed(updatedUserModel);
                 controllerdata.user_update(updatedUserResponse);
@@ -131,18 +133,18 @@ class _Profile_screenState extends State<Profile_screen> {
                                   File(imageFile!.path),
                                   height: 120,
                                   width: 120,
-                                  fit: BoxFit.cover, 
+                                  fit: BoxFit.cover,
                                 )),
                       Positioned(
                         bottom: 3,
                         right: 0,
                         child: GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
+                          onTap: () async {
+                            await showModalBottomSheet(
+                                clipBehavior: Clip.antiAlias,
                                 context: context,
-                                builder: (context) => imagePickerbottomsheet(
-                                      context,
-                                      (v) {
+                                builder: (context) => ImagePickBottomsheet(
+                                      file: (v) {
                                         if (v.path.isNotEmpty) {
                                           setState(() {
                                             imageFile = v;
@@ -150,12 +152,6 @@ class _Profile_screenState extends State<Profile_screen> {
                                         } else {
                                           null;
                                         }
-                                      },
-                                      () {
-                                        // App_service(context).popTo();
-                                        setState(() {
-                                          imageFile = null;
-                                        });
                                       },
                                     ));
                           },
@@ -194,10 +190,12 @@ class _Profile_screenState extends State<Profile_screen> {
                   children: [
                     Expanded(
                       child: Primary_txtField(
-                          hint_txt: usercontroller.userdata.data!.email),
+                          readOnly: true,
+                          hint_txt:
+                              usercontroller.userdata.data!.email.toString()),
                     ),
                     widthX(20.w),
-                    Iconcontainer(icon: Icons.lock_outline, onpressed: () {}),
+                    Iconcontainer(icon: Icons.email_outlined, onpressed: () {}),
                   ],
                 ),
                 heightY(20.h),
@@ -229,7 +227,7 @@ class _Profile_screenState extends State<Profile_screen> {
                     Expanded(
                       child: Primary_txtField(
                           controller: _address_controller,
-                          hint_txt: "Rishi nagar 90 - S 99 gali 1"),
+                          hint_txt: "Please Enter Your Address"),
                     ),
                     widthX(20.w),
                     Iconcontainer(

@@ -1,8 +1,12 @@
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
+import 'package:car_booking_owner/Controllers/CouponController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
+import 'package:car_booking_owner/Models/CouponCodeModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
+import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
+import 'package:car_booking_owner/Views/Screens/Setting/Coupon/CouponHistory.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -16,17 +20,20 @@ class Coupon_scrren extends StatefulWidget {
 }
 
 class _Coupon_scrrenState extends State<Coupon_scrren> {
-  String selectedValue = "Select";
-  List<DropdownMenuItem<String>> get dropdownItems {
-    List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Select"), value: "Select"),
-      DropdownMenuItem(child: Text("Unselect"), value: "Unselect"),
-    ];
-    return menuItems;
-  }
-
+  // String selectedValue = "Select";
+  // List<DropdownMenuItem<String>> get dropdownItems {
+  //   List<DropdownMenuItem<String>> menuItems = [
+  //     DropdownMenuItem(child: Text("Select"), value: "Select"),
+  //     DropdownMenuItem(child: Text("Unselect"), value: "Unselect"),
+  //   ];
+  //   return menuItems;
+  // }
+  final _couponcode = TextEditingController();
+  final _discount = TextEditingController();
+  final _alloweduser = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    final couponcontroller = Get.find<CouponController>();
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: EdgeInsets.all(10.0.sp),
@@ -35,14 +42,19 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
             PrimaryButton(
               title: languageconst.addCoupon.tr,
               onPressed: () {
-                Future.delayed(Duration(seconds: 2), () {
-                  Get.back();
-                });
+                final data = CoupOnCodeModel(
+                    alloweduser: int.tryParse(_alloweduser.text.trim()),
+                    couponcode: _couponcode.text.trim(),
+                    discount: int.tryParse(_discount.text.trim()));
+                couponcontroller.addcoupon(data.toMap());
                 Get.dialog(Primary_dialog(
                     image: manageData.appimage.coupon,
                     title: languageconst.couponCreatedSuccessfully.tr,
                     subtitle:
                         languageconst.configuringSerialNumberPleaseWait.tr));
+                Get.offAll(BottomScreen(
+                  currentIndex: 4,
+                ));
               },
               isExpanded: true,
             ),
@@ -54,6 +66,17 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
           languageconst.addCouponCode.tr,
           style: manageData.appTextTheme.fs24Normal,
         ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Get.to(CouponHistoryScreen());
+              },
+              child: Text(
+                "History",
+                style: manageData.appTextTheme.fs18Normal
+                    .copyWith(color: manageData.appColors.blue),
+              ))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0.sp),
@@ -76,6 +99,7 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
                   ),
                   heightY(10.h),
                   Primary_txtField(
+                    controller: _couponcode,
                     hint_txt: languageconst.enterCodeHere.tr,
                     fillcolor: true,
                   ),
@@ -94,6 +118,7 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
                             ),
                             heightY(10.h),
                             Primary_txtField(
+                              controller: _discount,
                               hint_txt: "₹00.00",
                               fillcolor: true,
                             ),
@@ -113,6 +138,7 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
                             ),
                             heightY(12.h),
                             Primary_txtField(
+                              controller: _alloweduser,
                               hint_txt: languageconst.enter.tr,
                               fillcolor: true,
                             ),

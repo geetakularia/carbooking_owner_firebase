@@ -5,7 +5,7 @@ import 'package:car_booking_owner/Components/Dropdownbutton/dropdown_widget.dart
 import 'package:car_booking_owner/Components/Text_field/Descriptiontextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Addrowicon_widget.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
@@ -37,7 +37,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   final _platenumber = TextEditingController();
   final _description = TextEditingController();
   final _ammount = TextEditingController();
-  final carcontroller = Get.find<FirebaseController>();
+  final carcontroller = Get.find<CarController>();
   bool isAvailableSelected = false;
   bool isUnavailableSelected = false;
   @override
@@ -47,7 +47,7 @@ class _EditVehiclesScreenState extends State<EditVehiclesScreen> {
   }
 
   getfun() {
-    final carcontroller = Get.find<FirebaseController>();
+    final carcontroller = Get.find<CarController>();
     final id = Get.arguments["car_id"];
     final dataId = carcontroller.getallcars
         .firstWhere((e) => e.car_id == id, orElse: () => Car_model());

@@ -1,5 +1,7 @@
+import 'package:car_booking_owner/Controllers/BookingController.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
+import 'package:car_booking_owner/Controllers/CouponController.dart';
 import 'package:car_booking_owner/Controllers/OfferController.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -29,8 +31,10 @@ class _Splash_ScreenState extends State<Splash_Screen> {
 
     Future.delayed(Duration(milliseconds: 400), () async {
       await Get.find<UserController>().relogin();
-      await Get.find<FirebaseController>().getCars();
+      await Get.find<CarController>().getCars();
       await Get.find<OfferController>().getoffers();
+      await Get.find<BookingController>().getCarsBooking();
+      await Get.find<CouponController>().getcouponcode();
     });
   }
 

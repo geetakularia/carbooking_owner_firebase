@@ -1,13 +1,15 @@
 import 'dart:io';
 
 import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Components/Dialog/Primarydialog.dart';
+import 'package:car_booking_owner/Components/ImgPicker/ImgPicker.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
-import 'package:car_booking_owner/Models/UserModel.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
+import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
 import 'package:car_booking_owner/Views/Screens/Add%20Vehicle/Thumbnail_screen.dart';
 import 'package:car_booking_owner/Views/Screens/Vehicles/ImageShowScreen.dart';
 import 'package:car_booking_owner/main.dart';
@@ -26,53 +28,44 @@ class PhotovideoScreen extends StatefulWidget {
 }
 
 class _PhotovideoScreenState extends State<PhotovideoScreen> {
-  List<File> imageFiles = [];
+  List<File>? imageFiles = [];
 
   @override
   Widget build(BuildContext context) {
-    final carController = Get.find<FirebaseController>();
+    final carController = Get.find<CarController>();
 
     final id = Get.arguments["car_id"];
+    final dataId = carController.getallcars
+        .firstWhere((e) => e.car_id == id, orElse: () => Car_model());
+    // print("///////////////////${dataId.car_id}\\\\\\\\\\\\");
 
     return Scaffold(
-      bottomNavigationBar: PrimaryButton(
-        title: languageconst.uploadVehicle.tr,
-        onPressed: () async {
-          // // Check if video file is selected
-          // if (videoFile == null) {
-          //   Get.snackbar("Error", "Please select a video to upload.");
-          //   return;
-          // }
-
-          // // Upload the video
-          // final videoUrl = await uploadecarvideo(videoFile!);
-
-          // Upload the images using the separate function
-          List<String> imageUrls = await uploadImages(imageFiles);
-
-          final data = carController.car.copyWith(
-            image: imageUrls,
-            // videos: [videoUrl],
-            carstatus: "Available",
-          );
-
-          await carController.addvehicle(data.toAddvehicle()).whenComplete(
-            () {
-              Future.delayed(Duration(milliseconds: 300), () async {
-                Get.back();
-                // Get.to(BottomScreen(
-                //   currentIndex: 3,
-                // ));
-              });
-              // Get.dialog(Primary_dialog(
-              //     image: manageData.appimage.vehicle,
-              //     title: languageconst.vehicleAddedSuccessfully.tr,
-              //     subtitle:
-              //         languageconst.uploadingVehicleListPleaseWait.tr));
-            },
-          );
-        },
-        isExpanded: true,
+      bottomNavigationBar: Padding(
+        padding: EdgeInsets.all(12.0.sp),
+        child: PrimaryButton(
+          title: languageconst.uploadVehicle.tr,
+          onPressed: () async {
+            if (imageFiles != null) {
+              // Upload the selected image to Firebase
+              List<String> imageUrl = await uploadImages(imageFiles!);
+              // Update the vehicle with the new image
+              await updatevehicleImg(dataId, imageUrl);
+              Get.dialog(Primary_dialog(
+                image: manageData.appimage.vehicle,
+                title: languageconst.vehicleAddedSuccessfully.tr,
+                subtitle: languageconst.uploadingVehicleListPleaseWait.tr,
+              ));
+              Get.offAll(BottomScreen(
+                currentIndex: 3,
+              ));
+            } else {
+              print("------------------------------------");
+              Get.snackbar("Error", "Please select an image to upload.");
+              print("------------------------------------");
+            }
+          },
+          isExpanded: true,
+        ),
       ),
       appBar: AppBar(
         title: Text(
@@ -82,23 +75,15 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
         actions: [
           IconButton(
               onPressed: () {
-                imageFiles.isNotEmpty
-                    ? Wrap(
-                        spacing: 10,
-                        runSpacing: 10,
-                        children: imageFiles.map((file) {
-                          return ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.file(
-                              file,
-                              height: 100,
-                              width: 100,
-                              fit: BoxFit.cover,
-                            ),
-                          );
-                        }).toList(),
-                      )
-                    : Center(child: Text('No images selected'));
+                showModalBottomSheet(
+                    context: context,
+                    builder: (context) => ImagePickBottomsheet(
+                          file: (File v) {
+                            setState(() {
+                              imageFiles!.add(v);
+                            });
+                          },
+                        ));
               },
               icon: Icon(Icons.add))
         ],
@@ -110,7 +95,7 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              GetBuilder<FirebaseController>(
+              GetBuilder<CarController>(
                 builder: (controller) {
                   final dataId = controller.getallcars.firstWhere(
                       (e) => e.car_id == id,
@@ -150,7 +135,8 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                               // padding: EdgeInsets.symmetric(
                               //     vertical: 4.h, horizontal: 4.w),
                               decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.r),
+                                shape: BoxShape.circle,
+                                // borderRadius: BorderRadius.circular(5.r),
                                 boxShadow: [
                                   BoxShadow(
                                       color: manageData.appColors.gray
@@ -162,7 +148,7 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                                 color: manageData.appColors.white,
                               ),
                               child: Icon(
-                                Icons.more_vert,
+                                Icons.close,
                                 color: manageData.appColors.primary,
                               ),
                             ),
@@ -171,7 +157,7 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                               return [
                                 PopupMenuItem(
                                   onTap: () {
-                                    print("===============");
+                                    // print("===============");
                                     deletevehicleImg(
                                         dataId, dataId.image![index]);
                                   },
@@ -201,6 +187,68 @@ class _PhotovideoScreenState extends State<PhotovideoScreen> {
                 },
               ),
               heightY(15.h),
+              /*********************** */
+              imageFiles!.isEmpty
+                  ? SizedBox()
+                  : Text(
+                      "New Photos",
+                      style: manageData.appTextTheme.fs18Normal,
+                    ),
+              imageFiles!.isEmpty ? SizedBox() : heightY(15.h),
+              GridView.builder(
+                shrinkWrap: true,
+                itemCount: imageFiles!.length,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    childAspectRatio: 1,
+                    crossAxisCount: 3,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 10),
+                itemBuilder: (context, index) {
+                  return Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(12.r),
+                        child: Image.file(
+                          imageFiles![index],
+                          height: 120,
+                          width: 120,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      Positioned(
+                        top: 10,
+                        right: 10,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              imageFiles!.removeAt(index);
+                            });
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                              shape: BoxShape.circle,
+                              boxShadow: [
+                                BoxShadow(
+                                    color: manageData.appColors.gray
+                                        .withOpacity(0.2),
+                                    blurRadius: 1,
+                                    spreadRadius: 1,
+                                    offset: Offset(0, 0))
+                              ],
+                              color: manageData.appColors.white,
+                            ),
+                            child: Icon(
+                              Icons.close,
+                              color: manageData.appColors.primary,
+                            ),
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                },
+              ),
               Text(
                 "Videos",
                 style: manageData.appTextTheme.fs18Normal,

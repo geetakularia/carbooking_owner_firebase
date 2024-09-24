@@ -89,7 +89,7 @@ class Localdata {
   static List<String> carmodelItems = ["X Classic", "AGT XX", "Punch"];
 /////========================Packagetypedata==============
   ///
-  static List<String> packagedata = ["Per Hour", "Per Day ", "Per Week "];
+  static List<String> packagedata = ["Per Hour", "Per Day", "Per Week"];
 /////========================amountdata==============
 
 /////========================cardata==============

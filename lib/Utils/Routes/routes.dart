@@ -16,7 +16,7 @@ import 'package:car_booking_owner/Views/Screens/Setting/Faq/Addquestion.dart';
 import 'package:car_booking_owner/Views/Screens/Setting/Offer/AddOfferDetails_screen.dart';
 import 'package:car_booking_owner/Views/Screens/Setting/Offer/Add_offer_Screen.dart';
 import 'package:car_booking_owner/Views/Screens/Setting/Payment_Method/Addcard_screen.dart';
-import 'package:car_booking_owner/Views/Screens/Setting/Coupon_screen.dart';
+import 'package:car_booking_owner/Views/Screens/Setting/Coupon/Coupon_screen.dart';
 import 'package:car_booking_owner/Views/Screens/Setting/Faq/Faq_Screen.dart';
 import 'package:car_booking_owner/Views/Screens/Home/RentalCarSeeAll.dart';
 import 'package:car_booking_owner/Views/Screens/Home/ReviewScreen.dart';

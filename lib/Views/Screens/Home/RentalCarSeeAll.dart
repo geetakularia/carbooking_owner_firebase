@@ -1,5 +1,5 @@
 import 'package:car_booking_owner/Components/AppTiles/RentalCars.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +8,7 @@ import 'package:get/get.dart';
 
 class RentalCarSeeAllScreen extends StatelessWidget {
   RentalCarSeeAllScreen({super.key});
-  final controllerdata = Get.find<FirebaseController>();
+  final controllerdata = Get.find<CarController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

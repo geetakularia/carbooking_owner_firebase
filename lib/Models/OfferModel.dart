@@ -46,7 +46,7 @@ import 'package:car_booking_owner/Models/carmodel.dart';
 // Main model class
 class OfferDetails {
   String? OfferId;
-  double? generalDiscount;
+  int? generalDiscount;
   String? bannerimg;
   String? title;
   String? couponCode;
@@ -59,7 +59,7 @@ class OfferDetails {
   String? bundleType; // Only for Bundle Discount
 
   OfferDetails(
-      { this.discountType,
+      {this.discountType,
       this.OfferId,
       this.generalDiscount,
       this.bannerimg,
@@ -75,7 +75,7 @@ class OfferDetails {
   OfferDetails.fromofferdetails(FirebaseResponseModel json)
       : OfferId = json.docid,
         generalDiscount = json.data['generalDiscount'] ?? 0.0,
-        bannerimg = json.data['thumbnail'] ?? '',
+        bannerimg = json.data['bannerimg'] ?? '',
         title = json.data['title'] ?? '',
         couponCode = json.data['couponCode'] ?? '',
         description = json.data['description'] ?? '',
@@ -103,7 +103,7 @@ class OfferDetails {
     return {
       'OfferId': OfferId,
       'generalDiscount': generalDiscount,
-      'thumbnail': bannerimg,
+      'bannerimg': bannerimg,
       'title': title,
       'couponCode': couponCode,
       'description': description,
@@ -118,8 +118,8 @@ class OfferDetails {
 
   OfferDetails copyWith({
     String? OfferId,
-    double? generalDiscount,
-    String? thumbnail,
+    int? generalDiscount,
+    String? bannerimg,
     String? title,
     String? couponCode,
     String? description,
@@ -133,7 +133,7 @@ class OfferDetails {
     return OfferDetails(
       OfferId: OfferId ?? this.OfferId,
       generalDiscount: generalDiscount ?? this.generalDiscount,
-      bannerimg: thumbnail ?? this.bannerimg,
+      bannerimg: bannerimg ?? this.bannerimg,
       title: title ?? this.title,
       couponCode: couponCode ?? this.couponCode,
       description: description ?? this.description,
@@ -153,7 +153,7 @@ class OfferDetails {
 }
 
 class Benefitsmodel {
-  double? discountValue;
+  int? discountValue;
   String? discountUnit;
   String? validFrom;
   String? validTill;
@@ -170,7 +170,7 @@ class Benefitsmodel {
         validTill = json["validTill"] ?? "";
 
   Benefitsmodel copyWith({
-    double? discountValue,
+    int? discountValue,
     String? discountUnit,
     String? validFrom,
     String? validTill,
@@ -191,16 +191,12 @@ class Benefitsmodel {
       'validTill': validTill,
     };
   }
-
-  // String toJson() => json.encode(toMap());
-
-  // factory Benefitsmodel.fromJson(String source) => Benefitsmodel.fromMap(json.decode(source) as Map<String, dynamic>);
 }
 
 // Model for Tiered Discount
 class TieredDiscount {
-  double? spendvalue;
-  double? discountValue;
+  int? spendvalue;
+  int? discountValue;
   String? discountUnit;
   String? validfrom;
   String? validtill;
@@ -213,8 +209,8 @@ class TieredDiscount {
       this.validtill});
 
   TieredDiscount.fromJson(Map<String, dynamic> json)
-      : spendvalue = json['spendvalue'] ?? 0.0,
-        discountValue = json['discountValue'] ?? 0.0,
+      : spendvalue = json['spendvalue'] ?? 0,
+        discountValue = json['discountValue'] ?? 0,
         discountUnit = json['discountUnit'] ?? '',
         validfrom = json['validfrom'] ?? '',
         validtill = json['validtill'] ?? '';
@@ -230,8 +226,8 @@ class TieredDiscount {
   }
 
   TieredDiscount copyWith({
-    double? spendThreshold,
-    double? discountValue,
+    int? spendThreshold,
+    int? discountValue,
     String? discountUnit,
     String? validFrom,
     String? validTill,

@@ -3,7 +3,7 @@ import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Dialog/UploadDialog.dart';
 import 'package:car_booking_owner/Components/Dialog/logout_dialog.dart';
 import 'package:car_booking_owner/Components/Widget/RowColumn_widget.dart';
-import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
@@ -24,7 +24,7 @@ class CarPreviewScreen extends StatefulWidget {
 
 class _CarPreviewScreenState extends State<CarPreviewScreen> {
   int currentindex = 0;
-  final controllerdata = Get.find<FirebaseController>();
+  final controllerdata = Get.find<CarController>();
   final id = Get.arguments["car_id"];
 
   @override
@@ -47,7 +47,8 @@ class _CarPreviewScreenState extends State<CarPreviewScreen> {
                       },
                       onpressed_Yes: () {
                         setState(() {
-                          controllerdata.vehicleDelete(dataId);
+                          controllerdata.vehicleDelete(
+                              dataId.car_id!, dataId.image!);
                         });
                       },
                       title: languageconst.confirmDeleteVehicle.tr,

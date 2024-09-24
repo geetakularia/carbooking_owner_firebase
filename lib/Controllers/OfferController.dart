@@ -1,4 +1,5 @@
 import 'package:car_booking_owner/Controllers/carFunction.dart';
+import 'package:car_booking_owner/Functions/Addimg.dart';
 import 'package:car_booking_owner/Models/OfferModel.dart';
 import 'package:car_booking_owner/Models/carmodel.dart';
 import 'package:car_booking_owner/Response/DataResponse.dart';
@@ -24,10 +25,10 @@ class OfferController extends GetxController {
       final offers =
           OfferDetails.fromofferdetails(FirebaseResponseModel(model, docId));
       _addoffers.add(offers);
-      // print("=========================jkjlvgjidfjigf=======================");
+      print("=========================jkjlvgjidfjigf=======================");
       print(offers);
     } catch (e) {
-      // print("=====================================================rrrrrr");
+      print("=====================================================rrrrrr");
       print('Error adding Offers: $e');
     } finally {
       update();
@@ -64,11 +65,22 @@ class OfferController extends GetxController {
     }
   }
 
+  /**************************** remove from list Vehicle */
+  remove_offer(String id) {
+    _addoffers.removeWhere((e) => e.OfferId == id);
+    update();
+  }
+
   /****************** delete offers */
-  offerdelete(OfferDetails model) {
+  offerdelete(String id, String img) {
     try {
-      manageData.api.offerdoc(_addoffers.first.OfferId).delete();
-    
+      manageData.api.offerdoc(id).delete().then(
+        (value) async {
+          final reference = await storage.refFromURL(img);
+          await reference.delete();
+          remove_offer(id);
+        },
+      );
     } catch (e) {
       print('Error Delete offers data: $e');
     }

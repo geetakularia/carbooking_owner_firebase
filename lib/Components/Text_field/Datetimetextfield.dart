@@ -9,12 +9,14 @@ class Datetimetextfield extends StatelessWidget {
   String title, hint;
   Function onpressed;
   TextEditingController? controller;
+  bool readOnly;
   Datetimetextfield(
       {super.key,
       required this.title,
       required this.hint,
       required this.onpressed,
-      this.controller});
+      this.controller,
+      this.readOnly = false});
 
   @override
   Widget build(BuildContext context) {
@@ -28,6 +30,7 @@ class Datetimetextfield extends StatelessWidget {
         ),
         heightY(10.h),
         Primary_txtField(
+          readOnly: readOnly,
           controller: controller,
           suffix_onpressed: () {
             onpressed();

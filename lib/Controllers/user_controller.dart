@@ -33,18 +33,19 @@ class UserController extends GetxController {
 /******************************* sign up */
   Future<void> signup(Map<String, dynamic> data) async {
     final Usermodel userdata = Usermodel.fromjson(data["userdata"]);
+    print("--------------------1");
     try {
       final credential = await _services.authenticate(AuthState.SIGNUP,
               json: {"email": userdata.email, "password": data["password"]})
           as UserCredential;
+      print("--------------------2");
       final String userid = credential.user!.uid;
       // print("-=-=-=-=--=///////${userid}\\\\\\-=-=-=-");
       // print("-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=");
       if (userid.isNotEmpty) {
         await _services.post(Apis().userdoc(userid),
-            await userdata.copywith(id: userid).tomap());
-
-        _userdata = DataResponse.completed(userdata.copywith(id: userid));
+            await userdata.copyWith(id: userid).tomap());
+        _userdata = DataResponse.completed(userdata.copyWith(id: userid));
         prefrance.setUserPrefs(userdata);
         Get.offAllNamed(RoutesName.BottomScreen);
       }
@@ -76,7 +77,7 @@ class UserController extends GetxController {
       }
     } catch (e) {
       _userdata = DataResponse.error(e.toString());
-      print("-------login error:: $e-------");
+      print("-------login error::: $e-------");
     }
   }
 
@@ -100,12 +101,10 @@ class UserController extends GetxController {
       // print(userId);
       if (userId.isNotEmpty) {
         final data = await Apis().userdoc(jsonDecode(userId)["id"]).get();
-
         if (data.exists) {
           final Usermodel usermodeldata = Usermodel.fromjson(data.data()!);
           _userdata = DataResponse.completed(usermodeldata);
           prefrance.setUserPrefs(usermodeldata);
-
           Get.offAllNamed(RoutesName.BottomScreen);
         } else {
           _userdata = DataResponse.error("User data not found.");
@@ -127,18 +126,18 @@ class UserController extends GetxController {
   user_update(DataResponse<Usermodel> model) {
     try {
       // print("user upload Function run ************");
-      print("step:-1.======================");
+      // print("step:-1.======================");
       manageData.api
           .userdoc(userdata.data!.id)
           .update(model.data!.tomap())
           .then(
         (value) {
           /************************ for userupdate in realtime show  */
-          print("step:-2.======================");
+          // print("step:-2.======================");
           updateUserProfile(model);
         },
       );
-      print("step:-3.======================");
+      // print("step:-3.======================");
     } catch (e) {
       print(e.toString());
     }

@@ -1,4 +1,3 @@
-import 'package:car_booking_owner/Components/Buttons/primary_button.dart';
 import 'package:car_booking_owner/Components/Text_field/Datetimetextfield.dart';
 import 'package:car_booking_owner/Components/Text_field/Textfieldwithtitle.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
@@ -29,7 +28,7 @@ class TieredDiscountScreen extends StatefulWidget {
 }
 
 class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
-  bool showvaluecontainer = false;
+  bool showvaluecontainer = true;
   DateTime selectedDate = DateTime.now();
 
   final TextEditingController datecontrollrs = TextEditingController();
@@ -40,13 +39,21 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
       child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
         showvaluecontainer
             ? Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(languageconst.SpendThreshold.tr,
                           style: manageData.appTextTheme.fs16Normal),
-                      SvgPicture.asset(manageData.appsvgimg.spendthreshold)
+                      InkWell(
+                          onTap: () {
+                            setState(() {
+                              showvaluecontainer = !showvaluecontainer;
+                            });
+                          },
+                          child: SvgPicture.asset(
+                              manageData.appsvgimg.spendthreshold))
                     ],
                   ),
                   heightY(10.h),
@@ -132,86 +139,100 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                   ),
                 ],
               )
-            : Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+            : Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    "After adding values ( preview ) ",
-                    style: manageData.appTextTheme.fs20Medium,
-                  ),
-                  heightY(7.h),
-                  Align(
-                      alignment: Alignment.topRight,
-                      child: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              showvaluecontainer = !showvaluecontainer;
-                            });
-                          },
-                          child: Icon(Icons.cancel_rounded))),
-                  heightY(10.h),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            languageconst.MinimumSpend.tr,
-                            style: manageData.appTextTheme.fs14Normal,
-                          ),
-                          Text(
-                            "₹400",
-                            style: manageData.appTextTheme.fs16Normal,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            languageconst.discount.tr,
-                            style: manageData.appTextTheme.fs14Normal,
-                          ),
-                          Text(
-                            "10%",
-                            style: manageData.appTextTheme.fs16Normal,
-                          ),
-                        ],
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            "01-01-2024",
-                            style: manageData.appTextTheme.fs14Normal,
-                          ),
-                          Text(
-                            "to",
-                            style: manageData.appTextTheme.fs14Normal,
-                          ),
-                          Text(
-                            "10-03-2024",
-                            style: manageData.appTextTheme.fs14Normal,
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  Text(languageconst.SpendThreshold.tr,
+                      style: manageData.appTextTheme.fs16Normal),
+                  InkWell(
+                      onTap: () {
+                        setState(() {
+                          showvaluecontainer = !showvaluecontainer;
+                        });
+                      },
+                      child: Icon(Icons.add))
                 ],
               ),
-        heightY(10.h),
-        Align(
-            alignment: Alignment.bottomRight,
-            child: PrimaryButton(
-                title: "Save",
-                onPressed: () {
-                  setState(() {
-                    showvaluecontainer = !showvaluecontainer;
-                  });
-                })),
+        // : Column(
+        //     crossAxisAlignment: CrossAxisAlignment.start,
+        //     children: [
+        //       Text(
+        //         "After adding values ( preview ) ",
+        //         style: manageData.appTextTheme.fs20Medium,
+        //       ),
+        //       heightY(7.h),
+        //       Align(
+        //           alignment: Alignment.topRight,
+        //           child: GestureDetector(
+        //               onTap: () {
+        //                 setState(() {
+        //                   showvaluecontainer = !showvaluecontainer;
+        //                 });
+        //               },
+        //               child: Icon(Icons.cancel_rounded))),
+        //       heightY(10.h),
+        //       Row(
+        //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //         crossAxisAlignment: CrossAxisAlignment.start,
+        //         children: [
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 languageconst.MinimumSpend.tr,
+        //                 style: manageData.appTextTheme.fs14Normal,
+        //               ),
+        //               Text(
+        //                 "₹400",
+        //                 style: manageData.appTextTheme.fs16Normal,
+        //               ),
+        //             ],
+        //           ),
+        //           Column(
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: [
+        //               Text(
+        //                 languageconst.discount.tr,
+        //                 style: manageData.appTextTheme.fs14Normal,
+        //               ),
+        //               Text(
+        //                 "10%",
+        //                 style: manageData.appTextTheme.fs16Normal,
+        //               ),
+        //             ],
+        //           ),
+        //           Column(
+        //             mainAxisAlignment: MainAxisAlignment.start,
+        //             mainAxisSize: MainAxisSize.min,
+        //             children: [
+        //               Text(
+        //                 "01-01-2024",
+        //                 style: manageData.appTextTheme.fs14Normal,
+        //               ),
+        //               Text(
+        //                 "to",
+        //                 style: manageData.appTextTheme.fs14Normal,
+        //               ),
+        //               Text(
+        //                 "10-03-2024",
+        //                 style: manageData.appTextTheme.fs14Normal,
+        //               ),
+        //             ],
+        //           ),
+        //         ],
+        //       ),
+        //     ],
+        //   ),
+        // heightY(10.h),
+        // Align(
+        //     alignment: Alignment.bottomRight,
+        //     child: PrimaryButton(
+        //         title: "Save",
+        //         onPressed: () {
+        //           setState(() {
+        //             showvaluecontainer = !showvaluecontainer;
+        //           });
+        //         })),
       ]),
     );
   }

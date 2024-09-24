@@ -38,7 +38,7 @@ class BookingSeeAllScreen extends StatelessWidget {
                 onpressed: () {
                   Get.toNamed(RoutesName.BookingDetailsScreen, arguments: {
                     "bookingID":
-                        bookingcontrollerdata.getbookingcar[index].bookingID
+                        bookingcontrollerdata.getbookingcar[index].bookingID  
                   });
                 },
                 model: bookingcontrollerdata.getbookingcar[index],

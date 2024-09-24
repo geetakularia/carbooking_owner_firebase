@@ -151,7 +151,7 @@ class BookingDetailsScreen extends StatelessWidget {
                           ),
                           heightY(10.h),
                           Text(
-                            dataId.address.toString(),
+                            dataId.address!.addressTitle.toString(),
                             style: manageData.appTextTheme.fs16Normal,
                           ),
                           heightY(15.h),
@@ -162,7 +162,7 @@ class BookingDetailsScreen extends StatelessWidget {
                           ),
                           heightY(10.h),
                           Text(
-                            dataId.destination.toString(),
+                            dataId.destination!.addressTitle.toString(),
                             style: manageData.appTextTheme.fs16Normal,
                           ),
                         ],

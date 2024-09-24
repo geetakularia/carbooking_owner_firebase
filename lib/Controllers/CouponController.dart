@@ -33,7 +33,7 @@ class CouponController extends GetxController {
   }
 
   /****************************************** getcars Coupon */
-  Future<void> getCarsBooking() async {
+  Future<void> getcouponcode() async {
     try {
       print("-------------------step1");
       final response = await _function.getDataFromFirebase(
@@ -48,6 +48,29 @@ class CouponController extends GetxController {
       print("Error getting Bookings: ${e}");
     } finally {
       update();
+    }
+  }
+
+  /**************************** remove from list Vehicle */
+  remove_coupon(String id) {
+    _coupon.removeWhere((e) => e.couponId == id);
+    update();
+  }
+
+  /********************* delete coupon code */
+  deletecouponcode(String id) {
+    try {
+      manageData.api.coupondoc(id).delete().then(
+        (value) {
+          remove_coupon(id);
+        },
+      ).whenComplete(
+        () {
+          Get.snackbar("Delete", "Coupon Delete Successfuly");
+        },
+      );
+    } catch (e) {
+      print('Error Delete Coupon data: $e');
     }
   }
 }

@@ -23,7 +23,7 @@ class OfferScreen extends StatelessWidget {
                 child: PrimaryButton(
                     title: languageconst.addoffers.tr,
                     onPressed: () {
-                      Get.toNamed("/addoffer");
+                      Get.toNamed(RoutesName.addoffer);
                     }))
           ],
         ),

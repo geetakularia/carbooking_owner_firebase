@@ -6,6 +6,7 @@ import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Models/CouponCodeModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Views/BottomNavigationBar/Bottomnavbar_screen.dart';
+import 'package:car_booking_owner/Views/Screens/Setting/Coupon/CouponHistory.dart';
 import 'package:car_booking_owner/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,6 +66,17 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
           languageconst.addCouponCode.tr,
           style: manageData.appTextTheme.fs24Normal,
         ),
+        actions: [
+          TextButton(
+              onPressed: () {
+                Get.to(CouponHistoryScreen());
+              },
+              child: Text(
+                "History",
+                style: manageData.appTextTheme.fs18Normal
+                    .copyWith(color: manageData.appColors.blue),
+              ))
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(20.0.sp),

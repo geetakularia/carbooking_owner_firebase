@@ -34,7 +34,7 @@ class _Splash_ScreenState extends State<Splash_Screen> {
       await Get.find<CarController>().getCars();
       await Get.find<OfferController>().getoffers();
       await Get.find<BookingController>().getCarsBooking();
-      await Get.find<CouponController>().getCarsBooking();
+      await Get.find<CouponController>().getcouponcode();
     });
   }
 

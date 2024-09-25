@@ -24,10 +24,8 @@ Future<String> uploadeprofile(File file) async {
 
 Future<String?> uploadImage(String path, File imageFile) async {
   try {
-    final storageRef = FirebaseStorage.instance
-        .ref()
-        .child(path)
-        .child(imageFile.uri.pathSegments.last);
+    final storageRef =
+        storage.ref().child(path).child(imageFile.uri.pathSegments.last);
     final uploadTask = storageRef.putFile(imageFile);
 
     final snapshot = await uploadTask.whenComplete(() => {"image upload "});

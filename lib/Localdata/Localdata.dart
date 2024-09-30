@@ -95,10 +95,10 @@ class Localdata {
 /////========================cardata==============
 
   static List<Map<String, dynamic>> car_data = [
-    {"car": "Total Car’s", "ammount": "120"},
-    {"car": "Upcoming", "ammount": "21"},
-    {"car": "Ongoing", "ammount": "17"},
-    {"car": "Completed", "ammount": "30"},
+    {"car": "Total Car’s"},
+    {"car": "Upcoming"},
+    {"car": "Ongoing"},
+    {"car": "Completed"},
   ];
 
   //////++++++++++------addoffer

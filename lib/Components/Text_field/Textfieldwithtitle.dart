@@ -8,8 +8,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class Textfieldwithtitle extends StatelessWidget {
   String title, hint;
   TextEditingController? controller;
+  final TextInputType keyboardtype;
   Textfieldwithtitle(
-      {super.key, required this.title, required this.hint, this.controller});
+      {super.key,
+      required this.title,
+      required this.hint,
+      this.controller,
+      this.keyboardtype = TextInputType.text});
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +28,7 @@ class Textfieldwithtitle extends StatelessWidget {
         ),
         heightY(10.h),
         Primary_txtField(
+          keyboardType: keyboardtype,
           controller: controller,
           hint_txt: hint,
           fillcolor: true,

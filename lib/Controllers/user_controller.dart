@@ -116,14 +116,15 @@ class UserController extends GetxController {
       }
     } catch (e) {
       _userdata = DataResponse.error(e.toString());
-      print("-------relogin error:: $e-------");
+      print("---------relogin error:: $e-------");
       Get.offAllNamed(RoutesName.login_screen);
     } finally {
       update();
     }
   }
 
-  /*************************************update************************************************** */
+/*************************************update************************************************** */
+
   user_update(DataResponse<Usermodel> model) {
     try {
       // print("user upload Function run ************");

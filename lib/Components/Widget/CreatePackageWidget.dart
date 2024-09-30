@@ -53,6 +53,7 @@ class CreatePackageWidget extends StatelessWidget {
             ),
             heightY(10.h),
             Primary_txtField(
+              keyboardType: TextInputType.number,
               controller: ammount,
               hint_txt: "000",
               fillcolor: true,

@@ -8,15 +8,19 @@ import 'package:get/get.dart';
 
 class OffercontainerWidget extends StatelessWidget {
   OfferDetails model;
-  Function editOnPressed, deleteOnPressed;
+  Function? editOnPressed, deleteOnPressed;
+  bool isshow;
   OffercontainerWidget(
       {super.key,
       required this.model,
-      required this.deleteOnPressed,
-      required this.editOnPressed});
+      this.deleteOnPressed,
+      this.editOnPressed,
+      this.isshow = true});
 
   @override
   Widget build(BuildContext context) {
+    int? totaldiscount =
+        model.generalDiscount! + model.benefitsmodel!.first.discountValue!;
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: manageData.appColors.gray.withOpacity(0.3)),
@@ -51,7 +55,7 @@ class OffercontainerWidget extends StatelessWidget {
                               .copyWith(color: Colors.black),
                           children: [
                         TextSpan(
-                          text: model.generalDiscount.toString(),
+                          text: "₹${totaldiscount.toString()}",
                           style: manageData.appTextTheme.fs16Bold
                               .copyWith(color: Colors.black),
                         ),
@@ -73,75 +77,79 @@ class OffercontainerWidget extends StatelessWidget {
                       model.bannerimg!,
                       fit: BoxFit.cover,
                     ),
-                    PopupMenuButton(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(10.0.r),
-                        ),
-                      ),
-                      padding: EdgeInsets.zero,
-                      icon: Container(
-                        padding: EdgeInsets.symmetric(
-                            vertical: 4.h, horizontal: 4.w),
-                        decoration: BoxDecoration(
-                          boxShadow: [
-                            BoxShadow(
-                                color:
-                                    manageData.appColors.gray.withOpacity(0.2),
-                                blurRadius: 1,
-                                spreadRadius: 1,
-                                offset: Offset(0, 0))
-                          ],
-                          shape: BoxShape.circle,
-                          color: manageData.appColors.white,
-                        ),
-                        child: Icon(
-                          Icons.more_vert,
-                          color: manageData.appColors.primary,
-                        ),
-                      ),
-                      color: Colors.white,
-                      itemBuilder: (BuildContext context) {
-                        return [
-                          PopupMenuItem(
-                            onTap: () {
-                              editOnPressed();
-                            },
-                            value: languageconst.edit.tr,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(languageconst.edit.tr),
-                                IconButton(
-                                    onPressed: () {
-                                      // Get.toNamed("/AddOfferDetails");
-                                    },
-                                    icon: Icon(Icons.edit_outlined))
-                              ],
+                    isshow == true
+                        ? PopupMenuButton(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(10.0.r),
+                              ),
                             ),
-                          ),
-                          PopupMenuItem(
-                            onTap: () {
-                              deleteOnPressed();
-                            },
-                            value: languageconst.Delete.tr,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(languageconst.Delete.tr),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Icon(
-                                    Icons.delete_outline,
-                                    color: manageData.appColors.red,
+                            padding: EdgeInsets.zero,
+                            icon: Container(
+                              padding: EdgeInsets.symmetric(
+                                  vertical: 4.h, horizontal: 4.w),
+                              decoration: BoxDecoration(
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: manageData.appColors.gray
+                                          .withOpacity(0.2),
+                                      blurRadius: 1,
+                                      spreadRadius: 1,
+                                      offset: Offset(0, 0))
+                                ],
+                                shape: BoxShape.circle,
+                                color: manageData.appColors.white,
+                              ),
+                              child: Icon(
+                                Icons.more_vert,
+                                color: manageData.appColors.primary,
+                              ),
+                            ),
+                            color: Colors.white,
+                            itemBuilder: (BuildContext context) {
+                              return [
+                                PopupMenuItem(
+                                  onTap: () {
+                                    editOnPressed!();
+                                  },
+                                  value: languageconst.edit.tr,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(languageconst.edit.tr),
+                                      IconButton(
+                                          onPressed: () {
+                                            // Get.toNamed("/AddOfferDetails");
+                                          },
+                                          icon: Icon(Icons.edit_outlined))
+                                    ],
                                   ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ];
-                      },
-                    ),
+                                ),
+                                PopupMenuItem(
+                                  onTap: () {
+                                    deleteOnPressed!();
+                                  },
+                                  value: languageconst.Delete.tr,
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(languageconst.Delete.tr),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: Icon(
+                                          Icons.delete_outline,
+                                          color: manageData.appColors.red,
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ];
+                            },
+                          )
+                        : SizedBox(),
                   ])))
         ],
       ),

@@ -8,6 +8,9 @@ class BookingController extends GetxController {
   final _function = FirebaseResponseHandler();
   List<BookingModel> _bookingcar = [];
   List<BookingModel> get getbookingcar => _bookingcar;
+
+  /************************ for booking update in realtime show  */
+
   /****************************************** getcars booking */
   Future<void> getCarsBooking() async {
     try {

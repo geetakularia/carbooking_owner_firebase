@@ -5,12 +5,14 @@ import 'package:car_booking_owner/Components/Custom_graph.dart';
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Car_box_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
+import 'package:car_booking_owner/Components/offerContainerWidget.dart';
 import 'package:car_booking_owner/Controllers/BookingController.dart';
 import 'package:car_booking_owner/Controllers/CarController.dart';
 import 'package:car_booking_owner/Controllers/OfferController.dart';
 import 'package:car_booking_owner/Controllers/user_controller.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Localdata/Localdata.dart';
+import 'package:car_booking_owner/Models/BookingCarModel.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/Utils/Routes/routes_name.dart';
 import 'package:car_booking_owner/main.dart';
@@ -68,16 +70,6 @@ class _Home_screenState extends State<Home_screen> {
                             fit: BoxFit.cover,
                           ),
                         ),
-                  // Container(
-                  //   clipBehavior: Clip.antiAlias,
-                  //   height: 60,
-                  //   width: 60,
-                  //   decoration: const BoxDecoration(shape: BoxShape.circle),
-                  //   child: Image.asset(
-                  //     manageData.appimage.girlprofile,
-                  //     fit: BoxFit.cover,
-                  //   ),
-                  // ),
                   widthX(14.w),
                   Expanded(
                     child: Column(
@@ -146,7 +138,6 @@ class _Home_screenState extends State<Home_screen> {
               children: [
                 heightY(15.h),
                 SizedBox(
-                  // aspectRatio: 2.48,
                   height: AppServices.screenHeight(context) * 0.1,
                   child: ListView.separated(
                     clipBehavior: Clip.none,
@@ -156,9 +147,37 @@ class _Home_screenState extends State<Home_screen> {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, i) {
                       final data = Localdata.car_data;
+                      String numberOfCars = '';
+                      if (data[i]["car"] == "Total Car’s") {
+                        final int totalCarsCount =
+                            controllerdata.getallcars.length;
+                        numberOfCars = totalCarsCount.toString();
+                      } else if (data[i]["car"] == "Upcoming") {
+                        final int upcomingCarsCount = BookingControllerdata
+                            .getbookingcar
+                            .where(
+                                (e) => e.bookingState == BookingState.REQUEST)
+                            .length;
+                        numberOfCars = upcomingCarsCount.toString();
+                      } else if (data[i]["car"] == "Ongoing") {
+                        final int ongoingCarsCount = BookingControllerdata
+                            .getbookingcar
+                            .where((e) => e.bookingState == BookingState.ACCEPT)
+                            .length;
+                        numberOfCars = ongoingCarsCount.toString();
+                      } else if (data[i]["car"] == "Completed") {
+                        final int completedCarsCount = BookingControllerdata
+                            .getbookingcar
+                            .where(
+                                (e) => e.bookingState == BookingState.COMPLETE)
+                            .length;
+                        numberOfCars = completedCarsCount.toString();
+                      }
+
                       return CarBoxWidget(
-                          totalbooking: data[i]["car"],
-                          numberofcar: data[i]["ammount"]);
+                        totalbooking: data[i]["car"],
+                        numberofcar: numberOfCars,
+                      );
                     },
                   ),
                 ),
@@ -178,73 +197,9 @@ class _Home_screenState extends State<Home_screen> {
                     ),
                     items: OfferControllerdata.getofferdata.map(
                       (e) {
-                        return Container(
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(12.r),
-                              color: manageData.appColors.white),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        e.title.toString(),
-                                        style:
-                                            manageData.appTextTheme.fs20Normal,
-                                      ),
-                                      heightY(10.h),
-                                      Text(
-                                        e.description.toString(),
-                                        style: manageData
-                                            .appTextTheme.fs14Normal
-                                            .copyWith(
-                                                color: manageData
-                                                    .appColors.primary),
-                                      ),
-                                      heightY(10.h),
-                                      Text(
-                                        "Starting from",
-                                        style:
-                                            manageData.appTextTheme.fs12Normal,
-                                      ),
-                                      RichText(
-                                          text: TextSpan(
-                                              style: manageData
-                                                  .appTextTheme.fs12Normal
-                                                  .copyWith(
-                                                      color: Colors.black),
-                                              children: [
-                                            TextSpan(
-                                              text:
-                                                  e.generalDiscount.toString(),
-                                              style: manageData
-                                                  .appTextTheme.fs16Normal
-                                                  .copyWith(
-                                                      color: Colors.black),
-                                            ),
-                                            // TextSpan(
-                                            //   text: e["discount"],
-                                            // )
-                                          ]))
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Expanded(
-                                  child: ClipRRect(
-                                      borderRadius: BorderRadius.circular(10.r),
-                                      child: Image.network(
-                                        e.bannerimg!,
-                                        height:
-                                            AppServices.screenHeight(context),
-                                        fit: BoxFit.cover,
-                                      )))
-                            ],
-                          ),
+                        return OffercontainerWidget(
+                          model: e,
+                          isshow: false,
                         );
                       },
                     ).toList()),

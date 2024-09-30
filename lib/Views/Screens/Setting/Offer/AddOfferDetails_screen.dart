@@ -185,128 +185,167 @@ class _AddOfferDetails_screenState extends State<AddOfferDetails_screen> {
                           controller: _description,
                           hint: languageconst.writeshortdescription.tr),
                       heightY(15.h),
-                      Text(
-                        languageconst.Benefits.tr,
-                        style: manageData.appTextTheme.fs16Normal
-                            .copyWith(color: manageData.appColors.gray),
-                      ),
-                      heightY(10.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Textfieldwithtitle(
-                              controller: _discountvalue,
-                              title: languageconst.DiscountValue.tr,
-                              hint: "₹0.0",
-                            ),
-                          ),
-                          widthX(10.w),
-                          Expanded(
-                            child: Textfieldwithtitle(
-                              controller: _discountunit,
-                              title: languageconst.DiscountUnit.tr,
-                              hint: languageconst.enter.tr,
-                            ),
-                          ),
-                        ],
-                      ),
-                      heightY(10.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Datetimetextfield(
-                                readOnly: true,
-                                controller: _datefrom,
-                                title: languageconst.ValidForm.tr,
-                                hint: "DD/MM/YY",
-                                onpressed: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2101),
-                                  );
-                                  if (pickedDate != null) {
-                                    setState(() {
-                                      _datefrom.text = "${pickedDate.toLocal()}"
-                                          .split(' ')[0];
-                                    });
-                                  }
-                                }),
-                          ),
-                          widthX(10.w),
-                          Expanded(
-                            child: Datetimetextfield(
-                                readOnly: true,
-                                controller: _datetill,
-                                title: languageconst.ValidTill.tr,
-                                hint: "DD/MM/YY",
-                                onpressed: () async {
-                                  DateTime? pickedDate = await showDatePicker(
-                                    context: context,
-                                    initialDate: DateTime.now(),
-                                    firstDate: DateTime(2000),
-                                    lastDate: DateTime(2101),
-                                  );
-                                  if (pickedDate != null) {
-                                    setState(() {
-                                      _datetill.text = "${pickedDate.toLocal()}"
-                                          .split(' ')[0];
-                                    });
-                                  }
-                                }),
-                          ),
-                        ],
-                      ),
-                      heightY(15.h),
-                      Text(
-                        languageconst.UsageBenifits.tr,
-                        style: manageData.appTextTheme.fs16Normal
-                            .copyWith(color: manageData.appColors.gray),
-                      ),
-                      heightY(10.h),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Textfieldwithtitle(
-                              controller: _totaluser,
-                              title: languageconst.TotalUsers.tr,
-                              hint: languageconst.enter.tr,
-                            ),
-                          ),
-                          widthX(10.w),
-                          Expanded(
-                            child: Textfieldwithtitle(
-                              controller: _totaluses,
-                              title: languageconst.UsesperCustomer.tr,
-                              hint: languageconst.enter.tr.tr,
-                            ),
-                          ),
-                        ],
-                      ),
-                      heightY(10.h),
-                      offerType == "Tiered Discount"
-                          ? TieredDiscountScreen(
-                              discountunit: _tiereddiscountunit,
-                              discountvalue: _tiereddiscountvalue,
-                              spendvalue: _tieredspendvalue,
-                              validfrom: _tieredvaildfrom,
-                              validtill: _tieredvaildtill,
-                            )
-                          : SizedBox(),
                       offerType == "Bundle Discount"
                           ? Column(
                               children: [
+                                Textfieldwithtitle(
+                                  keyboardtype: TextInputType.number,
+                                  controller: _discountvalue,
+                                  title: languageconst.DiscountValue.tr,
+                                  hint: "₹0.0",
+                                ),
+                                heightY(10.h),
                                 Primarydropdownbutton_widget(
                                   hint: languageconst.bundleType.tr,
                                   selectedValue: _offervalue,
                                   dropdownItems: Localdata.bundleType,
                                   title: languageconst.bundleType.tr,
-                                  onChanged: (v) {},
+                                  onChanged: (v) {
+                                    setState(() {
+                                      _offervalue = v;
+                                    });
+                                  },
                                 ),
                               ],
                             )
-                          : SizedBox(),
+                          : Column(
+                              children: [
+                                offerType == "Tiered Discount"
+                                    ? SizedBox()
+                                    : Text(
+                                        languageconst.Benefits.tr,
+                                        style: manageData
+                                            .appTextTheme.fs16Normal
+                                            .copyWith(
+                                                color:
+                                                    manageData.appColors.gray),
+                                      ),
+                                heightY(10.h),
+                                offerType == "Tiered Discount"
+                                    ? SizedBox()
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: Textfieldwithtitle(
+                                              keyboardtype:
+                                                  TextInputType.number,
+                                              controller: _discountvalue,
+                                              title: languageconst
+                                                  .DiscountValue.tr,
+                                              hint: "₹0.0",
+                                            ),
+                                          ),
+                                          widthX(10.w),
+                                          Expanded(
+                                            child: Textfieldwithtitle(
+                                              keyboardtype:
+                                                  TextInputType.number,
+                                              controller: _discountunit,
+                                              title:
+                                                  languageconst.DiscountUnit.tr,
+                                              hint: languageconst.enter.tr,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                heightY(10.h),
+                                offerType == "Tiered Discount"
+                                    ? SizedBox()
+                                    : Row(
+                                        children: [
+                                          Expanded(
+                                            child: Datetimetextfield(
+                                                readOnly: true,
+                                                controller: _datefrom,
+                                                title:
+                                                    languageconst.ValidForm.tr,
+                                                hint: "DD/MM/YY",
+                                                onpressed: () async {
+                                                  DateTime? pickedDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(2000),
+                                                    lastDate: DateTime(2101),
+                                                  );
+                                                  if (pickedDate != null) {
+                                                    setState(() {
+                                                      _datefrom.text =
+                                                          "${pickedDate.toLocal()}"
+                                                              .split(' ')[0];
+                                                    });
+                                                  }
+                                                }),
+                                          ),
+                                          widthX(10.w),
+                                          Expanded(
+                                            child: Datetimetextfield(
+                                                readOnly: true,
+                                                controller: _datetill,
+                                                title:
+                                                    languageconst.ValidTill.tr,
+                                                hint: "DD/MM/YY",
+                                                onpressed: () async {
+                                                  DateTime? pickedDate =
+                                                      await showDatePicker(
+                                                    context: context,
+                                                    initialDate: DateTime.now(),
+                                                    firstDate: DateTime(2000),
+                                                    lastDate: DateTime(2101),
+                                                  );
+                                                  if (pickedDate != null) {
+                                                    setState(() {
+                                                      _datetill.text =
+                                                          "${pickedDate.toLocal()}"
+                                                              .split(' ')[0];
+                                                    });
+                                                  }
+                                                }),
+                                          ),
+                                        ],
+                                      ),
+                                // heightY(10.h),
+                                offerType == "Tiered Discount"
+                                    ? TieredDiscountScreen(
+                                        discountunit: _tiereddiscountunit,
+                                        discountvalue: _tiereddiscountvalue,
+                                        spendvalue: _tieredspendvalue,
+                                        validfrom: _tieredvaildfrom,
+                                        validtill: _tieredvaildtill,
+                                      )
+                                    : SizedBox(),
+
+                                heightY(15.h),
+                                // Text(
+                                //   languageconst.UsageBenifits.tr,
+                                //   style: manageData.appTextTheme.fs16Normal
+                                //       .copyWith(color: manageData.appColors.gray),
+                                // ),
+                                // heightY(10.h),
+                                Row(
+                                  children: [
+                                    Expanded(
+                                      child: Textfieldwithtitle(
+                                        keyboardtype: TextInputType.number,
+                                        controller: _totaluser,
+                                        title: languageconst.TotalUsers.tr,
+                                        hint: languageconst.enter.tr,
+                                      ),
+                                    ),
+                                    widthX(10.w),
+                                    Expanded(
+                                      child: Textfieldwithtitle(
+                                        keyboardtype: TextInputType.number,
+                                        controller: _totaluses,
+                                        title: languageconst.UsesperCustomer.tr,
+                                        hint: languageconst.enter.tr.tr,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                heightY(10.h),
+                              ],
+                            ),
                     ],
                   ),
                 )

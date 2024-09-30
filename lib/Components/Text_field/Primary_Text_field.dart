@@ -11,6 +11,7 @@ class Primary_txtField extends StatefulWidget {
   bool obscuretxt;
   bool fillcolor;
   bool readOnly;
+  final TextInputType keyboardType;
   Function(String?)? validator;
   Function(String)? onChanged;
   TextEditingController? controller;
@@ -23,6 +24,7 @@ class Primary_txtField extends StatefulWidget {
       this.fillcolor = false,
       this.obscuretxt = false,
       this.readOnly = false,
+      this.keyboardType = TextInputType.text,
       this.validator,
       this.controller,
       this.onChanged,
@@ -47,6 +49,7 @@ class _common_txtfieldState extends State<Primary_txtField> {
                 style: manageData.appTextTheme.fs16Normal,
               ),
         TextFormField(
+          keyboardType: widget.keyboardType,
           onChanged: (v) => setState(() {
             widget.onChanged != null ? widget.onChanged!(v.toString()) : null;
           }),

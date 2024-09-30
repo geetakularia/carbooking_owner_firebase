@@ -64,6 +64,7 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                   ),
                   heightY(10.h),
                   Textfieldwithtitle(
+                    keyboardtype: TextInputType.number,
                     controller: widget.spendvalue,
                     title:
                         "${languageconst.SpendThreshold.tr} (${languageconst.minimumspentvalue.tr})",
@@ -74,6 +75,7 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                     children: [
                       Expanded(
                         child: Textfieldwithtitle(
+                          keyboardtype: TextInputType.number,
                           controller: widget.discountvalue,
                           title: "${languageconst.DiscountValue.tr} ",
                           hint: "₹0.0",
@@ -82,6 +84,7 @@ class _TieredDiscountScreenState extends State<TieredDiscountScreen> {
                       widthX(10.w),
                       Expanded(
                         child: Textfieldwithtitle(
+                          keyboardtype: TextInputType.number,
                           controller: widget.discountunit,
                           title: languageconst.DiscountUnit.tr,
                           hint: languageconst.enter.tr,

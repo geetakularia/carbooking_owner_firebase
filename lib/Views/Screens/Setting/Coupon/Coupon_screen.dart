@@ -118,6 +118,7 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
                             ),
                             heightY(10.h),
                             Primary_txtField(
+                              keyboardType: TextInputType.number,
                               controller: _discount,
                               hint_txt: "₹00.00",
                               fillcolor: true,
@@ -138,6 +139,7 @@ class _Coupon_scrrenState extends State<Coupon_scrren> {
                             ),
                             heightY(12.h),
                             Primary_txtField(
+                              keyboardType: TextInputType.number,
                               controller: _alloweduser,
                               hint_txt: languageconst.enter.tr,
                               fillcolor: true,

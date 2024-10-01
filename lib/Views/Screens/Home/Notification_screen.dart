@@ -1,6 +1,7 @@
 import 'package:car_booking_owner/Components/Text_field/Primary_Text_field.dart';
 import 'package:car_booking_owner/Components/Widget/Icon_container_widget.dart';
 import 'package:car_booking_owner/Components/Widget/Notificationlistitle.dart';
+import 'package:car_booking_owner/Controllers/NotificationServices.dart';
 import 'package:car_booking_owner/I18n/Translation.dart';
 import 'package:car_booking_owner/Res/Services/app_services.dart';
 import 'package:car_booking_owner/main.dart';
@@ -8,8 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-class Notification_screen extends StatelessWidget {
+class Notification_screen extends StatefulWidget {
   const Notification_screen({super.key});
+
+  @override
+  State<Notification_screen> createState() => _Notification_screenState();
+}
+
+class _Notification_screenState extends State<Notification_screen> {
+  NotificationServices noti = NotificationServices();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    noti.requestNotificationPermission();
+    noti.getDeviceToken().then(
+      (value) {
+        print(value);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {

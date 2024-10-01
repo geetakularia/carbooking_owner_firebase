@@ -23,6 +23,7 @@ class _Notification_screenState extends State<Notification_screen> {
     // TODO: implement initState
     super.initState();
     noti.requestNotificationPermission();
+    noti.firebaseInit();
     noti.getDeviceToken().then(
       (value) {
         print(value);

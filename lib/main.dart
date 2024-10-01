@@ -5,6 +5,7 @@ import 'package:car_booking_owner/Preferences/sharedpreferences.dart';
 import 'package:car_booking_owner/Res/Services/appconfig.dart';
 import 'package:car_booking_owner/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -16,10 +17,18 @@ Prefs prefrance = Prefs.instance;
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await prefrance.setPreferences();
+  FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
+  
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(const MyApp());
+}
+
+@pragma("vm:entry-point")
+Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print(message.notification!.title.toString());
 }
 
 class MyApp extends StatelessWidget {

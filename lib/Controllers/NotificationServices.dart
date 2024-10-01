@@ -88,7 +88,10 @@ class NotificationServices {
 
   /********* Get Token *********/
   Future<String> getDeviceToken() async {
+    /****** permission to send notification  */
+    await messaging.requestPermission();
     String? token = await messaging.getToken();
+    print(token);
     return token!;
   }
 
